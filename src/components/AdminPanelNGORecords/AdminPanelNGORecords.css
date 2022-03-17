@@ -1,0 +1,54 @@
+.customOverlay {
+    background: rgba(36, 123, 160, 0.7);
+  }
+  .customModal {
+    background: #e8e8eb;
+    max-width: 500px;
+    width: 100%;
+  }
+
+/*.........................*/
+
+
+  .column-ngo {
+    float: left;
+    width: 50%;
+  }
+  .row-ngo{
+      display: grid;
+  }
+  /* Clear floats after the columns */
+  .row-ngo:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+/*.........................*/
+
+.small-text-admin{
+    font-family: BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    color:#6e6e73;
+
+}
+
+.small-b-i{
+    font-weight: bold;
+    font-style: italic ;
+
+}
+
+.ngo-u-list{
+  list-style-type: none;     
+}
+.ngo-u-list .org-name{
+    font-size: x-large;
+    color: #f5f5f7;
+    
+
+  background: url('../../images/diamond-bullet.png') no-repeat left top;
+  background-size: 30px;
+  padding-left: 40px;
+    font-size: x-large;
+    font-weight: 300;
+    font-family: Poppins,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}

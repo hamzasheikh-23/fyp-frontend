@@ -1,0 +1,89 @@
+.account-button{
+    background: transparent;
+    border: none;
+}
+
+.account-button:focus{
+    outline: none;
+}
+
+.col-6 .pic-border{
+    position: relative;
+    background-color: white;
+    border: 1px solid #4A89DC;
+    padding: 10px;
+    border-radius: 5%;
+}
+
+.col-6 .pic-border i{
+    position: absolute;
+    right: -7px;
+    bottom: -7px;
+    font-size: 20px; 
+    color: rgb(0, 177, 80);
+    
+}
+
+.pic-container{
+    height: 122px;
+    width: 122px;
+}
+
+.pic1{  
+    height: 100%;
+    width: 100%;
+    background: url(../../images/donor.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%; 
+}
+
+.pic2{
+    height: 100%;
+    width: 100%;
+    background: url(../../images/ngo.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%; 
+}
+
+.tag{
+    margin-top: 20px;
+    text-align: center;
+    letter-spacing: -.9px;
+    font-family: hind,sans-serif;
+    font-weight: 700;
+}
+
+/* media queries */
+
+@media(max-width: 768px) {
+    .pic-container{
+        height: 119px;
+        width: 119px; 
+    }
+}
+
+@media (max-width: 418px){
+    .col-6 .b i{
+        font-size: 18px; 
+    }
+    .pic-container{
+        height: 114px;
+        width: 114px; 
+    }  
+}
+
+@media (max-width: 360px){
+    .pic-container{
+        height: 92px;
+        width: 92px; 
+    }
+}
+
+@media (max-width: 320px){
+    .col-6 .b i{
+        font-size: 18px; 
+    }
+}
+

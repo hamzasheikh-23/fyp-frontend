@@ -1,4 +1,5 @@
 .display-pic {
+    
     position: absolute;
     left: 0;
     display: block;
@@ -12,14 +13,14 @@
 .display_holderImage{
     height: 100%;
     position:relative;
-    background: url(./images/cover.jpeg);
+    background: url(../../images/cover.jpeg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
 
 .fade-content{
-    margin-top: -150px;
+    margin-top: -120px;
     margin-left: auto;
     margin-right: auto;
     width: 80%;
@@ -37,8 +38,8 @@
 
 .fade-content h1{
     margin-bottom: 2px;
-    font-size: 40px;
-    line-height: 30px;
+    font-size: 35px;
+    line-height: 25px;
     letter-spacing: -.9px;
     font-family: ibm plex sans,sans-serif;
     font-weight: 700;
@@ -48,7 +49,7 @@
     margin: 0 20px 20px;
     color: #4A89DC!important;
     line-height: 26px;
-    font-size: 15px;
+    font-size: 14px;
     display: block;
     position: relative;
     font-family: roboto,sans-serif;
@@ -59,7 +60,6 @@
 
 .fade-content hr{
     display: block;
-  
     margin-left: auto;
     margin-right: auto;
     border-style: solid;
@@ -72,27 +72,33 @@
 
 .fade-content p{
     margin: 0 20px 20px;
-    line-height: 26px;
-    font-size: 14px;
+    line-height: 22px;
+    font-size: 13px;
     color: #6c6c6c;
     display: block;
     position: relative;
     font-family: roboto,sans-serif;
     box-sizing: border-box;
-    
+}
+.fade-content a{
+    text-decoration: none;
 }
 
-.fade-content button{
+.fade-content .my-btn
+{
     background-color:  #4A89DC;
     font-family: roboto,sans-serif;
     border: none;
-    width: 180px;
+    width: 170px;
     color: white;
-    padding: 10px 20px;
+    padding: 7px 20px;
     text-align: center;
     text-decoration: none;
     display: block;
-    font-size: 13px;
+    font-size: 12px;
     margin: 4px 2px;
     border-radius: 65px;
+}
+.fade-content .my-btn:active{
+    outline:none;
 }

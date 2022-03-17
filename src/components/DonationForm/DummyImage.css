@@ -1,0 +1,28 @@
+
+.book{  
+    height: 100%;
+    width: 100%;
+    background: url(../../images/book.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%; 
+}
+
+.giftbox{  
+    height: 100%;
+    width: 100%;
+    background: url(../../images/giftbox.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%; 
+}
+
+.heart-img{  
+    height: 100%;
+    width: 100%;
+    background: url(../../images/heart-img.PNG);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%; 
+}
+

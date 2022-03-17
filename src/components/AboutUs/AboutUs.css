@@ -1,0 +1,214 @@
+.about-page{
+    font-family: sans-serif;
+}
+.about-cover-container{
+    position: relative;
+    top:0;
+    left:0;
+    right: 100%;
+    bottom: 100%;
+    display: block;
+    
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+
+    width: 100%;
+}
+.about-cover{
+    height: 100%;
+    background: url(../../images/grayscale-kid.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 65% 0%;
+    background-attachment: fixed;
+    
+}
+
+.about-detail-section1{
+    height: auto;
+    display: flex;
+  
+}
+.about-detail-section2{
+    height: auto;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.about-small-img{
+    margin-top: 10%;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+  
+  
+    max-height: 100%;
+    max-width: 100%;
+   
+}
+
+.side-content{
+  
+    margin-top: 10%;
+    margin-bottom: 0;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.about-set-img-in-div{
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%; 
+}
+
+ .side-content p{
+    color: #6c6c6c; 
+    line-height: 26px;
+    font-size: 20px;
+    font-weight: 300;
+ 
+}
+.remove-partner-space {
+    margin-top: 5%;
+}
+
+.about-small-img.remove-pic-space{
+    margin-top: 20%;
+}
+
+.about-partners{
+    
+    min-height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+ 
+    margin: 0 30px;
+    margin-bottom: 15px;
+    
+}
+.about-partners .partner-card{
+    max-width: 150px;
+    min-height: 100px;
+ 
+    margin: 20px;
+    text-align: center;
+}
+.about-partners .partner-card .partner-img{
+    width: 120px;
+    height: 120px;
+ 
+    margin: 0 auto;
+}
+.about-partners .partner-card img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid gray;
+    object-fit: contain;
+    padding: 3px;
+}
+.partner-card .partner-title{
+    padding: 10px;
+    color: rgb(48, 99, 167);
+    font-weight: bold;
+}
+.success-story-section{
+border: 2px solid red;
+min-height: 90vh;
+}
+
+@media (min-width: 769px){
+    .about-cover{
+        background-position: cover;
+    }
+}
+@media (max-width: 767px){
+    .about-small-img.remove-pic-space{
+        margin-top: 0;
+    }
+    .about-small-img{
+    max-width: 70%;
+    height: 70%;
+    }
+    .remove-partner-space{
+        margin-top: 0;
+    }
+    .remove-space{
+        margin-top:0px;
+      
+    }
+ 
+}
+@media (max-width: 639px){
+    .side-content p{
+        line-height: 20px;
+        font-size: 17px;
+        font-weight: 200;
+    }
+}
+
+/* .about-page{
+    box-sizing: border-box;
+    font-family: hind,sans-serif;
+}
+.about-banner{
+    position: relative;
+    border: 2px solid red;
+    width: 100%;
+    height: 90vh;
+    background: url(../../images/grayscale-kid3.jpg);
+    background-size: contain;
+    background-position: 60% 0%;
+    background-attachment: fixed;
+    background-repeat: initial;
+   
+}
+.about-toolbar{
+    border: 2px solid blue;
+}
+.about-page section{
+    position: relative;
+    height: auto;
+
+    display: flex;
+}
+.about-page section .imgBox{
+    position: sticky;
+    top:0;
+    min-width: 50%;
+    height: 100vh;
+   
+}
+.about-page section .imgBox img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 600px;
+}
+.about-page section .side-content{
+    padding: 0 80px;
+    padding-top: 100px;
+}
+.about-page section .side-content h2{
+ text-align: left;
+}
+.about-page section .side-content p{
+    color: #6c6c6c; 
+    line-height: 26px;
+    font-size: 20px;
+    font-weight: 300;
+ 
+}
+.set-img-in-div{
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%; 
+} */

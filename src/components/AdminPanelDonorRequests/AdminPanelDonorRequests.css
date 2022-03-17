@@ -1,0 +1,8 @@
+
+.donor-req-img-cont{
+    text-align: center;
+}
+.donor-req-img{
+    max-inline-size: -webkit-fill-available;
+    max-height: 16rem;
+}

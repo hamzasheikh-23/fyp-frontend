@@ -1,0 +1,124 @@
+.side-drawer{
+    height: 100%;
+    background: white;
+    box-shadow: 1px 0px 7px rgba(0,0,0,0.5);
+    position: fixed;
+    top:0;
+    left:0;
+    width: 70%;
+    max-width: 300px;
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
+    font-family: hind,sans-serif;
+}
+
+.side-drawer .image-card{
+    width: 100%;
+    height: 38% ;
+    box-sizing: border-box;
+}
+
+.image-card .image{
+    height: 100%;
+    position:relative;
+    background: url(../../images/cover.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.pic-content{
+    position: relative;
+    margin-top: -78px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pic-content h1{
+    margin-bottom: 0;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -.9px;
+    font-family: ibm plex sans,sans-serif;
+}
+
+.pic-content .color-highlight{
+    margin-top: 1px;
+    color: #4A89DC;
+    font-size: 15px;
+    font-family: roboto,sans-serif;
+}
+
+.donation-options li a{
+    margin: 0.5rem 0;
+    font-family: hind,sans-serif;
+    display: block;
+    font-size: 15px;
+    padding: 10px 16px;
+    padding-left: 28px;
+    margin:0;
+    text-decoration: none;
+    
+}
+
+.side-drawer li{
+    /* margin: 0.5rem 0; */
+    font-family: hind,sans-serif;
+    display: block;
+    font-size: 15px;
+}
+
+.side-drawer li button{
+    display: inline-block;
+    color: #585858; 
+    text-decoration: none;
+    background-color: transparent;
+    outline: none;
+    border: none;
+   
+}
+
+
+.side-drawer li i{
+    padding: 20px 16px;
+    color: rgb(47, 119, 214);
+}
+
+.side-drawer.open{
+    transform: translateX(0);
+}
+
+.side-drawer ul{
+    height: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    padding: 0px 0px;
+}
+
+
+.side-drawer a{
+    padding: 15px 10px;
+    display: block;
+    color: #585858; 
+    text-decoration: none;
+}
+
+.side-drawer a:hover,
+.side-drawer a:active{
+    background-color: #e6e6e6;
+    text-decoration: none;
+}
+
+@media (min-width: 972px){
+    .side-drawer{
+        display:none;
+    }
+}

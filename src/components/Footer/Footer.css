@@ -1,0 +1,129 @@
+.footer-container{
+    padding: 0 50px;
+    }
+    footer p{
+        color:#999;
+        line-height: 25px;
+    }
+    footer h1,h2{
+        color:#fff;
+    }
+    footer h2{
+        font-size: 18px;
+    }
+    footer .footer-top{
+        background: #111 ;
+        padding: 80px 0;
+    }
+    footer .segment-one h3{
+        font-family: sans-serif;
+        color: #fff !important;
+        letter-spacing: 1px;
+        margin: 10px 0;
+    }
+    footer .segment-two{
+        color:#fff;
+        font-family: sans-serif;
+        text-transform: uppercase;
+    }
+    .segment-two h2{
+        color: white;
+        letter-spacing: 1px;
+        
+    }
+    footer .segment-two h2:before{
+    content: '|';
+    color: rgb(48, 99, 167);
+    padding-right: 10px;
+    font-weight: bold;
+    font-size: x-large;
+    }
+    footer .segment-two ul{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    footer .segment-two ul li{
+        border-bottom: 1px solid rgba(255,255,255,0.3);
+        line-height: 40px;
+    }
+    footer .segment-two ul li a{
+        color: #999;
+        text-decoration: none;
+    }
+    footer .segment-three h2{
+        color: #fff;
+        font-family: sans-serif;
+        text-transform: uppercase;
+    }
+    footer .segment-three h2:before{
+        content: '|';
+        color:  rgb(48, 99, 167);
+        padding-right: 10px;
+        font-weight: bold;
+    font-size: x-large;
+    }
+    footer .segment-three a{
+        background: rgb(48, 99, 167);
+        width: 32px;
+        height: 30px;
+        margin: 2px;
+        display: inline-block;
+        border-radius: 50%;
+        position: relative;
+    
+    }
+    footer .segment-three a i {
+        font-size: 20px;
+        color: #fff;
+        position: absolute;
+        top: -19px;
+        left: -6px;
+        padding: 20px 12px;
+    }
+    footer .segment-four h2{
+        color: #fff;
+        font-family: sans-serif;
+        text-transform: uppercase;
+    }
+    footer .segment-four h2:before{
+        content: '|';
+        color:  rgb(48, 99, 167);
+        padding-right: 10px;
+        font-weight: bold;
+        font-size: x-large;
+    }
+    footer .segment-four form textarea{
+     width: 100%;
+    
+    }
+    
+    footer .segment-four form input[type=submit]{
+        background:  rgb(48, 99, 167);
+        border: none;
+        padding: 3px 15px;
+        margin-top: 10px;
+       
+        color: #fff;
+        text-transform: uppercase;  
+    }
+    footer .footer-bottom-text{
+        text-align: center;
+        background: #000;
+        line-height: 75px;
+    }
+    
+    @media only screen and (min-width:768px) and (max-width:991px){
+        .md-mb-30{
+            margin-bottom: 30px;
+        }
+    }
+    @media only screen and (max-width:767px){
+        .sm-mb-30{
+            margin-bottom: 30px;
+        }
+        footer .footer-top{
+            padding: 50px opx;
+        }
+    }
+    

@@ -1,0 +1,191 @@
+
+.my-donation-form{
+    width: 80%;
+    margin: auto;  
+}
+.my-donation-form .form-control{
+    border: 1px solid rgb(162, 201, 243);
+    color: #6c6c6c;
+    font-size: 0.85em;
+}
+.item-pic-container{
+    border: 1px solid rgb(162, 201, 243);
+    color: #6c6c6c;
+    border-radius: 5px;
+  padding: 7px;
+    width: 100%;
+}
+
+.item-pic{
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.upload-pic-container{
+    height: 118px;
+    width: 118px;
+    padding: 5px;
+    margin-left: 5px;
+}
+
+.upload-pic-container img{
+    border-radius: 5%;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%; 
+} 
+
+/* .my-donation-form .form-group label.my-donation-label{
+    color: red !important;
+} */
+.my-donation-page .donation-heading{
+    font-size: 30px;
+    line-height: 30px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.my-condition-radio .radio{
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+}
+
+.my-condition-radio .radio + .radio{
+    margin-left: 30px;
+}
+
+.my-condition-radio input[type=radio]{
+    margin: 15px 0;
+    margin-left: 20px;
+    display: none;
+}
+
+.my-condition-radio span{
+    height: 20px;
+    width: 20px;
+    border-radius:50%;
+    border: 3px solid #4A89DC;
+    display: block;
+    position: absolute;
+    left:3px;
+    top: 3px;
+}
+
+.my-condition-radio span:after{
+    content:"";
+    height: 8px;
+    width: 8px;
+    background: #4A89DC;
+    display: block;
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    transition:300ms ease-in-out 0s;
+}
+
+.my-condition-radio .radio input[type="radio"]:checked ~ span:after{
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.my-login-background{
+    border: 1px solid white;
+    height: 100vh;
+    background-image: url(../../images/bk.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%; 
+}
+
+.my-login-background .main-section{
+    font-family: hind,sans-serif;
+    margin: 0 auto;
+    margin-top: 130px;
+    padding: 0;
+}
+
+.my-login-background .main-section .modal-content{
+    border-color:rgba(75, 138, 221,0.4) ;
+    border-width: 4px;
+    background-color: white;
+    padding: 0 18px;
+    border-radius: 10px;
+}
+
+.my-donation-form .star-rating{
+    font-size: 30px;
+} 
+
+.dark-border .gift-img img{
+    height: 150px;
+    width: 175px;
+    margin : 0 auto;
+}
+
+.dark-border .gift-img {
+    margin-top: -63px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.donation-btn{
+    background-color:  #4A89DC;
+    font-family: roboto,sans-serif;
+    border: none;
+    width: 170px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 13px;
+    border-radius: 65px;
+    margin: 20px 0px;
+    font-size: 14px;
+    padding: 7px 14px;
+    margin-left: auto;
+}
+
+@media(max-width: 768px) {
+
+     .my-donation-form{
+        width: 90%;
+     }
+    
+}
+
+
+
+@media (max-width: 418px){
+
+    .my-donation-form{
+        width: 95%;
+     }
+     .my-donation-page .donation-heading{
+        font-size: 25px;
+    }
+   
+   
+}
+
+
+@media (max-width: 320px){
+
+    .my-donation-form{
+        width: 100%;
+     }
+     .my-donation-page .donation-heading{
+        font-size: 22px;
+    }
+    
+  
+}
