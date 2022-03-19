@@ -36,7 +36,7 @@ const App=()=>{
            <Route path="/viewStory" exact element={<ViewStory/>}/>
            <Route path="/signup" exact element={<Signup/>}/>
            <Route path="/aboutUs" element={<AboutUs/>}/>
-           <Route path="/login" element={<LoginForm/>}/>
+           <Route path="/login" element={<LoginForm history={history}/>}/>
            <Route path="/help" element={<Help/>}/>
            <Route path="/donationForm" element={<DonationForm/>}/>
            <Route path="/adminPanelStatistics" element={<AdminPanelStatistics/>} />

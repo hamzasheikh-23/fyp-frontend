@@ -119,7 +119,7 @@ onSubmit=(formValues, dispatch)=>{
     
 //    console. log(signupData);
     this.setState({alertMsg:true, msg:'We are processing. Please wait', bg:'primary'})
-    axios.post('/api/register',signupData)
+    axios.post('https://localhost:44357/user/register',signupData)
     .then(res=>{
         dispatch(reset("signupForm"));
         this.setState({alertMsg:true, msg:'Form submitted successfully', bg:'success'});
