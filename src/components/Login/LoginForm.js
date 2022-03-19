@@ -64,8 +64,8 @@ class LoginForm extends Component {
       axios
         .post("https://localhost:44357/user/login", loginData)
         .then((res) => {
-        console.log('response',res,this.props.history,this.props);
-         // console.log(res);
+          console.log("response", res, this.props.history, this.props);
+          // console.log(res);
           localStorage.clear();
           if (res.data.code === "1") {
             localStorage.setItem("admin", true);
@@ -80,7 +80,7 @@ class LoginForm extends Component {
               localStorage.setItem("loginType", "ngo");
             }
           }
-          
+
           this.props.history.push("/");
         })
         .catch((err) => {
