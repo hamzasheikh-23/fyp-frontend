@@ -43,7 +43,8 @@ class MainPage extends Component{
                                 <p>"Little Deeds" is built with love and care for all you who believe that giving to those in need will bring more joy than money could ever buy.</p>
                                 {/* <a href="/">Next</a> */}
                                 <Link to="/login">
-                                <button className="my-btn" >NEXT</button>
+                                    {!localStorage.getItem("loginType") &&
+                                <button className="my-btn" >NEXT</button> }
                                 </Link>
                             </div>
                     </div>

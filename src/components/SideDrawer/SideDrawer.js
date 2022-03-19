@@ -106,7 +106,7 @@ class SideDrawer extends React.Component {
 
 {(localStorage.getItem('loginToken') || localStorage.getItem('admin')) ? <li><Link to="/" onClick={this.logout}><i><FaSignInAlt/></i>Logout</Link></li> :   <li><Link to="/login"><i><FaSignInAlt/></i>Login</Link></li>}
                     
-                    <li><Link to="/help"><i><FaQuestionCircle/></i>Help</Link></li>
+                    {/* <li><Link to="/help"><i><FaQuestionCircle/></i>Help</Link></li> */}
                 </ul>
             </div>
             
