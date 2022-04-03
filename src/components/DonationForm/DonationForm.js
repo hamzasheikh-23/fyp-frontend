@@ -145,7 +145,11 @@ class DonationForm extends Component {
       axios
       .post("https://localhost:44357/donation/post", DonationData)
       .then((res) => {
-          this.props.history.push("/profile")
+         // this.props.history.push("/profile")
+            this.props.history.push({
+        pathname: "/googleMap",
+        state: { data: DonationData },
+      });
         console.log("response: ", res);
       })
       .catch((err) => {

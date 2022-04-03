@@ -11,7 +11,7 @@ import RequestCard from './RequestCard';
 class ViewStory extends React.Component {
     componentDidMount(){
         console.log('worked')
-        axios.get('/api/getApprovedStories')
+        axios.get('https://localhost:44357/story/get')
         .then(res=>{
             axios.get('/api/getUsers/ngo')
             .then(list=>{
@@ -107,7 +107,7 @@ class ViewStory extends React.Component {
                         <h3 className="request-area-heading">SUCCESS STORIES</h3>
                         
 
-                        {/* <RequestCard org="Helping Hands" title="From Beggary To School" 
+                        {/* { <RequestCard org="Helping Hands" title="From Beggary To School" 
                         image='http://localhost:8000/storage/cover_images/story1.jpg'
                         body1="A decade ago, we visited a small home in the village of Salehpat, Sindh. There, on a charpoy (woven bed), sat a shy little girl in her TCF School uniform and her feeble old grandmother. Five-year-old Madiha had just been brought into school by her Principal, Madam Saima Memon, who had seen her begging alongside her grandmother in the busy marketplace."
                         body2="Barefoot under the blazing sun, Madiha was wading through throngs of busy shoppers with a begging bowl in her hand when Ms. Saima saw her for the first time."
@@ -128,7 +128,7 @@ class ViewStory extends React.Component {
                         body7='“There came a time when we lost everything, including our home. That’s when I asked baba (father) to let me work and support the family. He instantly refused, reminding me that only education would change our lives so I must focus on that,” shares Muskan.'
                         body8='Amjad believes that better days are ahead. “I’m very proud of my daughters. I see them working so hard every day. I know that education will change their lives in many ways,” he reaffirms.'
                         
-                        /> */}
+                        /> } */}
                         {this.state.stories.map((story)=>{
                             // var name;
                             // axios.get(`/api/getUserDetails/${story.ngo_id}`)

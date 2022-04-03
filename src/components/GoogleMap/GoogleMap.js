@@ -56,7 +56,7 @@ class GoogleMap extends Component {
 					donationDetails={this.props.location.state.data}
 					google={this.props.google}
 					center={{lat: this.state.latitude, lng: this.state.longitude}}
-					height='400px'
+					height='650px'
 					zoom={15}
 				/>
 			

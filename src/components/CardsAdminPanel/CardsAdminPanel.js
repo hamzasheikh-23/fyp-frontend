@@ -42,7 +42,7 @@ class CardsAdminPanel extends Component{
             {
               id:'3',
               title: 'Partner NGO Records',
-              image: 'https://www.mckinsey.com/~/media/McKinsey/Business%20Functions/Organization/Our%20Insights/Leadership%20and%20Organization%20Blog/The%20critical%20importance%20of%20the%20HR%20business%20partner/08EngineeringHRBPstemplateenhancedheroOriginal.jpg',
+              image: 'https://thumbs.dreamstime.com/b/multiracial-group-black-african-american-caucasian-asian-hands-holding-each-other-wrist-tolerance-unity-love-anti-135505973.jpg',
               description: 'You saved a life. What is Lorem Ipsum it is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
             },
             {
@@ -106,8 +106,8 @@ else if (id==='6'){
         return <Redirect to={this.state.goto} push/>
     }
         return(
-
-                            <Card className="carddeckclass"    >
+<div style={{display:'flex', flexWrap:'wrap', justifyContent:'space-evenly'}}>
+                            {/* <Card className="carddeckclass"    > */}
                               {this.state.arrayforcards.map(data => (
                       
                               <div className="">                                             
@@ -131,7 +131,8 @@ else if (id==='6'){
 
                               </div>
                               ) )}
-                              </Card>
+                              {/* </Card> */}
+                              </div>
 
                               
 

@@ -4,7 +4,7 @@ import axios from 'axios';
 import Geocode from "react-geocode";
 import Autocomplete from 'react-google-autocomplete';
 
-Geocode.setApiKey( "AIzaSyBJsngH4XSM3eSmkUMXJs8a3hffZHNEkFA" );
+Geocode.setApiKey( "AIzaSyDoJnlxSdzT8YfshmuwdxG-BJL3r7biC5Y" );
 Geocode.enableDebug();
 
 class Map extends Component{
@@ -266,7 +266,7 @@ class Map extends Component{
 						/>
 						<Marker />
 						{/* For Auto complete Search Box */}
-						<Autocomplete
+						{/* <Autocomplete
 							style={{
 								width: '100%',
 								height: '40px',
@@ -276,7 +276,7 @@ class Map extends Component{
 							}}
 							onPlaceSelected={ this.onPlaceSelected }
 							types={['(regions)']}
-						/>
+						/> */}
 					</GoogleMap>
 				)
 			)
@@ -287,7 +287,7 @@ class Map extends Component{
 				<div>
                     
 				<AsyncMap 
-					googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyBJsngH4XSM3eSmkUMXJs8a3hffZHNEkFA&libraries=places`}
+					googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyDoJnlxSdzT8YfshmuwdxG-BJL3r7biC5Y&libraries=geometry`}
 					loadingElement={
 						<div style={{ height: `100%` }} />
 					}
@@ -298,7 +298,7 @@ class Map extends Component{
 						<div style={{ height: `100%` }} />
 					}
 				/>
-					<div className="form-group">
+					{/* <div className="form-group">
 						<label htmlFor="">City</label>
 						<input type="text" name="city" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.city }/>
 					</div>
@@ -313,7 +313,7 @@ class Map extends Component{
 					<div className="form-group">
 						<label htmlFor="">Address</label>
 						<input type="text" name="address" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.address }/>
-					</div>
+					</div> */}
 					<button style={{outline:"none"}} className="my-btn donation-btn" onClick={this.donate}>DONATE</button>
 				</div>
 

@@ -27,7 +27,7 @@ class LoginForm extends Component {
     let loginEmailError = "";
     let loginPasswordError = "";
     const validEmail =
-      /^([a-zA-z0-9_\-\.]+)@([a-zA-z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+      /^([a-zA-z0-9_\-.]+)@([a-zA-z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
 
     // if(!this.state.loginEmail){
     //     loginEmailError="you must enter an email";
@@ -58,7 +58,7 @@ class LoginForm extends Component {
       console.log(this.state);
 
       const loginData = {
-        usernameOrEmail: this.state.loginEmail,
+        Username: this.state.loginEmail,
         password: this.state.loginPassword,
       };
       axios

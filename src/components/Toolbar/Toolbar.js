@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Toolbar.css";
 import DrawerToggleButton from "../SideDrawer/DrawerToggleButton";
-import Logo from "../../images/logo-transparent-background.png";
+import Logo from "../../images/charitable_circled_icon.png";
 
 const Toolbar = (props) => {
   const logout = () => {
@@ -16,7 +16,7 @@ const Toolbar = (props) => {
             <img alt="logo" src={Logo} />
           </span>
           <Link to="/">
-            <div>Little Deeds</div>
+            <div className="company-name">CharitAble</div>
           </Link>
         </div>
         <div className="spacer"></div>

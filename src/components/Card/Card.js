@@ -24,11 +24,16 @@ class Card extends React.Component{
             <div>
                 
                 <div class="card">
-                            <img src={this.props.itemImg1} alt=".." className="card-image"/>
+                            {this.props.itemImg1 && <img src={this.props.itemImg1} alt=".." className="card-image"/>}
                             <div class="card-body">
-                                <h5 class="card-title">{this.props.title} </h5><span style={{marginBottom:'10px'}} class={badgeClass}>{this.props.status}</span> 
-                                <p class="card-text" style={{minHeight:'180px'}}>{this.props.description}</p>
-                        
+                                <h5 class="card-title">{this.props.title} </h5>
+                                {/* <span style={{marginBottom:'10px'}} class={badgeClass}>{this.props.status}</span>  */}
+                                <p class="card-text" >{this.props.description}</p>
+                                <p class="card-text" ><span style={{fontWeight:'bold'}}>Quantity</span> &nbsp; {this.props.quantity}</p>
+                                <p class="card-text" ><span style={{fontWeight:'bold'}}>Quantity/Unit</span> &nbsp; {this.props.quantityPerUnit}</p>
+                                <p class="card-text" ><span style={{fontWeight:'bold'}}>Weight</span> &nbsp; {this.props.weight}</p>
+                                <p class="card-text" ><span style={{fontWeight:'bold'}}>Expiration Date</span> &nbsp; {this.props.date}</p>
+
                                 <button href="#" onClick={()=>this.setState({addDetailModalShow:true})}  class="btn btn-primary view-detail">View Details</button>
                                 {this.props.status==="Pending"? <button style={{marginLeft:"10px"}} href="#" onClick={()=>{this.props.delete(this.props.itemId)}}  class="btn btn-danger view-detail">Delete</button> : null }
                             </div>

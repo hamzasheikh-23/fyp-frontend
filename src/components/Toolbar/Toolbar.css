@@ -26,14 +26,18 @@
   text-transform: uppercase;
 }
 
+.company-name{
+  font-size: larger;
+}
 
 .toolbar-logo {
   margin-left: 1rem;
   display: flex;
 }
 .toolbar-logo .logo img {
-  width: 45px;
-  height: 45px;
+  margin-bottom: 2px;
+  width: 47px;
+  height: 48px;
   padding: 2px;
 }
 

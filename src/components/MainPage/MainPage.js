@@ -37,10 +37,10 @@ class MainPage extends Component{
                     <div className="display-pic">
                         <div className="display_holderImage"></div>
                             <div className="fade-content">
-                                <h1>Little Deeds</h1>
-                                <p className="color-highlight">-that make big difference!</p>
+                                <h1>CharitAble</h1>
+                                <p className="color-highlight">" <i>Contribute to make the world a better place </i> "</p>
                                 <hr/>
-                                <p>"Little Deeds" is built with love and care for all you who believe that giving to those in need will bring more joy than money could ever buy.</p>
+                                <p>"CharitAble" is built with love and care for all you who believe that giving to those in need will bring more joy than money could ever buy.</p>
                                 {/* <a href="/">Next</a> */}
                                 <Link to="/login">
                                     {!localStorage.getItem("loginType") &&
