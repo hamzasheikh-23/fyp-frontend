@@ -142,22 +142,28 @@ class Map extends Component{
 		// 	image3: donation.images[2] == undefined ? null: donation.images[2],
 		// 	donationAddress: this.state.address
 		// }
-		const formData = new FormData();
-            formData.append('Rating',Rating);
-            formData.append('Category',Category);
-            formData.append('Description',Description);
-            formData.append('Condition',Condition);
-            formData.append('DonorId',DonorId);
-			formData.append('Title',Title);
-            formData.append('Quantity',Quantity);
-            formData.append('Weight',Weight);
-            formData.append('ExpirationDate',ExpirationDate);
-            //formData.append('status',status);
-            formData.append('Image1',Images[0]===undefined? null: Images[0]);
-            formData.append('Image2',Images[1]===undefined? null: Images[1]);
-            formData.append('Image3',Images[2]===undefined? null: Images[2]);
-            // formData.append('donationAddress',this.state.address);
-		axios.post(`https://localhost:44357/donation/post`,formData)
+
+
+		// const formData = new FormData();
+        //     formData.append('Rating',Rating);
+        //     formData.append('Category',Category);
+        //     formData.append('Description',Description);
+        //     formData.append('Condition',Condition);
+        //     formData.append('DonorId',DonorId);
+		// 	formData.append('Title',Title);
+        //     formData.append('Quantity',Quantity);
+        //     formData.append('Weight',Weight);
+        //     formData.append('ExpirationDate',ExpirationDate);
+        //     //formData.append('status',status);
+        //     formData.append('Image1',Images[0]===undefined? null: Images[0]);
+        //     formData.append('Image2',Images[1]===undefined? null: Images[1]);
+        //     formData.append('Image3',Images[2]===undefined? null: Images[2]);
+        //     // formData.append('donationAddress',this.state.address);
+
+		
+
+
+		axios.post(`https://localhost:44357/donation/post`,this.props.donationDetails)
 		.then(res=>{
 			this.props.redirect.push('/profile');
 			
