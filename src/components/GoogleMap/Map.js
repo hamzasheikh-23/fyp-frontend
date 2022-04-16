@@ -129,7 +129,7 @@ class Map extends Component{
 		this.setState({ [event.target.name]: event.target.value });
 	};
 	donate=()=>{
-		const {rating,category,description,condition,images,status,donor_id}=this.props.donationDetails;
+		const {Rating,Category,Description,Condition,Images,DonorId,Title,Quantity,Weight}=this.props.donationDetails;
 		// const donationRequest={
 		// 	category: donation.category,
 		// 	description: donation.itemDescription,
@@ -143,22 +143,22 @@ class Map extends Component{
 		// 	donationAddress: this.state.address
 		// }
 		const formData = new FormData();
-            formData.append('rating',rating);
-            formData.append('category',category);
-            formData.append('description',description);
-            formData.append('condition',condition);
-            formData.append('donor_id',donor_id);
-            formData.append('status',status);
-            formData.append('image1',images[0]==undefined? null: images[0]);
-            formData.append('image2',images[1]==undefined? null: images[1]);
-            formData.append('image3',images[2]==undefined? null: images[2]);
+            formData.append('Rating',Rating);
+            formData.append('Category',Category);
+            formData.append('Description',Description);
+            formData.append('Condition',Condition);
+            formData.append('DonorId',DonorId);
+            //formData.append('status',status);
+            formData.append('Image1',Images[0]===undefined? null: Images[0]);
+            formData.append('Image2',Images[1]===undefined? null: Images[1]);
+            formData.append('Image3',Images[2]===undefined? null: Images[2]);
             formData.append('donationAddress',this.state.address);
-		axios.post('/api/donationsRegister',formData)
+		axios.post(`https://localhost:44357/donation/post`,formData)
 		.then(res=>{
 			this.props.redirect.push('/profile');
 			
 		})
-		.catch(err=>console.log('Erroe',err));
+		.catch(err=>console.log('Error',err));
 		// console.log(donationRequest);
 	}
 	/**

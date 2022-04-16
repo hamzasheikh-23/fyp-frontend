@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import history from "./history";
 import history from "./assets/history";
@@ -27,7 +27,11 @@ import NGOStatusPending from "./components/NGOStatusPending/NGOStatusPending";
 import NGOStatusRejected from "./components/NGOStatusRejected/NGOStatusRejected";
 import AdminPanelStatistics from "./components/AdminPanelStatistics/AdminPanelStatistics";
 
+
 const App = () => {
+
+  useEffect(() => {console.log("run")},[])
+  
   return (
     <Router>
       <Switch>

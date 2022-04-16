@@ -13,16 +13,24 @@ class ViewStory extends React.Component {
         console.log('worked')
         axios.get('https://localhost:44357/story/get')
         .then(res=>{
-            axios.get('/api/getUsers/ngo')
-            .then(list=>{
-                // console.log('ngo list',list.data.users)
-                this.setState({ngoList:[...list.data.users]})
-                // console.log(this.state)
-        })
-            .catch(error=>console.log(error));
+        //     axios.get('/api/getUsers/ngo')
+        //     .then(list=>{
+        //         // console.log('ngo list',list.data.users)
+        //         this.setState({ngoList:[...list.data.users]})
+        //         // console.log(this.state)
+        // })
+        //     .catch(error=>console.log(error));
      
-            this.setState({stories:[...res.data]})
-            // console.log('stories', res)
+            this.setState({stories: res.data.map(arr => {
+                return {
+                    name:arr.NGOId,
+                    title:arr.StoryTitle,
+                    description:arr.Description,
+                    image: "https://images.unsplash.com/photo-1615789591457-74a63395c990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmVhdXRpZnVsJTIwY2F0fGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+                    date: arr.PostedDate
+                }
+            })})
+            console.log('stories', res)
             // console.log('stories resconse',this.state)
     })
         .catch(err=>console.log(err));
@@ -140,8 +148,8 @@ class ViewStory extends React.Component {
                             // console.log('donor data',name)
 
                             return(
-                                <RequestCard org={story.ngo[0].name} title={story.title} 
-                                image={`http://localhost:8000/storage/cover_images/${story.image}`}
+                                <RequestCard org={story.name} title={story.title} 
+                                image={story.image}
                                 body1={story.description}
                                 />
 

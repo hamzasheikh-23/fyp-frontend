@@ -53,7 +53,7 @@ class NGORequests extends React.Component {
         requests:[],
         ngoList:[],
         tempReq:[]
-        // addModalShow: false,
+        //addModalShow: false,
     };
     filteredContent=()=>{
         console.log('ngo: ', this.state.selectedNgo, 'category: ', this.state.selectedCategory)
@@ -131,7 +131,7 @@ class NGORequests extends React.Component {
                 <SideDrawer about={true} show={this.state.siderDrawerOpen} />
                 {backdrop}
                 <div className="ngo-main-div">
-                    {/* <div className="filter-area">
+                     <div className="filter-area">
                         <h2 className="filter-heading">Filter By NGO:</h2>
                         <ul className="filter-options">
                         
@@ -185,7 +185,7 @@ class NGORequests extends React.Component {
                          
                             
                         </ul>
-                    </div> */}
+                    </div> 
                     <div class="request-area">
                         <h3 className="request-area-heading">NGO'S REQUESTS</h3>
                         <div style={{width:'100%', display:'flex', flexWrap:'wrap', justifyContent:'space-evenly'}}>

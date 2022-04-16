@@ -66,9 +66,10 @@ class LoginForm extends Component {
         .then((res) => {
           console.log("response", res, this.props.history, this.props);
           // console.log(res);
-          localStorage.clear();
-          localStorage.setItem('loginId', res.data.userID);
-          localStorage.setItem('donorId', res.data.donorID);
+          if (res.data.code !== "0") {
+            localStorage.clear();
+            localStorage.setItem('loginId', res.data.userID);
+            localStorage.setItem('donorId', res.data.donorID);
           if (res.data.code === "1") {
             localStorage.setItem("admin", true);
             localStorage.setItem("loginType", "admin");
@@ -84,8 +85,13 @@ class LoginForm extends Component {
             }
             this.props.history.push("/");
           }
+        }
+        else {
+          this.setState({loginErr: true})
+        }
 
         })
+      
         .catch((err) => {
           this.setState({ loginErr: true });
           console.log("login error", err);

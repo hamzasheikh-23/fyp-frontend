@@ -109,9 +109,9 @@ class DonationForm extends Component {
         itemWeightError = "*required";
       }
 
-    // if (this.state.rating < 1) {
-    //   ratingError = "*please rate condition";
-    // }
+    if (this.state.rating < 1) {
+      ratingError = "*please rate condition";
+    }
 
     if (ratingError || itemDescriptionError || itemWeightError || itemQuantityError || itemTitleError) {
       this.setState({ ratingError, itemDescriptionError, itemWeightError, itemQuantityError , itemTitleError });
@@ -131,35 +131,36 @@ class DonationForm extends Component {
       //     return pic.name;
       //     });
       const DonationData = {
-        // rating: this.state.rating,
-        // category: this.state.category,
+        Rating: this.state.rating,
+        Category: this.state.category,
         Description: this.state.itemDescription,
         Title : this.state.itemTitle,
         Quantity: this.state.itemQuantity,
         Weight: this.state.itemWeight,
-        // condition: this.state.condition,
+        Condition: this.state.condition,
         DonorId: localStorage.getItem("donorId"),
         // status: "Pending",
-        // images: this.state.itemPic,
+        Images: this.state.itemPic,
       };
-      axios
-      .post("https://localhost:44357/donation/post", DonationData)
-      .then((res) => {
-         // this.props.history.push("/profile")
-            this.props.history.push({
+      // axios
+      // .post("https://localhost:44357/donation/post", DonationData)
+      // .then((res) => {
+      //    // this.props.history.push("/profile")
+      //       this.props.history.push({
+      //   pathname: "/googleMap",
+      //   state: { data: DonationData },
+      // });
+      //   console.log("response: ", res);
+      // })
+      // .catch((err) => {
+      //   console.log("error: ", err);
+      // });
+      
+      this.setState(initialDonationState);
+      this.props.history.push({
         pathname: "/googleMap",
         state: { data: DonationData },
       });
-        console.log("response: ", res);
-      })
-      .catch((err) => {
-        console.log("error: ", err);
-      });
-      //this.setState(initialDonationState);
-    //   this.props.history.push({
-    //     pathname: "/googleMap",
-    //     state: { data: DonationData },
-    //   });
     }
   };
 
@@ -207,7 +208,7 @@ class DonationForm extends Component {
                 className="form-control"
               />
               </div>
-            {/* <div className="form-group">
+              <div className="form-group">
                         <label htmlFor="category" className="my-donation-label">Category</label>
                         <select name="category" 
                                 value={this.state.category}  
@@ -219,7 +220,7 @@ class DonationForm extends Component {
                             <option>Toys</option>
                             <option>Medicines</option>
                         </select>
-                    </div>  */}
+              </div>  
             <div className="row">
               <div className="col-lg-6">
               <label htmlFor="item-quantity" className="my-donation-label">
@@ -283,7 +284,7 @@ class DonationForm extends Component {
               </div>
             </div>
 
-            {/* <div className="form-group">
+             <div className="form-group">
               <label>Upload Item Image(s)</label>
               <div className="item-pic-container ">
                 <input
@@ -297,9 +298,9 @@ class DonationForm extends Component {
                   {this.state.itemPic.length > 0 ? this.displayImg() : null}
                 </div>
               </div>
-            </div> */}
+            </div> 
 
-            {/* <div className="row">
+            <div className="row">
               <div className="col-sm-6">
                 <div className="form-group my-condition-radio">
                   <label>Select One:</label>
@@ -358,7 +359,7 @@ class DonationForm extends Component {
                   />
                 </div>
               </div>
-            </div> */}
+            </div>
             {/* <GoogleMap/> */}
             <button style={{ outline: "none" }} className="my-btn donation-btn">
               NEXT
