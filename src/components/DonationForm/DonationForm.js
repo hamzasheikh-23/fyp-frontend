@@ -10,6 +10,8 @@ import history from "../../assets/history";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { ItemDonation } from "../../actions";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const initialDonationState = {
   rating: 0,
@@ -25,7 +27,11 @@ const initialDonationState = {
   itemTitleError: "",
   itemWeightError: "",
   itemPic: [],
+  categoriesArr: [],
+  expirationDate: new Date(),
 };
+
+const requireExpirationDate = ["Food", "Medicine"];
 
 class DonationForm extends Component {
   constructor() {
@@ -34,13 +40,35 @@ class DonationForm extends Component {
     this.state = initialDonationState;
   }
 
+  componentDidMount() {
+    const temp = [
+      {
+        id: 0,
+        name: "Cloth",
+      },
+      {
+        id: 1,
+        name: "Medicine",
+      },
+      {
+        id: 2,
+        name: "Toy",
+      },
+      {
+        id: 3,
+        name: "Food",
+      },
+    ];
+    this.setState({ categoriesArr: temp });
+  }
+
   onStarClick(nextValue, prevValue, name) {
     this.setState({ rating: nextValue });
   }
 
   DonationFormInputChange = (event, fieldName) => {
     this.setState({ [fieldName]: event.target.value });
-    // console.log(event.target.value);
+    console.log(event.target.value);
   };
 
   ImagefileSelectedHandler = (e) => {
@@ -98,23 +126,35 @@ class DonationForm extends Component {
     }
 
     if (!this.state.itemTitle) {
-        itemTitleError = "*required";
-      }
-    
-      if (!this.state.itemQuantity) {
-        itemQuantityError = "*required";
-      }
+      itemTitleError = "*required";
+    }
 
-      if (!this.state.itemWeight) {
-        itemWeightError = "*required";
-      }
+    if (!this.state.itemQuantity) {
+      itemQuantityError = "*required";
+    }
+
+    if (!this.state.itemWeight) {
+      itemWeightError = "*required";
+    }
 
     if (this.state.rating < 1) {
       ratingError = "*please rate condition";
     }
 
-    if (ratingError || itemDescriptionError || itemWeightError || itemQuantityError || itemTitleError) {
-      this.setState({ ratingError, itemDescriptionError, itemWeightError, itemQuantityError , itemTitleError });
+    if (
+      ratingError ||
+      itemDescriptionError ||
+      itemWeightError ||
+      itemQuantityError ||
+      itemTitleError
+    ) {
+      this.setState({
+        ratingError,
+        itemDescriptionError,
+        itemWeightError,
+        itemQuantityError,
+        itemTitleError,
+      });
       return false;
     }
 
@@ -124,9 +164,8 @@ class DonationForm extends Component {
   DonationFormSubmitHandler = (e) => {
     e.preventDefault();
     const isValid = this.Donationvalidation();
-    console.log("isValid: ",isValid);
+    console.log("isValid: ", isValid);
     if (isValid) {
-       
       // let picnames= this.state.itemPic.map((pic)=>{
       //     return pic.name;
       //     });
@@ -134,13 +173,14 @@ class DonationForm extends Component {
         Rating: this.state.rating,
         Category: this.state.category,
         Description: this.state.itemDescription,
-        Title : this.state.itemTitle,
+        Title: this.state.itemTitle,
         Quantity: this.state.itemQuantity,
         Weight: this.state.itemWeight,
         Condition: this.state.condition,
         DonorId: localStorage.getItem("donorId"),
         // status: "Pending",
         Images: this.state.itemPic,
+        ExpirationDate: requireExpirationDate.includes(this.state.category) ? this.state.expirationDate : null
       };
       // axios
       // .post("https://localhost:44357/donation/post", DonationData)
@@ -155,7 +195,7 @@ class DonationForm extends Component {
       // .catch((err) => {
       //   console.log("error: ", err);
       // });
-      
+
       this.setState(initialDonationState);
       this.props.history.push({
         pathname: "/googleMap",
@@ -193,7 +233,7 @@ class DonationForm extends Component {
             onSubmit={this.DonationFormSubmitHandler}
             noValidate
           >
-              <div className="form-group">
+            <div className="form-group">
               <label htmlFor="item-title" className="my-donation-label">
                 Title
               </label>
@@ -207,54 +247,58 @@ class DonationForm extends Component {
                 placeholder="Item Title"
                 className="form-control"
               />
-              </div>
-              <div className="form-group">
-                        <label htmlFor="category" className="my-donation-label">Category</label>
-                        <select name="category" 
-                                value={this.state.category}  
-                                onChange={event=> this.DonationFormInputChange(event, "category")}  
-                                id="category" 
-                                className="form-control">
-                            <option>Clothes</option>
-                            <option>Books</option>
-                            <option>Toys</option>
-                            <option>Medicines</option>
-                        </select>
-              </div>  
+            </div>
+            <div className="form-group">
+              <label htmlFor="category" className="my-donation-label">
+                Category
+              </label>
+              <select
+                name="category"
+                value={this.state.category}
+                onChange={(event) =>
+                  this.DonationFormInputChange(event, "category")
+                }
+                id="category"
+                className="form-control"
+              >
+                {this.state.categoriesArr.map((option) => (
+                  <option value={option.name}>{option.name}</option>
+                ))}
+              </select>
+            </div>
             <div className="row">
               <div className="col-lg-6">
-              <label htmlFor="item-quantity" className="my-donation-label">
-                Quantity
-              </label>
-              <input
-                name="item-quantity"
-                value={this.state.itemQuantity}
-                onChange={(event) =>
-                  this.DonationFormInputChange(event, "itemQuantity")
-                }
-                type='number'
-                id="item-quantity"
-                placeholder="Quantity"
-                className="form-control"
-              />
+                <label htmlFor="item-quantity" className="my-donation-label">
+                  Quantity
+                </label>
+                <input
+                  name="item-quantity"
+                  value={this.state.itemQuantity}
+                  onChange={(event) =>
+                    this.DonationFormInputChange(event, "itemQuantity")
+                  }
+                  type="number"
+                  id="item-quantity"
+                  placeholder="Quantity"
+                  className="form-control"
+                />
               </div>
               <div className="col-lg-6">
-              <label htmlFor="item-weight" className="my-donation-label">
-                Weight
-              </label>
-              <input
-               type='number'
-                name="item-weight"
-                value={this.state.itemWeight}
-                onChange={(event) =>
-                  this.DonationFormInputChange(event, "itemWeight")
-                }
-                id="item-weight"
-                placeholder="Weight in kg"
-                className="form-control"
-              />
+                <label htmlFor="item-weight" className="my-donation-label">
+                  Weight
+                </label>
+                <input
+                  type="number"
+                  name="item-weight"
+                  value={this.state.itemWeight}
+                  onChange={(event) =>
+                    this.DonationFormInputChange(event, "itemWeight")
+                  }
+                  id="item-weight"
+                  placeholder="Weight in kg"
+                  className="form-control"
+                />
               </div>
-
             </div>
             <div className="form-group">
               <label htmlFor="item-description" className="my-donation-label">
@@ -284,7 +328,7 @@ class DonationForm extends Component {
               </div>
             </div>
 
-             <div className="form-group">
+            <div className="form-group">
               <label>Upload Item Image(s)</label>
               <div className="item-pic-container ">
                 <input
@@ -298,10 +342,10 @@ class DonationForm extends Component {
                   {this.state.itemPic.length > 0 ? this.displayImg() : null}
                 </div>
               </div>
-            </div> 
+            </div>
 
             <div className="row">
-              <div className="col-sm-6">
+              <div className="col-md-4 col-sm-12">
                 <div className="form-group my-condition-radio">
                   <label>Select One:</label>
                   <br />
@@ -333,7 +377,7 @@ class DonationForm extends Component {
                   </label>
                 </div>
               </div>
-              <div className="col-sm-6">
+              <div className="col-md-4 col-sm-12">
                 <div className="form-group">
                   <label style={{ marginBottom: "0px" }}>
                     Please rate condition of item
@@ -359,6 +403,21 @@ class DonationForm extends Component {
                   />
                 </div>
               </div>
+              {requireExpirationDate.includes(this.state.category) &&
+                <div className="col-md-4 col-sm-12">
+                  <div className="form-group">
+                    <label>Expiration Date:</label>
+                    <br />
+                    <DatePicker
+                selected={this.state.expirationDate}
+                onChange={(date) => {
+                  console.log("date", date);
+                  this.setState({ expirationDate: date });
+                }}
+              />
+                  </div>
+                </div>}
+              
             </div>
             {/* <GoogleMap/> */}
             <button style={{ outline: "none" }} className="my-btn donation-btn">

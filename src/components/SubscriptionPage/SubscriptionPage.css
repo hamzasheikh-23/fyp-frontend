@@ -1,0 +1,42 @@
+.subscription .card .card-body .card-title{
+    text-align: center;
+    color: #585858;
+}
+
+.subscription .card .card-body .card-text{
+    font-size: 10px;
+    color: #585858;
+}
+
+.subscription .card .card-body button{
+    display: block;
+    margin: 0 auto;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    background: rgb(48, 99, 167);
+    border: none;
+    /* padding: 3px 15px; */
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 0;
+}
+
+.subscription .card{
+    width: 100% !important;
+}
+
+.subscription .card .card-body .amount-container{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.subscription .card .card-body .amount{
+    font-size: x-large;
+    font-weight: bold;
+    color: rgb(38, 93, 165);
+}
+
+.subscription .card .card-body .amount-tag{
+    white-space: nowrap;
+    font-size: 10px;
+}

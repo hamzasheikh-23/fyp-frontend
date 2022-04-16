@@ -129,7 +129,7 @@ class Map extends Component{
 		this.setState({ [event.target.name]: event.target.value });
 	};
 	donate=()=>{
-		const {Rating,Category,Description,Condition,Images,DonorId,Title,Quantity,Weight}=this.props.donationDetails;
+		const {Rating,Category,Description,Condition,Images,DonorId,Title,Quantity,Weight, ExpirationDate}=this.props.donationDetails;
 		// const donationRequest={
 		// 	category: donation.category,
 		// 	description: donation.itemDescription,
@@ -148,11 +148,15 @@ class Map extends Component{
             formData.append('Description',Description);
             formData.append('Condition',Condition);
             formData.append('DonorId',DonorId);
+			formData.append('Title',Title);
+            formData.append('Quantity',Quantity);
+            formData.append('Weight',Weight);
+            formData.append('ExpirationDate',ExpirationDate);
             //formData.append('status',status);
             formData.append('Image1',Images[0]===undefined? null: Images[0]);
             formData.append('Image2',Images[1]===undefined? null: Images[1]);
             formData.append('Image3',Images[2]===undefined? null: Images[2]);
-            formData.append('donationAddress',this.state.address);
+            // formData.append('donationAddress',this.state.address);
 		axios.post(`https://localhost:44357/donation/post`,formData)
 		.then(res=>{
 			this.props.redirect.push('/profile');

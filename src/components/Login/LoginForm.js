@@ -29,9 +29,10 @@ class LoginForm extends Component {
     const validEmail =
       /^([a-zA-z0-9_\-.]+)@([a-zA-z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
 
-    // if(!this.state.loginEmail){
-    //     loginEmailError="you must enter an email";
-    // }else if(!validEmail.test(this.state.loginEmail)){
+    if(!this.state.loginEmail){
+        loginEmailError="you must enter an email";
+    }
+    //else if(!validEmail.test(this.state.loginEmail)){
     //     loginEmailError="invalid email";
     // }
 

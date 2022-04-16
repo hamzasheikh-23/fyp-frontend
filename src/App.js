@@ -26,6 +26,7 @@ import AdminPanelUserFeedback from "./components/AdminPanelUserFeedback/AdminPan
 import NGOStatusPending from "./components/NGOStatusPending/NGOStatusPending";
 import NGOStatusRejected from "./components/NGOStatusRejected/NGOStatusRejected";
 import AdminPanelStatistics from "./components/AdminPanelStatistics/AdminPanelStatistics";
+import SubscriptionPage from "./components/SubscriptionPage/SubscriptionPage";
 
 
 const App = () => {
@@ -47,6 +48,8 @@ const App = () => {
         <Route path="/ngoRequests" component={NGORequests} />
         <Route path="/googleMap" component={GoogleMap} />
         <Route path="/adminPanelMain" component={AdminPanel} />
+        <Route path="/subscription" component={SubscriptionPage} />
+
         <Route
           path="/adminPanelDonorRequests"
           component={AdminPanelDonorRequests}
