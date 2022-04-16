@@ -90,7 +90,7 @@ class DonationForm extends Component {
     this.getBase64(e.target.files[0], (result) => {
       // console.log('result', result, this.state.base64Images)
       // idCardBase64 = result;
-      this.setState({base64Images: [...this.state.base64Images, result]})
+      this.setState({base64Images: [...this.state.base64Images, {name: e.target.files[0].name ,base64:result}]})
     });
     this.setState(
       { itemPic: [...this.state.itemPic, ...e.target.files] },
@@ -114,6 +114,9 @@ class DonationForm extends Component {
 
     this.setState((prev) => ({
       itemPic: prev.itemPic.filter((el) => el.name !== img.name),
+    }));
+    this.setState((prev) => ({
+      base64Images: prev.base64Images.filter((el) => el.name !== img.name),
     }));
     // console.log(this.state.itemPic);
   };
