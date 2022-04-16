@@ -87,26 +87,13 @@ class DonationForm extends Component {
   ImagefileSelectedHandler = (e) => {
     // console.log("file", e.target.files);
     // let idCardBase64 = "";
-    this.getBase64(e.target.files[0], (result) => {
-      // console.log('result', result, this.state.base64Images)
-      // idCardBase64 = result;
-      this.setState({base64Images: [...this.state.base64Images, {name: e.target.files[0].name ,base64:result}]})
-    });
-    this.setState(
-      { itemPic: [...this.state.itemPic, ...e.target.files] },
-      function () {
-        // for (let index = 0; index < this.state.itemPic.length; index++) {
-        //    console.log(this.state.itemPic[index].name)
-        // }
-        //  this.state.itemPic.foreach(
-        //      (item)=>{
-        //          console.log(item.name)
-        //      }
-        //  );
-        // console.log(this.state.itemPic)
-        // console.log(this.state.itemPic[0].name)
-      }
-    );
+    var pattern = /[\/](jpg|png|jpeg)$/i;
+    if (e.target.files[0].type.match(pattern)) {
+      this.getBase64(e.target.files[0], (result) => {
+        this.setState({base64Images: [...this.state.base64Images, {name: e.target.files[0].name ,base64:result}]})
+      });
+      this.setState({ itemPic: [...this.state.itemPic, ...e.target.files] });
+    }
   };
 
   RemoveImg = (event, img) => {
@@ -368,6 +355,7 @@ class DonationForm extends Component {
                 {/* <FileBase64 disabled={this.state.itemPic.length > 2 ? true : false} multiple={true} onDone={this.getFiles.bind(this)} /> */}
                 <input
                   type="file"
+                  accept="image/*"
                   multiple
                   onChange={this.ImagefileSelectedHandler}
                   disabled={this.state.itemPic.length > 2 ? true : false}

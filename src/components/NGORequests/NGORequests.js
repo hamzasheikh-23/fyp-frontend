@@ -1,17 +1,17 @@
-import React from 'react';
-import Footer from '../Footer/Footer';
-import Toolbar from '../Toolbar/Toolbar';
+import React from "react";
+import Footer from "../Footer/Footer";
+import Toolbar from "../Toolbar/Toolbar";
 import SideDrawer from "../SideDrawer/SideDrawer";
 import BackDrop from "../BackDrop/BackDrop";
-import dummy from '../../images/grayscale-kid.jpg'
-import './NGORequests.css';
-import axios from 'axios';
+import dummy from "../../images/grayscale-kid.jpg";
+import "./NGORequests.css";
+import axios from "axios";
 // import ProceedOrderModal from '../Modal/ProceedOrderModal';
-import RequestCard from './RequestCard';
-import { filter } from 'lodash';
+import RequestCard from "./RequestCard";
+import { filter } from "lodash";
 
 class NGORequests extends React.Component {
-    componentDidMount(){
+  componentDidMount() {
     //     axios.get('/api/getRequestedItemsByStatus/approved')
     //     .then(res=>{
     //         axios.get('/api/getUsers/ngo')
@@ -21,117 +21,129 @@ class NGORequests extends React.Component {
     //             // console.log(this.state)
     //     })
     //         .catch(error=>console.log(error));
-     
+
     //             this.setState({requests:[...res.data]})
-          
-       
+
     //         // console.log(this.state)
     // })
     //     .catch(err=>console.log(err));
 
     //temporary work for hamza
-    axios.get('https://localhost:44357/case/get')
-    .then(res=>{
-        this.setState({tempReq:res.data.map(req=>({
+    axios
+      .get("https://localhost:44357/case/get")
+      .then((res) => {
+        this.setState({
+          tempReq: res.data.map((req) => ({
             caseId: req.CaseId,
             ngoId: req.NGOId,
             caseTitle: req.CaseTitle,
             postedDate: req.PostedDate,
             description: req.Description,
-            picture: req.Picture
-        }))})
-    })
-    .catch(console.log)
- 
-      
-    }
-    state = {
-        siderDrawerOpen: false,
-        donor: true,
-        selectedNgo: '',
-        selectedCategory:'',
-        requests:[],
-        ngoList:[],
-        tempReq:[]
-        //addModalShow: false,
-    };
-    filteredContent=()=>{
-        console.log('ngo: ', this.state.selectedNgo, 'category: ', this.state.selectedCategory)
-        if(this.state.selectedCategory && this.state.selectedNgo){
-
-            axios.get(`/api/getRequestedItemsByNgoId/${this.state.selectedNgo}`)
-            .then(res=>{
-                const newList= res.data.filter(item=>item.category===this.state.selectedCategory)
-                this.setState({requests:[...newList]})
-                // console.log('filtered req with ngo n category', newList)
-        })
-            .catch(error=>console.log(error));
-        }else if(this.state.selectedNgo && !(this.state.selectedCategory)){
-            axios.get(`/api/getRequestedItemsByNgoId/${this.state.selectedNgo}`)
-            .then(res=>{
-                // const newList= res.data.filter(item=>item.category===this.state.selectedCategory)
-                this.setState({requests:[...res.data]})
-                // console.log('filtered req with ngo', res.data)
-        })
-            .catch(error=>console.log(error));
-        }else if(!(this.state.selectedNgo) && this.state.selectedCategory){
-            axios.get('/api/getRequestedItemsByStatus/approved')
-            .then(res=>{
-                const newList= res.data.filter(item=>item.category===this.state.selectedCategory)
-                this.setState({requests:[...newList]})
-                // console.log('filtered req with category', newList)
-            })
-            .catch(err=>console.log(err))
-        }else{
-            axios.get('/api/getRequestedItemsByStatus/approved')
-            .then(res=>{
-                // const newList= res.data.filter(item=>item.category===this.state.selectedCategory)
-                this.setState({requests:[...res.data]})
-                // console.log('filtered req with nothing', res.data)
-            })
-            .catch(err=>console.log(err))
-        }
-    }
-    drawerToggleHandler = () => {
-        this.setState(prevState => {
-            return { siderDrawerOpen: !prevState.siderDrawerOpen };
+            picture: req.Picture,
+          })),
         });
-    };
+      })
+      .catch(console.log);
+  }
+  state = {
+    siderDrawerOpen: false,
+    donor: true,
+    selectedNgo: "",
+    selectedCategory: "",
+    requests: [],
+    ngoList: [],
+    tempReq: [],
+    //addModalShow: false,
+  };
+  filteredContent = () => {
+    console.log(
+      "ngo: ",
+      this.state.selectedNgo,
+      "category: ",
+      this.state.selectedCategory
+    );
+    if (this.state.selectedCategory && this.state.selectedNgo) {
+      axios
+        .get(`/api/getRequestedItemsByNgoId/${this.state.selectedNgo}`)
+        .then((res) => {
+          const newList = res.data.filter(
+            (item) => item.category === this.state.selectedCategory
+          );
+          this.setState({ requests: [...newList] });
+          // console.log('filtered req with ngo n category', newList)
+        })
+        .catch((error) => console.log(error));
+    } else if (this.state.selectedNgo && !this.state.selectedCategory) {
+      axios
+        .get(`/api/getRequestedItemsByNgoId/${this.state.selectedNgo}`)
+        .then((res) => {
+          // const newList= res.data.filter(item=>item.category===this.state.selectedCategory)
+          this.setState({ requests: [...res.data] });
+          // console.log('filtered req with ngo', res.data)
+        })
+        .catch((error) => console.log(error));
+    } else if (!this.state.selectedNgo && this.state.selectedCategory) {
+      axios
+        .get("/api/getRequestedItemsByStatus/approved")
+        .then((res) => {
+          const newList = res.data.filter(
+            (item) => item.category === this.state.selectedCategory
+          );
+          this.setState({ requests: [...newList] });
+          // console.log('filtered req with category', newList)
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axios
+        .get("/api/getRequestedItemsByStatus/approved")
+        .then((res) => {
+          // const newList= res.data.filter(item=>item.category===this.state.selectedCategory)
+          this.setState({ requests: [...res.data] });
+          // console.log('filtered req with nothing', res.data)
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+  drawerToggleHandler = () => {
+    this.setState((prevState) => {
+      return { siderDrawerOpen: !prevState.siderDrawerOpen };
+    });
+  };
 
-    backdropClickHandler = () => {
-        this.setState({ siderDrawerOpen: false });
-    };
-    // filterByName=()=>{
-    //     axios.get(/api/getRequestedItemsByNgoId/${this.state.selectedNgo})
-    //         .then(res=>{
-    //             const newList= res.data.filter(item=>item.category===this.state.selectedCategory)
-    //             // this.setState({requests:[...res.data]})
-    //             console.log('filtered req', newList)
-    //     })
-    //         .catch(error=>console.log(error));
-    // }
-    // filterByAll=()=>{
-    //     axios.get('/api/getRequestedItemsByStatus/approved')
-    //     .then(res=>{ this.setState({requests:[...res.data]}) })
-    //     .catch(err=>console.log(err))
-    // }
-    // filterCategory=(category)=>{
-    //     const newList= this.state.requests.filter((item)=>item.category === category)
-    //   this.setState({requests:[...newList]})
-    // }
-    render() {
-        let backdrop;
-        if (this.state.siderDrawerOpen) {
-            backdrop = <BackDrop click={this.backdropClickHandler} />;
-        }
-        // let addModalClose=()=> this.setState({addModalShow:false});
-        return (
-            <div>
-                <Toolbar drawerClickHandler={this.drawerToggleHandler} about={true} />
-                <SideDrawer about={true} show={this.state.siderDrawerOpen} />
-                {backdrop}
-                <div className="ngo-main-div">
-                     <div className="filter-area">
+  backdropClickHandler = () => {
+    this.setState({ siderDrawerOpen: false });
+  };
+  // filterByName=()=>{
+  //     axios.get(/api/getRequestedItemsByNgoId/${this.state.selectedNgo})
+  //         .then(res=>{
+  //             const newList= res.data.filter(item=>item.category===this.state.selectedCategory)
+  //             // this.setState({requests:[...res.data]})
+  //             console.log('filtered req', newList)
+  //     })
+  //         .catch(error=>console.log(error));
+  // }
+  // filterByAll=()=>{
+  //     axios.get('/api/getRequestedItemsByStatus/approved')
+  //     .then(res=>{ this.setState({requests:[...res.data]}) })
+  //     .catch(err=>console.log(err))
+  // }
+  // filterCategory=(category)=>{
+  //     const newList= this.state.requests.filter((item)=>item.category === category)
+  //   this.setState({requests:[...newList]})
+  // }
+  render() {
+    let backdrop;
+    if (this.state.siderDrawerOpen) {
+      backdrop = <BackDrop click={this.backdropClickHandler} />;
+    }
+    // let addModalClose=()=> this.setState({addModalShow:false});
+    return (
+      <div>
+        <Toolbar drawerClickHandler={this.drawerToggleHandler} about={true} />
+        <SideDrawer about={true} show={this.state.siderDrawerOpen} />
+        {backdrop}
+        <div className="ngo-main-div">
+          {/* <div className="filter-area">
                         <h2 className="filter-heading">Filter By NGO:</h2>
                         <ul className="filter-options">
                         
@@ -185,23 +197,39 @@ class NGORequests extends React.Component {
                          
                             
                         </ul>
-                    </div> 
-                    <div class="request-area">
-                        <h3 className="request-area-heading">NGO'S REQUESTS</h3>
-                        <div style={{width:'100%', display:'flex', flexWrap:'wrap', justifyContent:'space-evenly'}}>
-                        {this.state.tempReq.map(request=>{
-                            return(
-                                <RequestCard
-                                caseId={request.caseId}
-                                ngoId={request.ngoId}
-                                caseTitle={request.caseTitle}
-                                postedDate={request.postedDate}
-                                description={request.description}
-                                picture={null}
-                                />
-                            );
-                        })}
-                        {/* <RequestCard
+                    </div>  */}
+          <div class="request-area">
+            <h3 className="request-area-heading">NGO'S REQUESTS</h3>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-evenly",
+              }}
+            >
+              {this.state.tempReq.map((request) => {
+                return (
+                  <RequestCard
+                    caseId={request.caseId}
+                    ngoId={request.ngoId}
+                    caseTitle={request.caseTitle}
+                    postedDate={request.postedDate}
+                    description={request.description}
+                    picture={null}
+                  />
+                );
+              })}
+             
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "space-evenly",
+                }}
+              >
+                <RequestCard
                                 caseId={1}
                                 ngoId={1}
                                 caseTitle={"100 Ration Bags for Ramadan"}
@@ -224,50 +252,31 @@ class NGORequests extends React.Component {
                                postedDate={"2022-04-03T00:00:00"}
                                description={"We have numerous needy families donate to bring food on table of needy people"}
                                picture={null}
-                                /> */}
-                        {/* <div style={{display:'flex',  flexWrap:'wrap'}}>
-
-                         <RequestCard
-                                image={dummy}
-                                title={'Title'}
-                                reqId={1}
-                                ngoname={'NGO Name'}
-                                des={'Descrption here...'}
-                                date={'12 March 2021'}
                                 />
                                  <RequestCard
-                                image={dummy}
-                                title={'Title'}
-                                reqId={1}
-                                ngoname={'NGO Name'}
-                                des={'Descrption here...'}
-                                date={'12 March 2021'}
+                                caseId={1}
+                                ngoId={1}
+                                caseTitle={"100 Ration Bags for Ramadan"}
+                                postedDate={"2022-04-03T00:00:00"}
+                                description={"We have numerous needy families donate to bring food on table of needy people"}
+                                picture={null}
                                 />
-                                 <RequestCard
-                                image={dummy}
-                                title={'Title'}
-                                reqId={1}
-                                ngoname={'NGO Name'}
-                                des={'Descrption here...'}
-                                date={'12 March 2021'}
+                                   
+                                  <RequestCard
+                               caseId={1}
+                               ngoId={1}
+                               caseTitle={"100 Ration Bags for Ramadan"}
+                               postedDate={"2022-04-03T00:00:00"}
+                               description={"We have numerous needy families donate to bring food on table of needy people"}
+                               picture={null}
                                 />
-                                 <RequestCard
-                                image={dummy}
-                                title={'Title'}
-                                reqId={1}
-                                ngoname={'NGO Name'}
-                                des={'Descrption here...'}
-                                date={'12 March 2021'}
-                                />
-                        </div> */}
-
-                        </div>
-                       
-                    </div>
-                </div>
-                <Footer/>
+              </div>
             </div>
-        );
-        }
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 }
 export default NGORequests;

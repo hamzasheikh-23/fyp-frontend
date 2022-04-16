@@ -40,6 +40,7 @@ class Card extends React.Component{
                 </div>
                 <DonationDetailsModal
                 itemImages={images}
+                data={this.props}
                 item={this.props.itemId}
                 show={this.state.addDetailModalShow}
                 onHide={addDetailModalClose}
