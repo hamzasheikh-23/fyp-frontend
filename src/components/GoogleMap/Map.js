@@ -161,7 +161,7 @@ class Map extends Component{
         //     // formData.append('donationAddress',this.state.address);
 
 		
-
+		console.log('dataaaaa=>', this.props.donationDetails)
 
 		axios.post(`https://localhost:44357/donation/post`,this.props.donationDetails)
 		.then(res=>{
