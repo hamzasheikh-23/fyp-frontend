@@ -10,6 +10,7 @@ import history from "../../assets/history";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { ItemDonation } from "../../actions";
+// import FileBase64 from "react-file-base64";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -29,6 +30,7 @@ const initialDonationState = {
   itemPic: [],
   categoriesArr: [],
   expirationDate: new Date(),
+  base64Images:[]
 };
 
 const requireExpirationDate = ["Food", "Medicine"];
@@ -71,31 +73,39 @@ class DonationForm extends Component {
     console.log(event.target.value);
   };
 
+  getBase64(file, cb) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        cb(reader.result)
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+}
+
   ImagefileSelectedHandler = (e) => {
-    this.setState(
-      { itemPic: [...this.state.itemPic, ...e.target.files] },
-      function () {
-        // for (let index = 0; index < this.state.itemPic.length; index++) {
-        //    console.log(this.state.itemPic[index].name)
-        // }
-        //  this.state.itemPic.foreach(
-        //      (item)=>{
-        //          console.log(item.name)
-        //      }
-        //  );
-        // console.log(this.state.itemPic)
-        // console.log(this.state.itemPic[0].name)
-      }
-    );
+    // console.log("file", e.target.files);
+    // let idCardBase64 = "";
+    var pattern = /[\/](jpg|png|jpeg)$/i;
+    if (e.target.files[0].type.match(pattern)) {
+      this.getBase64(e.target.files[0], (result) => {
+        this.setState({base64Images: [...this.state.base64Images, {name: e.target.files[0].name ,base64:result}]})
+      });
+      this.setState({ itemPic: [...this.state.itemPic, ...e.target.files] });
+    }
   };
 
   RemoveImg = (event, img) => {
-    console.log(img.name);
+    // console.log(img.name);
 
     this.setState((prev) => ({
       itemPic: prev.itemPic.filter((el) => el.name !== img.name),
     }));
-    console.log(this.state.itemPic);
+    this.setState((prev) => ({
+      base64Images: prev.base64Images.filter((el) => el.name !== img.name),
+    }));
+    // console.log(this.state.itemPic);
   };
 
   displayImg = () => {
@@ -164,7 +174,7 @@ class DonationForm extends Component {
   DonationFormSubmitHandler = (e) => {
     e.preventDefault();
     const isValid = this.Donationvalidation();
-    console.log("isValid: ", isValid);
+    console.log("isValid: ", isValid, this.state.base64Images);
     if (isValid) {
       // let picnames= this.state.itemPic.map((pic)=>{
       //     return pic.name;
@@ -179,9 +189,17 @@ class DonationForm extends Component {
         Condition: this.state.condition,
         DonorId: localStorage.getItem("donorId"),
         // status: "Pending",
-        Images: this.state.itemPic,
-        ExpirationDate: requireExpirationDate.includes(this.state.category) ? this.state.expirationDate : null
+        // Images: this.state.base64Images,
+        Image1: this.state.base64Images[0]===undefined? null: this.state.base64Images[0],
+        Image2: this.state.base64Images[1]===undefined? null: this.state.base64Images[1],
+        Image3: this.state.base64Images[2]===undefined? null: this.state.base64Images[2],
+
+        ExpirationDate: requireExpirationDate.includes(this.state.category)
+          ? this.state.expirationDate
+          : null,
+
       };
+      console.log('data', DonationData)
       // axios
       // .post("https://localhost:44357/donation/post", DonationData)
       // .then((res) => {
@@ -203,7 +221,10 @@ class DonationForm extends Component {
       });
     }
   };
-
+  // getFiles(files){
+  //   console.log('files', files)
+  //   this.setState({ itemPic: [...this.state.itemPic, files[0]] },()=>console.log('files', this.state.itemPic))
+  // }
   render() {
     const { rating } = this.state;
     return (
@@ -331,8 +352,10 @@ class DonationForm extends Component {
             <div className="form-group">
               <label>Upload Item Image(s)</label>
               <div className="item-pic-container ">
+                {/* <FileBase64 disabled={this.state.itemPic.length > 2 ? true : false} multiple={true} onDone={this.getFiles.bind(this)} /> */}
                 <input
                   type="file"
+                  accept="image/*"
                   multiple
                   onChange={this.ImagefileSelectedHandler}
                   disabled={this.state.itemPic.length > 2 ? true : false}
@@ -403,21 +426,21 @@ class DonationForm extends Component {
                   />
                 </div>
               </div>
-              {requireExpirationDate.includes(this.state.category) &&
+              {requireExpirationDate.includes(this.state.category) && (
                 <div className="col-md-4 col-sm-12">
                   <div className="form-group">
                     <label>Expiration Date:</label>
                     <br />
                     <DatePicker
-                selected={this.state.expirationDate}
-                onChange={(date) => {
-                  console.log("date", date);
-                  this.setState({ expirationDate: date });
-                }}
-              />
+                      selected={this.state.expirationDate}
+                      onChange={(date) => {
+                        console.log("date", date);
+                        this.setState({ expirationDate: date });
+                      }}
+                    />
                   </div>
-                </div>}
-              
+                </div>
+              )}
             </div>
             {/* <GoogleMap/> */}
             <button style={{ outline: "none" }} className="my-btn donation-btn">

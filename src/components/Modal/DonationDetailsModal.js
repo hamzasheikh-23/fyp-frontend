@@ -19,7 +19,8 @@ class DonationDetailsModal extends Component{
     }
 
     render(){
-      console.log('images',this.props.itemImages)
+      console.log('detail',this.props)
+      const {data}=this.props
         return(
             <Modal
       {...this.props}
@@ -29,7 +30,7 @@ class DonationDetailsModal extends Component{
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-         Category : {this.state.selectedItem.category}
+         Title : {data.title}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -38,32 +39,44 @@ class DonationDetailsModal extends Component{
               <tbody>
               <tr>
                 <td>Date & Time of Donation:</td>
-                <td>{this.state.selectedItem.created_at}</td>
+                <td>{data.date}</td>
               </tr>
-              <tr>
+              {/* <tr>
                 <td>Condition:</td>
                 <td>{this.state.selectedItem.condition}</td>
-              </tr>
-              <tr>
+              </tr> */}
+              {/* <tr>
                 <td>Address:</td>
                 <td>{this.state.selectedItem.donationAddress}</td>
+              </tr> */}
+              <tr>
+                <td>Quantity:</td>
+                <td>{data.quantity}</td>
+              </tr>
+              <tr>
+                <td>Quantity Per Unit:</td>
+                <td>{data.quantityPerUnit}</td>
+              </tr>
+              <tr>
+                <td>Weight:</td>
+                <td>{data.weight}</td>
               </tr>
               <tr>
                 <td>Description:</td>
-                <td>{this.state.selectedItem.description}</td>
+                <td>{data.description}</td>
               </tr>
-              <tr>
+              {/* <tr>
                 <td>Rating:</td>
                 <td>{this.state.selectedItem.rating}</td>
-              </tr>
-              <tr>
+              </tr> */}
+              {/* <tr>
                 <td>Status:</td>
                 <td>{this.state.selectedItem.status}</td>
-              </tr>
+              </tr> */}
               </tbody>
          
             </table>
-            <div  className="container"> 
+            {/* <div  className="container"> 
             <div className="row">
               <div className="col-lg-4 col-md-6 col-sm-12">
                 {this.props.itemImages[0]===null? null : <img src={this.props.itemImages[0]} height="200px" width="100%" style={{objectFit:'cover', marginBottom:'5px'}} />}
@@ -79,7 +92,7 @@ class DonationDetailsModal extends Component{
                 </div>}
             
             </div>
-            </div>
+            </div> */}
         </div>
       </Modal.Body>
       <Modal.Footer>
