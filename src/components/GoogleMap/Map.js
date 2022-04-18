@@ -129,7 +129,7 @@ class Map extends Component{
 		this.setState({ [event.target.name]: event.target.value });
 	};
 	donate=()=>{
-		const {Rating,Category,Description,Condition,Images,DonorId,Title,Quantity,Weight, ExpirationDate}=this.props.donationDetails;
+		const {Rating,Category,Description,Condition,Images,DonorId,Title,Quantity,Weight}=this.props.donationDetails;
 		// const donationRequest={
 		// 	category: donation.category,
 		// 	description: donation.itemDescription,
