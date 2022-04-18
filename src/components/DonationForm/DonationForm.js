@@ -192,9 +192,12 @@ class DonationForm extends Component {
         DonorId: localStorage.getItem("donorId"),
         // status: "Pending",
         // Images: this.state.base64Images,
-        Image1: this.state.base64Images[0]===undefined? null: this.state.base64Images[0],
-        Image2: this.state.base64Images[1]===undefined? null: this.state.base64Images[1],
-        Image3: this.state.base64Images[2]===undefined? null: this.state.base64Images[2],
+        Image1base64: this.state.base64Images[0]===undefined? null: this.state.base64Images[0].base64,
+        Image2base64: this.state.base64Images[1]===undefined? null: this.state.base64Images[1].base64,
+        Image3base64: this.state.base64Images[2]===undefined? null: this.state.base64Images[2].base64,
+        Image1Name: this.state.base64Images[0]===undefined? null: this.state.base64Images[0].name,
+        Image2Name: this.state.base64Images[1]===undefined? null: this.state.base64Images[1].name,
+        Image3Name: this.state.base64Images[2]===undefined? null: this.state.base64Images[2].name,
 
         ExpirationDate: requireExpirationDate.includes(this.state.category)
           ? this.state.expirationDate
