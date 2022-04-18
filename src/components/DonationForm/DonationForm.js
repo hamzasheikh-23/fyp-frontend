@@ -85,11 +85,13 @@ class DonationForm extends Component {
 }
 
   ImagefileSelectedHandler = (e) => {
-    // console.log("file", e.target.files);
+    console.log("file", e.target.files);
     // let idCardBase64 = "";
     var pattern = /[\/](jpg|png|jpeg)$/i;
+    e.persist()
     if (e.target.files[0].type.match(pattern)) {
       this.getBase64(e.target.files[0], (result) => {
+        console.log('file uploader', {name: e.target.files[0].name ,base64:result}, [...this.state.base64Images, {name: e.target.files[0].name ,base64:result}])
         this.setState({base64Images: [...this.state.base64Images, {name: e.target.files[0].name ,base64:result}]})
       });
       this.setState({ itemPic: [...this.state.itemPic, ...e.target.files] });
