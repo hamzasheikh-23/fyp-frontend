@@ -14,7 +14,7 @@ import axios from "axios";
 class SubscriptionPage extends React.Component {
   // componentDidMount() {
   //   axios
-  //     .get(`https://localhost:44357/donation/get/${localStorage.getItem("donorId")}`)
+  //     .get(`https://localhost:44357/donation/get/${localStorage.getItem("donorID")}`)
   //     .then((res) => {
   //       console.log(res)
   //       this.setState({ data: res.data.map(item=>({

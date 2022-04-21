@@ -1,22 +1,23 @@
 import React, {Component} from 'react';
 import {Modal, Button, Row, Col, Form} from 'react-bootstrap';
 import axios from 'axios';
+import moment from 'moment';
 
 class DonationDetailsModal extends Component{
-    componentDidMount(){
-        axios.get(`/api/getDonatedItem/${this.props.item}`)
-        .then(res=>{
-        this.setState({selectedItem:{...res.data}})
-        console.log('chal gaya', this.state)
-        }).catch(err=>console.log(err)); 
+    // componentDidMount(){
+    //     axios.get(`/api/getDonatedItem/${this.props.item}`)
+    //     .then(res=>{
+    //     this.setState({selectedItem:{...res.data}})
+    //     console.log('chal gaya', this.state)
+    //     }).catch(err=>console.log(err)); 
         
-    }
-    constructor(props){
-        super(props);
-        this.state={
-          selectedItem: {}
-        }
-    }
+    // }
+    // constructor(props){
+    //     super(props);
+    //     this.state={
+    //       selectedItem: {}
+    //     }
+    // }
 
     render(){
       console.log('detail',this.props)
@@ -29,8 +30,8 @@ class DonationDetailsModal extends Component{
      
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-         Title : {data.title}
+        <Modal.Title id="contained-modal-title-vcenter" style={{color:'rgb(74, 137, 220)'}}>
+         Title: {data.title}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -39,12 +40,12 @@ class DonationDetailsModal extends Component{
               <tbody>
               <tr>
                 <td>Date & Time of Donation:</td>
-                <td>{data.date}</td>
+                <td>{moment(data.posted).format('LL hh:mm:ss')}</td>
               </tr>
-              {/* <tr>
+              <tr>
                 <td>Condition:</td>
-                <td>{this.state.selectedItem.condition}</td>
-              </tr> */}
+                <td>{data.condition}</td>
+              </tr>
               {/* <tr>
                 <td>Address:</td>
                 <td>{this.state.selectedItem.donationAddress}</td>
@@ -65,38 +66,43 @@ class DonationDetailsModal extends Component{
                 <td>Description:</td>
                 <td>{data.description}</td>
               </tr>
-              {/* <tr>
+              <tr>
                 <td>Rating:</td>
-                <td>{this.state.selectedItem.rating}</td>
-              </tr> */}
-              {/* <tr>
+                <td>{data.rating}</td>
+              </tr>
+              {data.date &&
+              <tr>
+                <td>Expiration Date:</td>
+                <td>{moment(data.date).format('LL hh:mm:ss')}</td>
+              </tr>}
+              <tr>
                 <td>Status:</td>
-                <td>{this.state.selectedItem.status}</td>
-              </tr> */}
+                <td>{data.status}</td>
+              </tr>
               </tbody>
          
             </table>
-            {/* <div  className="container"> 
+            <div  className="container"> 
             <div className="row">
               <div className="col-lg-4 col-md-6 col-sm-12">
-                {this.props.itemImages[0]===null? null : <img src={this.props.itemImages[0]} height="200px" width="100%" style={{objectFit:'cover', marginBottom:'5px'}} />}
+                {this.props.itemImages[0]===null? null : <img src={this.props.itemImages[0]} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />}
               </div>
               
               {this.props.itemImages[1]===null? null : <div className="col-lg-4 col-md-6 col-sm-12">
-                <img src={this.props.itemImages[1]} height="200px" width="100%" style={{objectFit:'cover', marginBottom:'5px'}} />
+                <img src={this.props.itemImages[1]} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />
                 </div>}
             
               
               {this.props.itemImages[2]===null? null : <div className="col-lg-4 col-md-6 col-sm-12">
-                <img src={this.props.itemImages[2]} height="200px" width="100%" style={{objectFit:'cover', marginBottom:'5px'}} />
+                <img src={this.props.itemImages[2]} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />
                 </div>}
             
             </div>
-            </div> */}
+            </div>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={this.props.onHide}>Close</Button>
+        <Button style={{backgroundColor:'rgb(74, 137, 220)'}} onClick={this.props.onHide}>Close</Button>
         {/* <Button variant="primary">Submit</Button> */}
       </Modal.Footer>
     </Modal>

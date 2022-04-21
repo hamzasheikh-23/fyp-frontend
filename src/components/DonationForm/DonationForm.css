@@ -71,8 +71,8 @@
     cursor: pointer;
 }
 
-.my-condition-radio .radio + .radio{
-    margin-left: 30px;
+.my-condition-radio .radio {
+    margin-right: 30px;
 }
 
 .my-condition-radio input[type=radio]{

@@ -20,6 +20,7 @@ const initialDonationState = {
   category: "Clothes",
   itemDescription: "",
   itemQuantity: "",
+  itemQuantityPerUnit: "",
   itemTitle: "",
   itemWeight: "",
   condition: 1,
@@ -28,6 +29,7 @@ const initialDonationState = {
   itemQuantityError: "",
   itemTitleError: "",
   itemWeightError: "",
+  itemQuantityPerUnitError:"",
   itemPic: [],
   categoriesArr: [],
   expirationDate: new Date(),
@@ -65,13 +67,19 @@ class DonationForm extends Component {
     // ];
     // this.setState({ categoriesArr: temp });
 
-    axios.get('https://localhost:44357/donation/category/get')
-    .then(res=>{
-      // console.log(res)
-      this.setState({category:res.data.length>0 ? res.data[0].CategoryId : 0 , categoriesArr: res.data.map(item=>({id: item.CategoryId, name: item.DonationCategory})) });
-    })
-    .catch(err=>console.log('error in getting categories api', err))
-    
+    axios
+      .get("https://localhost:44357/donation/category/get")
+      .then((res) => {
+        // console.log(res)
+        this.setState({
+          category: res.data.length > 0 ? res.data[0].CategoryId : 0,
+          categoriesArr: res.data.map((item) => ({
+            id: item.CategoryId,
+            name: item.DonationCategory,
+          })),
+        });
+      })
+      .catch((err) => console.log("error in getting categories api", err));
   }
 
   onStarClick(nextValue, prevValue, name) {
@@ -116,10 +124,12 @@ class DonationForm extends Component {
           ],
         });
       });
-      this.setState({ itemPic: [...this.state.itemPic, ...e.target.files], imageErr: null });
-    }
-    else{
-      this.setState({imageErr: 'Invalid file format'})
+      this.setState({
+        itemPic: [...this.state.itemPic, ...e.target.files],
+        imageErr: null,
+      });
+    } else {
+      this.setState({ imageErr: "Invalid file format" });
     }
   };
 
@@ -156,49 +166,49 @@ class DonationForm extends Component {
     let ratingError = "";
     let itemTitleError = "";
     let itemQuantityError = "";
+    let itemQuantityPerUnitError = "";
     let itemWeightError = "";
     const validTitle = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
-    const validWeight =/^[0-9]*(\.[0-9]{0,2})?$/;
-    const validDesc= /^[^\s]+(?: [^\s]+)*$/; //no concurrent spaces and no boundary spaces
-
+    const validWeight = /^[0-9]*(\.[0-9]{0,2})?$/;
+    const validDesc = /^[^\s]+(?: [^\s]+)*$/; //no concurrent spaces and no boundary spaces
 
     if (!this.state.itemDescription) {
       itemDescriptionError = "required";
-    }
-    else if (!validDesc.test(this.state.itemDescription)) {
+    } else if (!validDesc.test(this.state.itemDescription)) {
       itemDescriptionError = "No boundary spaces allowed";
     }
 
     if (!this.state.itemTitle) {
       itemTitleError = "required";
-    }
-    else if(!validTitle.test(this.state.itemTitle)){
-      itemTitleError ='Only alphabets, No special characters and boundary spaces allowed'
-    }
-    else if (
+    } else if (!validTitle.test(this.state.itemTitle)) {
+      itemTitleError =
+        "Only alphabets, No special characters and boundary spaces allowed";
+    } else if (
       this.state.itemTitle.length < 5 ||
       this.state.itemTitle.length > 30
     ) {
       itemTitleError = "Title must be between 5 to 30 characters";
     }
 
+    if (!this.state.itemQuantityPerUnit) {
+      itemQuantityPerUnitError = "required";
+    } else if (this.state.itemQuantityPerUnit < 1 || this.state.itemQuantityPerUnit > 50) {
+      itemQuantityPerUnitError = "unit must be in range 1 to 50";
+    }
+
     if (!this.state.itemQuantity) {
       itemQuantityError = "required";
-    }
-    else if (this.state.itemQuantity < 1 || this.state.itemQuantity > 1000) {
+    } else if (this.state.itemQuantity < 1 || this.state.itemQuantity > 1000) {
       itemQuantityError = "Quantity must be in range 1 to 1000";
     }
 
     if (!this.state.itemWeight) {
       itemWeightError = "required";
-    }
-    else if (this.state.itemWeight < 0.1 || this.state.itemWeight > 80) {
+    } else if (this.state.itemWeight < 0.1 || this.state.itemWeight > 80) {
       itemWeightError = "Weight must be in range 0.1 to 80 kg ";
-    }
-    else if (!validWeight.test(this.state.itemWeight)) {
+    } else if (!validWeight.test(this.state.itemWeight)) {
       itemWeightError = "Only two decimal places allowed";
     }
-
 
     if (this.state.rating < 1) {
       ratingError = "please rate condition";
@@ -209,14 +219,17 @@ class DonationForm extends Component {
       itemDescriptionError ||
       itemWeightError ||
       itemQuantityError ||
+      itemQuantityPerUnitError ||
       itemTitleError ||
-      this.state.imageErr || this.state.expirationDateErr
+      this.state.imageErr ||
+      this.state.expirationDateErr
     ) {
       this.setState({
         ratingError,
         itemDescriptionError,
         itemWeightError,
         itemQuantityError,
+        itemQuantityPerUnitError,
         itemTitleError,
       });
       return false;
@@ -235,13 +248,14 @@ class DonationForm extends Component {
       //     });
       const DonationData = {
         Rating: this.state.rating,
-        Category: Number(this.state.category),
+        Category: parseFloat(this.state.category),
         Description: this.state.itemDescription,
         Title: this.state.itemTitle,
-        Quantity: this.state.itemQuantity,
-        Weight: this.state.itemWeight,
+        Quantity: parseFloat(this.state.itemQuantity),
+        Weight: parseFloat(this.state.itemWeight),
         Condition: this.state.condition,
-        DonorId: localStorage.getItem("donorId"),
+        DonorId: localStorage.getItem("donorID"),
+        QuantityPerUnit: parseFloat(this.state.itemQuantityPerUnit),
         // status: "Pending",
         // Images: this.state.base64Images,
         Image1base64:
@@ -352,27 +366,29 @@ class DonationForm extends Component {
                 {this.state.itemTitleError}
               </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="category" className="my-donation-label">
-                Category
-              </label>
-              <select
-                name="category"
-                value={this.state.category}
-                onChange={(event) =>
-                  this.DonationFormInputChange(event, "category")
-                }
-                id="category"
-                className="form-control"
-              >
-                {this.state.categoriesArr.map((option) => (
-                  <option value={option.id}>{option.name}</option>
-                ))}
-              </select>
-            </div>
             <div className="row">
               <div className="col-lg-6">
-                <label htmlFor="item-quantity" className="my-donation-label">
+                <div className="form-group">
+                  <label htmlFor="category" className="my-donation-label">
+                    Category
+                  </label>
+                  <select
+                    name="category"
+                    value={this.state.category}
+                    onChange={(event) =>
+                      this.DonationFormInputChange(event, "category")
+                    }
+                    id="category"
+                    className="form-control"
+                  >
+                    {this.state.categoriesArr.map((option) => (
+                      <option value={option.id}>{option.name}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="col-lg-6">
+              <label htmlFor="item-quantity" className="my-donation-label">
                   Quantity
                 </label>
                 <input
@@ -387,14 +403,41 @@ class DonationForm extends Component {
                   className="form-control"
                 />
                 <div
-                style={{
-                  fontSize: "12.8px",
-                  color: "#DC3545",
-                  marginLeft: "10px",
-                }}
-              >
-                {this.state.itemQuantityError}
+                  style={{
+                    fontSize: "12.8px",
+                    color: "#DC3545",
+                    marginLeft: "10px",
+                  }}
+                >
+                  {this.state.itemQuantityError}
+                </div>
               </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-6">
+                <label htmlFor="item-quantity-per-unit" className="my-donation-label">
+                  Quantity Per Unit
+                </label>
+                <input
+                  name="item-quantity-per-unit"
+                  value={this.state.itemQuantityPerUnit}
+                  onChange={(event) =>
+                    this.DonationFormInputChange(event, "itemQuantityPerUnit")
+                  }
+                  type="number"
+                  id="item-quantity-per-unit"
+                  placeholder="Quantity Per Unit"
+                  className="form-control"
+                />
+                <div
+                  style={{
+                    fontSize: "12.8px",
+                    color: "#DC3545",
+                    marginLeft: "10px",
+                  }}
+                >
+                  {this.state.itemQuantityPerUnitError}
+                </div>
               </div>
               <div className="col-lg-6">
                 <label htmlFor="item-weight" className="my-donation-label">
@@ -412,14 +455,14 @@ class DonationForm extends Component {
                   className="form-control"
                 />
                 <div
-                style={{
-                  fontSize: "12.8px",
-                  color: "#DC3545",
-                  marginLeft: "10px",
-                }}
-              >
-                {this.state.itemWeightError}
-              </div>
+                  style={{
+                    fontSize: "12.8px",
+                    color: "#DC3545",
+                    marginLeft: "10px",
+                  }}
+                >
+                  {this.state.itemWeightError}
+                </div>
               </div>
             </div>
             <div className="form-group">
@@ -482,32 +525,34 @@ class DonationForm extends Component {
                 <div className="form-group my-condition-radio">
                   <label>Select One:</label>
                   <br />
-                  <label className="radio">
-                    <input
-                      type="radio"
-                      name="condition"
-                      value={2}
-                      checked={this.state.condition === 2}
-                      onChange={(event) =>
-                        this.DonationFormInputChange(event, "condition")
-                      }
-                    />{" "}
-                    Used
-                    <span></span>
-                  </label>
-                  <label className="radio">
-                    <input
-                      type="radio"
-                      name="condition"
-                      value={1}
-                      checked={this.state.condition === 1}
-                      onChange={(event) =>
-                        this.DonationFormInputChange(event, "condition")
-                      }
-                    />{" "}
-                    Unused
-                    <span></span>
-                  </label>
+                  <div>
+                    <label className="radio">
+                      <input
+                        type="radio"
+                        name="condition"
+                        value={2}
+                        checked={this.state.condition === 2}
+                        onChange={(event) =>
+                          this.DonationFormInputChange(event, "condition")
+                        }
+                      />{" "}
+                      Used
+                      <span></span>
+                    </label>
+                    <label className="radio">
+                      <input
+                        type="radio"
+                        name="condition"
+                        value={1}
+                        checked={this.state.condition === 1}
+                        onChange={(event) =>
+                          this.DonationFormInputChange(event, "condition")
+                        }
+                      />{" "}
+                      Unused
+                      <span></span>
+                    </label>
+                  </div>
                 </div>
               </div>
               <div className="col-md-4 col-sm-12">
@@ -545,11 +590,15 @@ class DonationForm extends Component {
                       selected={this.state.expirationDate}
                       onChange={(date) => {
                         console.log("date", date, moment().isAfter(date));
-                        if(moment(date).isAfter()){
-                          this.setState({ expirationDate: date, expirationDateErr: null });
-                        }else{
-                          this.setState({ expirationDateErr: 'Please select a future date' });
-
+                        if (moment(date).isAfter()) {
+                          this.setState({
+                            expirationDate: date,
+                            expirationDateErr: null,
+                          });
+                        } else {
+                          this.setState({
+                            expirationDateErr: "Please select a future date",
+                          });
                         }
                       }}
                     />
