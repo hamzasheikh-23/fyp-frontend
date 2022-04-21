@@ -29,6 +29,8 @@ import AdminPanelStatistics from "./components/AdminPanelStatistics/AdminPanelSt
 import SubscriptionPage from "./components/SubscriptionPage/SubscriptionPage";
 import DoubleLoginProtection from "./components/RouteProtection/DoubleLoginProtection";
 import AlreadyLoggedIn from "./components/AlreadyLoggedIn/AlreadyLoggedIn";
+import RoleRouteProtection from "./components/RouteProtection/RoleRouteProtection";
+import UnauthorizePage from "./components/UnauthorizePage/UnauthorizePage";
 
 const App = () => {
   useEffect(() => {
@@ -39,8 +41,16 @@ const App = () => {
     <Router>
       <Switch>
         <Route path="/" exact component={MainPage} />
-        <Route path="/viewStory" exact component={ViewStory} />
+        <RoleRouteProtection
+          exact
+          path="/viewStory"
+          component={ViewStory}
+          validUser="donor"
+          // redirectTo="/"
+        />
+        {/* <Route path="/viewStory" exact component={ViewStory} /> */}
         <DoubleLoginProtection
+          exact
           path="/signup"
           component={Signup}
           redirectTo="/alreadyLoggedin"
@@ -54,44 +64,146 @@ const App = () => {
         />
         {/* <Route path="/login" component={LoginForm} /> */}
         <Route path="/help" component={Help} />
-        <Route path="/donationForm" component={DonationForm} />
-        <Route path="/adminPanelStatistics" component={AdminPanelStatistics} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/ngoRequests" component={NGORequests} />
-        <Route path="/googleMap" component={GoogleMap} />
-        <Route path="/adminPanelMain" component={AdminPanel} />
-        <Route path="/subscription" component={SubscriptionPage} />
+        {/* <Route path="/donationForm" component={DonationForm} /> */}
+        <RoleRouteProtection
+          exact
+          path="/donationForm"
+          component={DonationForm}
+          validUser="donor"
+          // redirectTo="/"
+        />
+        {/* <Route path="/adminPanelStatistics" component={AdminPanelStatistics} /> */}
+        <RoleRouteProtection
+          exact
+          path="/adminPanelStatistics"
+          component={AdminPanelStatistics}
+          validUser="admin"
+          // redirectTo="/"
+        />
+        {/* <Route path="/profile" component={Profile} /> */}
+        <RoleRouteProtection
+          exact
+          path="/profile"
+          component={Profile}
+          validUser="donor"
+          // redirectTo="/"
+        />
+        {/* <Route path="/ngoRequests" component={NGORequests} /> */}
+        <RoleRouteProtection
+          exact
+          path="/ngoRequests"
+          component={NGORequests}
+          validUser="donor"
+          // redirectTo="/"
+        />
+        {/* <Route path="/googleMap" component={GoogleMap} /> */}
+        <RoleRouteProtection
+          exact
+          path="/googleMap"
+          component={GoogleMap}
+          validUser="donor"
+          // redirectTo="/"
+        />
+        {/* <Route path="/adminPanelMain" component={AdminPanel} /> */}
+        <RoleRouteProtection
+          exact
+          path="/adminPanelMain"
+          component={AdminPanel}
+          validUser="admin"
+          // redirectTo="/"
+        />
+        {/* <Route path="/subscription" component={SubscriptionPage} /> */}
+        <RoleRouteProtection
+          exact
+          path="/subscription"
+          component={SubscriptionPage}
+          validUser="ngo"
+        />
         <Route path="/alreadyLoggedin" component={AlreadyLoggedIn} />
+        <Route path="/unauthorized" component={UnauthorizePage} />
 
-        {/* <ProtectedRoute
-          path="/alreadyLoggedin"
-          component={AlreadyLoggedIn}
-          redirectTo="/login"
-          condition={isAuthenticated}
-        /> */}
-        <Route
+        
+
+       
+        {/* <Route
           path="/adminPanelDonorRequests"
           component={AdminPanelDonorRequests}
+        /> */}
+        <RoleRouteProtection
+          exact
+          path="/adminPanelDonorRequests"
+          component={AdminPanelDonorRequests}
+          validUser="admin"
+          // redirectTo="/"
         />
-        <Route
+        {/* <Route
           path="/adminPanelNGORequests"
           component={AdminPanelNGORequests}
+        /> */}
+         <RoleRouteProtection
+          exact
+          path="/adminPanelNGORequests"
+          component={AdminPanelNGORequests}
+          validUser="admin"
+          // redirectTo="/"
         />
-        <Route path="/adminPanelNGORecords" component={AdminPanelNGORecords} />
-        <Route path="/adminPanelNGOJoin" component={AdminPanelNGOJoin} />
-        <Route
+        {/* <Route path="/adminPanelNGORecords" component={AdminPanelNGORecords} /> */}
+        <RoleRouteProtection
+          exact
+          path="/adminPanelNGORecords"
+          component={AdminPanelNGORecords}
+          validUser="admin"
+          // redirectTo="/"
+        />
+        {/* <Route path="/adminPanelNGOJoin" component={AdminPanelNGOJoin} /> */}
+        <RoleRouteProtection
+          exact
+          path="/adminPanelNGOJoin"
+          component={AdminPanelNGOJoin}
+          validUser="admin"
+          // redirectTo="/"
+        />
+        {/* <Route
           path="/adminPanelUserFeedback"
           component={AdminPanelUserFeedback}
+        /> */}
+         <RoleRouteProtection
+          exact
+          path="/adminPanelUserFeedback"
+          component={AdminPanelUserFeedback}
+          validUser="admin"
+          // redirectTo="/"
         />
-        <Route path="/ngostatuspending" component={NGOStatusPending} />
-        <Route path="/ngostatusrejected" component={NGOStatusRejected} />
+        {/* <Route path="/ngostatuspending" component={NGOStatusPending} /> */}
+        <RoleRouteProtection
+          exact
+          path="/ngostatuspending"
+          component={NGOStatusPending}
+          validUser="admin"
+          // redirectTo="/"
+        />
+        {/* <Route path="/ngostatusrejected" component={NGOStatusRejected} /> */}
+        <RoleRouteProtection
+          exact
+          path="/ngostatusrejected"
+          component={NGOStatusRejected}
+          validUser="admin"
+          // redirectTo="/"
+        />
 
-        <Route
+        {/* <Route
           path="/manage-donations"
           component={() => <ManageDonations pageheading={"Manage Donations"} />}
+        /> */}
+         <RoleRouteProtection
+          exact
+          path="/manage-donations"
+          component={() => <ManageDonations pageheading={"Manage Donations"} />}
+          validUser="ngo"
+          // redirectTo="/"
         />
 
-        <Route
+        {/* <Route
           path="/askdonation"
           component={() => (
             <AskDonationForm
@@ -102,16 +214,45 @@ const App = () => {
               bgclass={"my-background-4"}
             />
           )}
+        /> */}
+         <RoleRouteProtection
+          exact
+          path="/askdonation"
+          component={() => (
+            <AskDonationForm
+              formheading={"Ask for a Donation!"}
+              descplaceholder={"Describe the need in detail"}
+              buttontext={"Submit Request"}
+              iconimageurl={"../../images/pngdonat.png"}
+              bgclass={"my-background-4"}
+            />
+          )}
+          validUser="ngo"
+          // redirectTo="/"
         />
 
-        <Route path="/donor-replies" component={DonorReplies} />
+        {/* <Route path="/donor-replies" component={DonorReplies} /> */}
+        <RoleRouteProtection
+          exact
+          path="/donor-replies"
+          component={DonorReplies}
+          validUser="ngo"
+          // redirectTo="/"
+        />
 
-        <Route
+        {/* <Route
           path="/manage-stories"
           component={() => <ManageStories pageheading={"Manage Stories"} />}
+        /> */}
+         <RoleRouteProtection
+          exact
+          path="/manage-stories"
+          component={() => <ManageStories pageheading={"Manage Stories"} />}
+          validUser="ngo"
+          // redirectTo="/"
         />
 
-        <Route
+        {/* <Route
           path="/addstory"
           component={() => (
             <SuccessStoryForm
@@ -122,6 +263,21 @@ const App = () => {
               bgclass={"my-background-3"}
             />
           )}
+        /> */}
+         <RoleRouteProtection
+          exact
+          path="/addstory"
+          component={() => (
+            <SuccessStoryForm
+              formheading={"Publish a life-changing Story!"}
+              descplaceholder={"Add Story Description"}
+              buttontext={"Upload Story"}
+              iconimageurl={"../../images/icondiam.png"}
+              bgclass={"my-background-3"}
+            />
+          )}
+          validUser="ngo"
+          // redirectTo="/"
         />
       </Switch>
     </Router>
