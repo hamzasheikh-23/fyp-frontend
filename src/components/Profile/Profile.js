@@ -14,18 +14,24 @@ import axios from "axios";
 class Profile extends React.Component {
   componentDidMount() {
     axios
-      .get(`https://localhost:44357/donation/get/${localStorage.getItem("donorId")}`)
+      .get(
+        `https://localhost:44357/donation/get/${localStorage.getItem(
+          "donorId"
+        )}`
+      )
       .then((res) => {
-        console.log(res)
-        this.setState({ items: res.data.map(item=>({
-          title:item.Title,
-                quantity:item.Quantity,
-                date:item.ExpiryDate,
-                weight:item.Weight,
-                quantityPerUnit:item.QuantityPerUnit,
-                description:item.Description,
-               // status:item,
-        })) });
+        console.log(res);
+        this.setState({
+          items: res.data.map((item) => ({
+            title: item.Title,
+            quantity: item.Quantity,
+            date: item.ExpiryDate,
+            weight: item.Weight,
+            quantityPerUnit: item.QuantityPerUnit,
+            description: item.Description,
+            // status:item,
+          })),
+        });
       })
       .catch((err) => console.log(err));
   }
@@ -50,7 +56,7 @@ class Profile extends React.Component {
       .delete(`/api/deleteDonatedItem/${item}`)
       .then((res) => {
         axios
-          .get(`/api/getDonatedItems/${localStorage.getItem("loginId")}`)
+          .get(`/api/getDonatedItems/${localStorage.getItem("userID")}`)
           .then((res) => {
             this.setState({ items: [...res.data] });
           })

@@ -49,6 +49,7 @@ class Signup extends Component {
             color: "#DC3545",
             marginLeft: "20px",
             marginTop: "5px",
+            lineHeight: '13px',
           }}
         >
           {meta.error}
@@ -61,6 +62,7 @@ class Signup extends Component {
     const className = `form-group ${
       formProps.meta.error && formProps.meta.touched ? "error" : ""
     } `;
+    // console.log('onchange', formProps)
     return (
       <div className={className}>
         {formProps.input.name === "password" ? (
@@ -149,6 +151,8 @@ class Signup extends Component {
     const className = `form-group ${
       formProps.meta.error && formProps.meta.touched ? "error" : ""
     } `;
+   
+
     return (
       <div className={className}>
         {formProps.input.name === "description" ? (
@@ -226,10 +230,10 @@ class Signup extends Component {
     //     CNIC_Number: 0,
         
     //   };
-
+    const [first,...last] = name.split(' ');
     signupData = {
-        FirstName: name.split(" ")[0],
-        LastName: name.split(" ")[1],
+        FirstName: first, 
+        LastName: last.join(' '),
         Username: username,
         Email: email,
         Password: password,
@@ -251,7 +255,7 @@ class Signup extends Component {
       };
     }
 
-    console.log("Sign up data:", signupData);
+    // console.log("Sign up data:", signupData);
     this.setState({
       alertMsg: true,
       msg: "We are processing. Please wait",
@@ -260,13 +264,21 @@ class Signup extends Component {
     axios
       .post("https://localhost:44357/user/register", signupData)
       .then((res) => {
-         dispatch(reset("signupForm"));
-         //this.setState({alertMsg:true, msg:'Form submitted successfully', bg:'success'});
-         this.props.history.push("/");
-        console.log("response: ", res);
+        if(res.data.isSuccess){
+          dispatch(reset("signupForm"));
+          //this.setState({alertMsg:true, msg:'Form submitted successfully', bg:'success'});
+          this.props.history.push("/");
+         // console.log("response: ", res);
+        }else{
+          this.setState({
+            alertMsg: true,
+            msg: res.data.msg,
+            bg: "danger",
+          });
+        }
       })
       .catch((err) => {
-        console.log("error: ", err);
+        // console.log("error: ", err);
         this.setState({
           alertMsg: true,
           msg: "Form submission failed",
@@ -411,7 +423,7 @@ class Signup extends Component {
             component={this.renderInput}
             type="text"
             id="name"
-            placeholder={"Name"}
+            placeholder={"Organization Name"}
           />
   }
             <Field
@@ -436,6 +448,7 @@ class Signup extends Component {
                   type="number"
                   name="phoneNumber"
                   id="phoneNumber"
+                  // onChange={(e)=>{console.log('phone field', e.target.value)}}
                   component={this.renderInput}
                   placeholder="Phone Number"
                 />
@@ -513,9 +526,15 @@ const Signupvalidate = (formValues) => {
   const validCNIC = /^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$/;
   const validEmail =
     /^([a-zA-z0-9_\-\.]+)@([a-zA-z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-  const validName = /^[a-zA-Z]+(?:[\s]+[a-zA-Z]+)*$/;
-  const validUsername = /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
-  const validPhoneNum = /^\(?\d{4}\)?[-.]?\d{3}[-.]?\d{4}$/;
+  const validName = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
+  const onlyAlphabets = /^[a-zA-Z]*$/;
+  const onlyAlphanumeric = /^[a-zA-Z0-9]*$/;
+
+
+  const validUsername=/^[a-zA-Z][a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/;
+
+  // const validUsername = /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
+  // const validPhoneNum = /^\(?\d{4}\)?[-.]?\d{3}[-.]?\d{4}$/;
   const validRegNum = /^[0-9]*$/;
   if (!formValues.CNIC_Number) {
     errors.CNIC_Number = "you must enter CNIC";
@@ -530,11 +549,15 @@ const Signupvalidate = (formValues) => {
 
   if (!formValues.password) {
     errors.password = "you must enter password";
-  } else if (
-    formValues.password.length < 5 ||
-    formValues.password.length > 20
-  ) {
-    errors.password = "Password must be between 6 to 20";
+  }
+  else if (
+   formValues.password.length < 5 ||
+   formValues.password.length > 20
+ ) {
+   errors.password = "Password must be between 5 to 20";
+ }
+  else if(!onlyAlphanumeric.test(formValues.password)){
+    errors.password='Only alphanumeric characters, No special characters and spaces allowed'
   }
 
   if (!formValues.password_confirmation) {
@@ -545,32 +568,54 @@ const Signupvalidate = (formValues) => {
 
   if (!formValues.fname) {
     errors.fname = "you must enter first name";
-  } else if (!validName.test(formValues.fname)) {
-    errors.fname = "name must be a character between 3 to 25";
+  } 
+  else if (formValues.fname.length<3 || formValues.fname.length>25) {
+    errors.fname = "name must be characters between 3 to 25";
+  }
+  else if (!onlyAlphabets.test(formValues.fname)) {
+    errors.fname = "Only alphabets, No special characters and boundary spaces allowed";
   }
 
   if (!formValues.name) {
-    errors.name = "you must enter name";
-  } else if (!validName.test(formValues.name)) {
-    errors.name = "name must be a character between 3 to 25";
+    errors.name = "you must enter organization name";
+  } 
+  else if (formValues.name.length<3 || formValues.name.length>30) {
+    errors.name = "name must be characters between 3 to 30";
+  }
+  else if (!validUsername.test(formValues.name)) {
+    errors.name = "First character must be an alphabet and rest alphanumeric, No special characters and boundary spaces allowed";
   }
 
   if (!formValues.lname) {
     errors.lname = "you must enter last name";
-  } else if (!validName.test(formValues.lname)) {
-    errors.lname = "name must be a character between 3 to 25";
+  } else if (!onlyAlphabets.test(formValues.lname)) {
+    errors.lname = "Only alphabets, No special characters and boundary spaces allowed";
+  }
+  else if (formValues.lname.length<3 || formValues.lname.length>25) {
+    errors.lname = "name must be characters between 3 to 25";
   }
 
   if (!formValues.username) {
     errors.username = "you must enter username";
-  } else if (!validUsername.test(formValues.username)) {
-    errors.username = "Username is not valid";
+  } 
+  else if (formValues.username.length<3 || formValues.username.length>30) {
+    errors.username = "username must be characters between 3 to 30";
   }
+  else if (!validUsername.test(formValues.username)) {
+    errors.username = "First character must be an alphabet and rest alphanumeric, No special characters and boundary spaces allowed";
+  }
+  // console.log('phone check', formValues.phoneNumber)
 
-  if (!formValues.phoneNumber) {
-    errors.phoneNumber = "you must enter a number";
-  } else if (!validPhoneNum.test(formValues.phoneNumber)) {
+  if (!formValues.phoneNumber ) {
+    errors.phoneNumber = "you must enter a valid number";
+  } else if (!validRegNum.test(formValues.phoneNumber)) {
     errors.phoneNumber = "invalid number";
+  }
+  else if (formValues.phoneNumber.length>11) {
+    errors.phoneNumber = "phone number must be a 11-digit number";
+  }
+  else if(formValues.phoneNumber.includes('.')){
+    errors.phoneNumber = "you must enter a valid number";
   }
 
   if (!formValues.regNum) {

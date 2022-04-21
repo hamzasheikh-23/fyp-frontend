@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import "./LoginForm.css";
 import FaceImage from "../../images/peo.png";
-import { FaAt } from "react-icons/fa";
+import { FaUserTie } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 //import jwt_decode from 'jwt-decode';
 import axios from "axios";
 
 const LoginInitialState = {
-  loginEmail: "",
+  loginUserName: "",
   loginPassword: "",
-  loginEmailError: "",
+  loginUserNameError: "",
   loginPasswordError: "",
   loginErr: false,
 };
@@ -24,17 +24,29 @@ class LoginForm extends Component {
     this.setState({ [fieldName]: event.target.value });
   };
   loginFormValidate = () => {
-    let loginEmailError = "";
+    let loginUserNameError = "";
     let loginPasswordError = "";
+    // const validName = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
+    //with numbers
+    const validName = /^[a-zA-Z][a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/;
+
     const validEmail =
       /^([a-zA-z0-9_\-.]+)@([a-zA-z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
 
-    if(!this.state.loginEmail){
-        loginEmailError="you must enter an email";
-    }
+    // if(!this.state.loginEmail){
+    //     loginEmailError="you must enter an email";
+    // }
     //else if(!validEmail.test(this.state.loginEmail)){
     //     loginEmailError="invalid email";
     // }
+
+    if (!this.state.loginUserName) {
+      loginUserNameError = "you must enter a user name";
+    } else if (this.state.loginUserName.length > 50) {
+      loginUserNameError = "User name must be less than 50 characters";
+    } else if (!validName.test(this.state.loginUserName)) {
+      loginUserNameError = "First character must be an alphabet and rest alphanumeric, No special characters and boundary spaces allowed";
+    }
 
     if (!this.state.loginPassword) {
       loginPasswordError = "you must enter password";
@@ -45,8 +57,8 @@ class LoginForm extends Component {
       loginPasswordError = "Password must be between 6 to 20";
     }
 
-    if (loginEmailError || loginPasswordError) {
-      this.setState({ loginEmailError, loginPasswordError });
+    if (loginUserNameError || loginPasswordError) {
+      this.setState({ loginUserNameError, loginPasswordError });
       return false;
     }
     return true;
@@ -54,12 +66,13 @@ class LoginForm extends Component {
   LoginFormSubmitHandler = (e) => {
     e.preventDefault();
     const isLoginFormValid = this.loginFormValidate();
-    console.log(isLoginFormValid);
+    // console.log(isLoginFormValid);
+
     if (isLoginFormValid) {
       console.log(this.state);
 
       const loginData = {
-        Username: this.state.loginEmail,
+        Username: this.state.loginUserName,
         password: this.state.loginPassword,
       };
       axios
@@ -69,30 +82,36 @@ class LoginForm extends Component {
           // console.log(res);
           if (res.data.code !== "0") {
             localStorage.clear();
-            localStorage.setItem('loginId', res.data.userID);
-            localStorage.setItem('donorId', res.data.donorID);
-          if (res.data.code === "1") {
-            localStorage.setItem("admin", true);
-            localStorage.setItem("loginType", "admin");
-            this.props.history.push('/adminPanelMain')
-          } else {
-            localStorage.setItem("admin", false);
-            if (res.data.code === "2") {
-              //donor
-              localStorage.setItem("loginType", "donor");
-            } else if (res.data.code === "3") {
-              //ngo
-              localStorage.setItem("loginType", "ngo");
+            localStorage.setItem("isAuthenticated", true);
+            localStorage.setItem("userID", res.data.userID);
+            localStorage.setItem("userTypeId", res.data.userTypeId);
+            if (res.data.code === "1") {
+              localStorage.setItem("admin", true);
+              localStorage.setItem("loginType", "admin");
+              localStorage.setItem("adminID", res.data.adminID);
+              this.props.history.push("/adminPanelMain");
+            } else {
+              localStorage.setItem("admin", false);
+              if (res.data.code === "2") {
+                //donor
+                localStorage.setItem("loginType", "donor");
+                localStorage.setItem("donorID", res.data.donorID);
+              } else if (res.data.code === "3") {
+                //ngo
+                localStorage.setItem("loginType", "ngo");
+                localStorage.setItem("ngoID", res.data.ngoID);
+                if (!res.data.planID) {
+                  this.props.history.push("/subscription");
+                  return;
+                }
+              }
+              this.props.history.push("/");
             }
-            this.props.history.push("/");
+          } else {
+            this.setState({ loginErr: true });
           }
-        }
-        else {
-          this.setState({loginErr: true})
-        }
-
         })
-      
+
         .catch((err) => {
           this.setState({ loginErr: true });
           console.log("login error", err);
@@ -101,6 +120,7 @@ class LoginForm extends Component {
   };
 
   render() {
+    console.log("login page");
     return (
       <div className="my-login-background">
         <div className="modal-dialog text-center">
@@ -118,22 +138,22 @@ class LoginForm extends Component {
                   >
                     <div className="form-group ">
                       <i>
-                        <FaAt />
+                      <FaUserTie />
                       </i>
                       <input
-                        type="email"
+                        type="text"
                         className="form-control"
-                        placeholder="Enter Email"
-                        name="email"
-                        id="email"
+                        placeholder="Enter Username"
+                        name="username"
+                        id="username"
                         onChange={(event) =>
-                          this.LoginHandleInputChange(event, "loginEmail")
+                          this.LoginHandleInputChange(event, "loginUserName")
                         }
-                        value={this.state.loginEmail}
+                        value={this.state.loginUserName}
                         autoComplete="off"
                       />
                       <div style={{ fontSize: "12.8px", color: "#DC3545" }}>
-                        {this.state.loginEmailError}
+                        {this.state.loginUserNameError}
                       </div>
                     </div>
                     <div className="form-group">

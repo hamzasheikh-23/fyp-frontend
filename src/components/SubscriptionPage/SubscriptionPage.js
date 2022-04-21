@@ -67,7 +67,7 @@ class SubscriptionPage extends React.Component {
   };
 
   subscribe = (id) => {
-    console.log('subscription id =>',id)
+    console.log("subscription id =>", id);
   };
 
   render() {
@@ -87,8 +87,9 @@ class SubscriptionPage extends React.Component {
           <div className="row">
             {this.state.data.map((plan, i) => (
               <div
-              style={{display:'flex', }}
-               className={`col-lg-4 col-md-${i === 2 ? 12 : 6} col-sm-12`}>
+                style={{ display: "flex" }}
+                className={`col-lg-4 col-md-${i === 2 ? 12 : 6} col-sm-12`}
+              >
                 <div class="card">
                   <div class="card-body">
                     <h6 class="card-title">{plan.name}</h6>

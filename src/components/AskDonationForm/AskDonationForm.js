@@ -119,7 +119,7 @@ class AskDonationForm extends Component {
     const isValid = this.donationValidation();
     if (isValid) {
       const askDonationData = {
-        ngo_id: localStorage.getItem("loginId"),
+        ngo_id: localStorage.getItem("userID"),
         title: this.state.donationTitle,
         description: this.state.donationDescription,
         image: this.state.file,

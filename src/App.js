@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import history from "./history";
 import history from "./assets/history";
@@ -27,20 +27,32 @@ import NGOStatusPending from "./components/NGOStatusPending/NGOStatusPending";
 import NGOStatusRejected from "./components/NGOStatusRejected/NGOStatusRejected";
 import AdminPanelStatistics from "./components/AdminPanelStatistics/AdminPanelStatistics";
 import SubscriptionPage from "./components/SubscriptionPage/SubscriptionPage";
-
+import DoubleLoginProtection from "./components/RouteProtection/DoubleLoginProtection";
+import AlreadyLoggedIn from "./components/AlreadyLoggedIn/AlreadyLoggedIn";
 
 const App = () => {
+  useEffect(() => {
+    console.log("run");
+  }, []);
 
-  useEffect(() => {console.log("run")},[])
-  
   return (
     <Router>
       <Switch>
         <Route path="/" exact component={MainPage} />
         <Route path="/viewStory" exact component={ViewStory} />
-        <Route path="/signup" exact component={Signup} />
+        <DoubleLoginProtection
+          path="/signup"
+          component={Signup}
+          redirectTo="/alreadyLoggedin"
+        />
+        {/* <Route path="/signup" exact component={Signup} /> */}
         <Route path="/aboutUs" component={AboutUs} />
-        <Route path="/login" component={LoginForm} />
+        <DoubleLoginProtection
+          path="/login"
+          component={LoginForm}
+          redirectTo="/alreadyLoggedin"
+        />
+        {/* <Route path="/login" component={LoginForm} /> */}
         <Route path="/help" component={Help} />
         <Route path="/donationForm" component={DonationForm} />
         <Route path="/adminPanelStatistics" component={AdminPanelStatistics} />
@@ -49,7 +61,14 @@ const App = () => {
         <Route path="/googleMap" component={GoogleMap} />
         <Route path="/adminPanelMain" component={AdminPanel} />
         <Route path="/subscription" component={SubscriptionPage} />
+        <Route path="/alreadyLoggedin" component={AlreadyLoggedIn} />
 
+        {/* <ProtectedRoute
+          path="/alreadyLoggedin"
+          component={AlreadyLoggedIn}
+          redirectTo="/login"
+          condition={isAuthenticated}
+        /> */}
         <Route
           path="/adminPanelDonorRequests"
           component={AdminPanelDonorRequests}

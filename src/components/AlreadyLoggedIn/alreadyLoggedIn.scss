@@ -1,0 +1,30 @@
+.already-logged-in-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    .center{
+        text-align: center;
+    }
+    .main{
+        font-size: 2rem;
+        color: #4A89DC;
+        // font-weight: bold;
+    }
+    button{
+        background-color: #4A89DC;
+    font-family: roboto,sans-serif;
+    border: none;
+    width: 170px;
+    color: white;
+    padding: 7px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 12px;
+    margin: 4rem 2rem;
+    border-radius: 65px
+    }
+}
+

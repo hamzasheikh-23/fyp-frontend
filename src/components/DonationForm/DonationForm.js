@@ -13,6 +13,7 @@ import { ItemDonation } from "../../actions";
 // import FileBase64 from "react-file-base64";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 const initialDonationState = {
   rating: 0,
@@ -21,7 +22,7 @@ const initialDonationState = {
   itemQuantity: "",
   itemTitle: "",
   itemWeight: "",
-  condition: "Used",
+  condition: 1,
   ratingError: "",
   itemDescriptionError: "",
   itemQuantityError: "",
@@ -30,10 +31,11 @@ const initialDonationState = {
   itemPic: [],
   categoriesArr: [],
   expirationDate: new Date(),
-  base64Images:[]
+  expirationDateErr: null,
+  base64Images: [],
 };
 
-const requireExpirationDate = ["Food", "Medicine"];
+const requireExpirationDate = ["3", "2"];
 
 class DonationForm extends Component {
   constructor() {
@@ -43,25 +45,33 @@ class DonationForm extends Component {
   }
 
   componentDidMount() {
-    const temp = [
-      {
-        id: 0,
-        name: "Cloth",
-      },
-      {
-        id: 1,
-        name: "Medicine",
-      },
-      {
-        id: 2,
-        name: "Toy",
-      },
-      {
-        id: 3,
-        name: "Food",
-      },
-    ];
-    this.setState({ categoriesArr: temp });
+    // const temp = [
+    //   {
+    //     id: 0,
+    //     name: "Cloth",
+    //   },
+    //   {
+    //     id: 1,
+    //     name: "Medicine",
+    //   },
+    //   {
+    //     id: 2,
+    //     name: "Toy",
+    //   },
+    //   {
+    //     id: 3,
+    //     name: "Food",
+    //   },
+    // ];
+    // this.setState({ categoriesArr: temp });
+
+    axios.get('https://localhost:44357/donation/category/get')
+    .then(res=>{
+      // console.log(res)
+      this.setState({category:res.data.length>0 ? res.data[0].CategoryId : 0 , categoriesArr: res.data.map(item=>({id: item.CategoryId, name: item.DonationCategory})) });
+    })
+    .catch(err=>console.log('error in getting categories api', err))
+    
   }
 
   onStarClick(nextValue, prevValue, name) {
@@ -77,24 +87,39 @@ class DonationForm extends Component {
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function () {
-        cb(reader.result)
+      cb(reader.result);
     };
     reader.onerror = function (error) {
-        console.log('Error: ', error);
+      console.log("Error: ", error);
     };
-}
+  }
 
   ImagefileSelectedHandler = (e) => {
     console.log("file", e.target.files);
     // let idCardBase64 = "";
     var pattern = /[\/](jpg|png|jpeg)$/i;
-    e.persist()
+    e.persist();
     if (e.target.files[0].type.match(pattern)) {
       this.getBase64(e.target.files[0], (result) => {
-        console.log('file uploader', {name: e.target.files[0].name ,base64:result}, [...this.state.base64Images, {name: e.target.files[0].name ,base64:result}])
-        this.setState({base64Images: [...this.state.base64Images, {name: e.target.files[0].name ,base64:result}]})
+        console.log(
+          "file uploader",
+          { name: e.target.files[0].name, base64: result },
+          [
+            ...this.state.base64Images,
+            { name: e.target.files[0].name, base64: result },
+          ]
+        );
+        this.setState({
+          base64Images: [
+            ...this.state.base64Images,
+            { name: e.target.files[0].name, base64: result },
+          ],
+        });
       });
-      this.setState({ itemPic: [...this.state.itemPic, ...e.target.files] });
+      this.setState({ itemPic: [...this.state.itemPic, ...e.target.files], imageErr: null });
+    }
+    else{
+      this.setState({imageErr: 'Invalid file format'})
     }
   };
 
@@ -132,25 +157,51 @@ class DonationForm extends Component {
     let itemTitleError = "";
     let itemQuantityError = "";
     let itemWeightError = "";
+    const validTitle = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
+    const validWeight =/^[0-9]*(\.[0-9]{0,2})?$/;
+    const validDesc= /^[^\s]+(?: [^\s]+)*$/; //no concurrent spaces and no boundary spaces
+
 
     if (!this.state.itemDescription) {
-      itemDescriptionError = "*required";
+      itemDescriptionError = "required";
+    }
+    else if (!validDesc.test(this.state.itemDescription)) {
+      itemDescriptionError = "No boundary spaces allowed";
     }
 
     if (!this.state.itemTitle) {
-      itemTitleError = "*required";
+      itemTitleError = "required";
+    }
+    else if(!validTitle.test(this.state.itemTitle)){
+      itemTitleError ='Only alphabets, No special characters and boundary spaces allowed'
+    }
+    else if (
+      this.state.itemTitle.length < 5 ||
+      this.state.itemTitle.length > 30
+    ) {
+      itemTitleError = "Title must be between 5 to 30 characters";
     }
 
     if (!this.state.itemQuantity) {
-      itemQuantityError = "*required";
+      itemQuantityError = "required";
+    }
+    else if (this.state.itemQuantity < 1 || this.state.itemQuantity > 1000) {
+      itemQuantityError = "Quantity must be in range 1 to 1000";
     }
 
     if (!this.state.itemWeight) {
-      itemWeightError = "*required";
+      itemWeightError = "required";
+    }
+    else if (this.state.itemWeight < 0.1 || this.state.itemWeight > 80) {
+      itemWeightError = "Weight must be in range 0.1 to 80 kg ";
+    }
+    else if (!validWeight.test(this.state.itemWeight)) {
+      itemWeightError = "Only two decimal places allowed";
     }
 
+
     if (this.state.rating < 1) {
-      ratingError = "*please rate condition";
+      ratingError = "please rate condition";
     }
 
     if (
@@ -158,7 +209,8 @@ class DonationForm extends Component {
       itemDescriptionError ||
       itemWeightError ||
       itemQuantityError ||
-      itemTitleError
+      itemTitleError ||
+      this.state.imageErr || this.state.expirationDateErr
     ) {
       this.setState({
         ratingError,
@@ -176,14 +228,14 @@ class DonationForm extends Component {
   DonationFormSubmitHandler = (e) => {
     e.preventDefault();
     const isValid = this.Donationvalidation();
-    console.log("isValid: ", isValid, this.state.base64Images);
+    console.log("isValid: ", isValid, this.state);
     if (isValid) {
       // let picnames= this.state.itemPic.map((pic)=>{
       //     return pic.name;
       //     });
       const DonationData = {
         Rating: this.state.rating,
-        Category: this.state.category,
+        Category: Number(this.state.category),
         Description: this.state.itemDescription,
         Title: this.state.itemTitle,
         Quantity: this.state.itemQuantity,
@@ -192,19 +244,36 @@ class DonationForm extends Component {
         DonorId: localStorage.getItem("donorId"),
         // status: "Pending",
         // Images: this.state.base64Images,
-        Image1base64: this.state.base64Images[0]===undefined? null: this.state.base64Images[0].base64,
-        Image2base64: this.state.base64Images[1]===undefined? null: this.state.base64Images[1].base64,
-        Image3base64: this.state.base64Images[2]===undefined? null: this.state.base64Images[2].base64,
-        Image1Name: this.state.base64Images[0]===undefined? null: this.state.base64Images[0].name,
-        Image2Name: this.state.base64Images[1]===undefined? null: this.state.base64Images[1].name,
-        Image3Name: this.state.base64Images[2]===undefined? null: this.state.base64Images[2].name,
+        Image1base64:
+          this.state.base64Images[0] === undefined
+            ? null
+            : this.state.base64Images[0].base64,
+        Image2base64:
+          this.state.base64Images[1] === undefined
+            ? null
+            : this.state.base64Images[1].base64,
+        Image3base64:
+          this.state.base64Images[2] === undefined
+            ? null
+            : this.state.base64Images[2].base64,
+        Image1Name:
+          this.state.base64Images[0] === undefined
+            ? null
+            : this.state.base64Images[0].name,
+        Image2Name:
+          this.state.base64Images[1] === undefined
+            ? null
+            : this.state.base64Images[1].name,
+        Image3Name:
+          this.state.base64Images[2] === undefined
+            ? null
+            : this.state.base64Images[2].name,
 
         ExpirationDate: requireExpirationDate.includes(this.state.category)
           ? this.state.expirationDate
           : null,
-
       };
-      console.log('data', DonationData)
+      console.log("data", DonationData);
       // axios
       // .post("https://localhost:44357/donation/post", DonationData)
       // .then((res) => {
@@ -273,6 +342,15 @@ class DonationForm extends Component {
                 placeholder="Item Title"
                 className="form-control"
               />
+              <div
+                style={{
+                  fontSize: "12.8px",
+                  color: "#DC3545",
+                  marginLeft: "10px",
+                }}
+              >
+                {this.state.itemTitleError}
+              </div>
             </div>
             <div className="form-group">
               <label htmlFor="category" className="my-donation-label">
@@ -288,7 +366,7 @@ class DonationForm extends Component {
                 className="form-control"
               >
                 {this.state.categoriesArr.map((option) => (
-                  <option value={option.name}>{option.name}</option>
+                  <option value={option.id}>{option.name}</option>
                 ))}
               </select>
             </div>
@@ -308,10 +386,19 @@ class DonationForm extends Component {
                   placeholder="Quantity"
                   className="form-control"
                 />
+                <div
+                style={{
+                  fontSize: "12.8px",
+                  color: "#DC3545",
+                  marginLeft: "10px",
+                }}
+              >
+                {this.state.itemQuantityError}
+              </div>
               </div>
               <div className="col-lg-6">
                 <label htmlFor="item-weight" className="my-donation-label">
-                  Weight
+                  Weight (Kg)
                 </label>
                 <input
                   type="number"
@@ -321,9 +408,18 @@ class DonationForm extends Component {
                     this.DonationFormInputChange(event, "itemWeight")
                   }
                   id="item-weight"
-                  placeholder="Weight in kg"
+                  placeholder="Weight"
                   className="form-control"
                 />
+                <div
+                style={{
+                  fontSize: "12.8px",
+                  color: "#DC3545",
+                  marginLeft: "10px",
+                }}
+              >
+                {this.state.itemWeightError}
+              </div>
               </div>
             </div>
             <div className="form-group">
@@ -370,6 +466,15 @@ class DonationForm extends Component {
                   {this.state.itemPic.length > 0 ? this.displayImg() : null}
                 </div>
               </div>
+              <div
+                style={{
+                  fontSize: "12.8px",
+                  color: "#DC3545",
+                  marginLeft: "10px",
+                }}
+              >
+                {this.state.imageErr}
+              </div>
             </div>
 
             <div className="row">
@@ -381,8 +486,8 @@ class DonationForm extends Component {
                     <input
                       type="radio"
                       name="condition"
-                      value="Used"
-                      checked={this.state.condition === "Used"}
+                      value={2}
+                      checked={this.state.condition === 2}
                       onChange={(event) =>
                         this.DonationFormInputChange(event, "condition")
                       }
@@ -394,8 +499,8 @@ class DonationForm extends Component {
                     <input
                       type="radio"
                       name="condition"
-                      value="Unused"
-                      checked={this.state.condition === "Unused"}
+                      value={1}
+                      checked={this.state.condition === 1}
                       onChange={(event) =>
                         this.DonationFormInputChange(event, "condition")
                       }
@@ -439,10 +544,24 @@ class DonationForm extends Component {
                     <DatePicker
                       selected={this.state.expirationDate}
                       onChange={(date) => {
-                        console.log("date", date);
-                        this.setState({ expirationDate: date });
+                        console.log("date", date, moment().isAfter(date));
+                        if(moment(date).isAfter()){
+                          this.setState({ expirationDate: date, expirationDateErr: null });
+                        }else{
+                          this.setState({ expirationDateErr: 'Please select a future date' });
+
+                        }
                       }}
                     />
+                    <span
+                      style={{
+                        fontSize: "12.8px",
+                        color: "#DC3545",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      {this.state.expirationDateErr}
+                    </span>
                   </div>
                 </div>
               )}

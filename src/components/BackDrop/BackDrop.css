@@ -8,7 +8,7 @@
     left: 0;
 }
 
-@media (min-width: 769px){
+@media (min-width: 971px){
     .backdrop{
         display:none;
     }

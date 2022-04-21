@@ -34,14 +34,10 @@ const Toolbar = (props) => {
             {localStorage.getItem("loginType") === "ngo" ? (
               <>
                 <li>
-                  <Link to="/manage-donations">
-                    Manage Donations
-                  </Link>
+                  <Link to="/manage-donations">Manage Donations</Link>
                 </li>
                 <li>
-                  <Link to="/manage-stories">
-                    Manage Stories
-                  </Link>
+                  <Link to="/manage-stories">Manage Stories</Link>
                 </li>
                 {/* <li>
                     <div className="dropdown">
@@ -59,12 +55,12 @@ const Toolbar = (props) => {
             ) : null}
             {localStorage.getItem("loginType") === "donor" ? (
               <>
-              <li><Link to="/donationForm">
-                        Random Item
-                      </Link></li>
-              <li><Link to="/ngoRequests">
-                        NGO's requirement
-                      </Link></li>
+                <li>
+                  <Link to="/donationForm">Random Item</Link>
+                </li>
+                <li>
+                  <Link to="/ngoRequests">NGO's requirement</Link>
+                </li>
                 {/* <li>
                   <div className="dropdown">
                     <button
