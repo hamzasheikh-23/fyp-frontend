@@ -9,17 +9,68 @@ class Card extends React.Component {
     addDetailModalShow: false,
   };
   deleteItem = () => {
-    axios.delete(
-      `https://localhost:44357/donation/delete/${this.props.donationId}`
-    ).then(res=>{
-        if(res.data.isSuccess){
-            this.props.getData()
+    axios
+      .delete(
+        `https://localhost:44357/donation/delete/${this.props.donationId}`
+      )
+      .then((res) => {
+        if (res.data.isSuccess) {
+          this.props.getData();
         }
-    })
+      });
   };
-  editItem = () => {};
+  editItem = () => {
+    console.log("worked");
+    const {
+      title,
+      quantity,
+      quantityPerUnit,
+      date,
+      weight,
+      description,
+      category,
+      donationId,
+      rating,
+      condition,
+      itemImg1,
+      itemImg2,
+      itemImg3,
+      image1Name,
+      image2Name,
+      image3Name,
+      postedDate,
+      status,
+      isActive,
+    } = this.props;
+    this.props.history.push({
+      pathname: "/donationForm",
+      state: {
+        data: {
+          title,
+          quantity,
+          quantityPerUnit,
+          date,
+          weight,
+          description,
+          category,
+          donationId,
+          rating,
+          condition,
+          itemImg1,
+          itemImg2,
+          itemImg3,
+          image1Name,
+          image2Name,
+          image3Name,
+          postedDate,
+          status,
+          isActive,
+        },
+      },
+    });
+  };
   render() {
-    console.log("card", this.props);
+    // console.log("card", this.props);
     let addDetailModalClose = () =>
       this.setState({ addDetailModalShow: false });
     let badgeClass = "primary";
@@ -37,7 +88,7 @@ class Card extends React.Component {
       this.props.itemImg2,
       this.props.itemImg3,
     ];
-   
+
     return (
       <div style={{ margin: "0 10px" }}>
         <div

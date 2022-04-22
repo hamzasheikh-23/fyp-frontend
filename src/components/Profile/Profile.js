@@ -11,6 +11,7 @@ import item3 from "../../images/together.png";
 import item5 from "../../images/hope.png";
 import axios from "axios";
 import data from "./temp";
+import moment from "moment";
 
 class Profile extends React.Component {
   componentDidMount() {
@@ -19,7 +20,7 @@ class Profile extends React.Component {
         title: item.Title,
         quantity: item.Quantity,
         quantityPerUnit: item.QuantityPerUnit,
-        date: item.ExpiryDate,
+        date: item.ExpiryDate ? moment(item.ExpiryDate).format('LL hh:mm:ss'): null,
         weight: item.Weight,
         description: item.Description,
         category: item.Category,
@@ -29,7 +30,10 @@ class Profile extends React.Component {
         itemImg1: item.Image1base64,
         itemImg2: item.Image2base64,
         itemImg3: item.Image3base64,
-        postedDate: item.PostedDate,
+        image1Name: item.Image1Name,
+        image2Name: item.Image2Name,
+        image3Name: item.Image3Name,
+        postedDate: item.PostedDate ? moment(item.PostedDate).format('LL hh:mm:ss'): null,
         status: item.Status,
         isActive: item.IsActive,
       })),
@@ -38,36 +42,39 @@ class Profile extends React.Component {
   }
 
   getData = () => {
-    axios
-      .get(
-        `https://localhost:44357/donation/get/${localStorage.getItem(
-          "donorID"
-        )}?status=""&isActive=""`
-      )
-      .then((res) => {
-        console.log(res);
-        this.setState({
-          items: res.data.map((item) => ({
-            title: item.Title,
-            quantity: item.Quantity,
-            quantityPerUnit: item.QuantityPerUnit,
-            date: item.ExpiryDate,
-            weight: item.Weight,
-            description: item.Description,
-            category: item.Category,
-            donationId: item.DonationId,
-            rating: item.Rating,
-            condition: item.Condition,
-            itemImg1: item.Image1base64,
-            itemImg2: item.Image2base64,
-            itemImg3: item.Image3base64,
-            postedDate: item.PostedDate,
-            status: item.Status,
-            isActive: item.IsActive,
-          })),
-        });
-      })
-      .catch((err) => console.log(err));
+    // axios
+    //   .get(
+    //     `https://localhost:44357/donation/get/${localStorage.getItem(
+    //       "donorID"
+    //     )}?status=""&isActive=""`
+    //   )
+    //   .then((res) => {
+    //     console.log(res);
+    //     this.setState({
+    //       items: res.data.map((item) => ({
+    //         title: item.Title,
+    //         quantity: item.Quantity,
+    //         quantityPerUnit: item.QuantityPerUnit,
+    //         date: item.ExpiryDate,
+    //         weight: item.Weight,
+    //         description: item.Description,
+    //         category: item.Category,
+    //         donationId: item.DonationId,
+    //         rating: item.Rating,
+    //         condition: item.Condition,
+    //         itemImg1: item.Image1base64,
+    //         itemImg2: item.Image2base64,
+    //         itemImg3: item.Image3base64,
+    //         image1Name: item.Image1Name,
+    //         image2Name: item.Image2Name,
+    //         image3Name: item.Image3Name,
+    //         postedDate: item.PostedDate,
+    //         status: item.Status,
+    //         isActive: item.IsActive,
+    //       })),
+    //     });
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   state = {
@@ -104,6 +111,7 @@ class Profile extends React.Component {
     if (this.state.siderDrawerOpen) {
       backdrop = <BackDrop click={this.backdropClickHandler} />;
     }
+    console.log("profile", this.props);
     return (
       <div>
         <Toolbar drawerClickHandler={this.drawerToggleHandler} about={true} />
@@ -126,7 +134,8 @@ class Profile extends React.Component {
               // itemId={item.donatedItem_id}
               // delete={this.deleteItem}/>
               <Card
-                getData={this.getData}
+                getData={() => this.getData()}
+                history={this.props.history}
                 {...item}
                 // title={item.title}
                 // quantity={item.quantity}

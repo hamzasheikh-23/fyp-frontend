@@ -20,7 +20,7 @@ class DonationDetailsModal extends Component{
     // }
 
     render(){
-      console.log('detail',this.props)
+      // console.log('detail',this.props)
       const {data}=this.props
         return(
             <Modal
@@ -45,6 +45,10 @@ class DonationDetailsModal extends Component{
               <tr>
                 <td>Condition:</td>
                 <td>{data.condition}</td>
+              </tr>
+              <tr>
+                <td>Category:</td>
+                <td>{data.category}</td>
               </tr>
               {/* <tr>
                 <td>Address:</td>
