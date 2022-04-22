@@ -160,15 +160,23 @@ class Map extends Component{
         //     formData.append('Image3',Images[2]===undefined? null: Images[2]);
         //     // formData.append('donationAddress',this.state.address);
 
-		
 		console.log('dataaaaa=>', this.props.donationDetails)
+		if(this.props.isEdit){
+			axios.put(`https://localhost:44357/donation/edit/${this.props.donationId} `,this.props.donationDetails)
+			.then(res=>{
+				this.props.redirect.push('/profile');
+				
+			})
+			.catch(err=>console.log('Put Error',err));
+		}else{
+			axios.post(`https://localhost:44357/donation/post`,this.props.donationDetails)
+			.then(res=>{
+				this.props.redirect.push('/profile');
+				
+			})
+			.catch(err=>console.log('Post Error',err));
+		}
 
-		axios.post(`https://localhost:44357/donation/post`,this.props.donationDetails)
-		.then(res=>{
-			this.props.redirect.push('/profile');
-			
-		})
-		.catch(err=>console.log('Error',err));
 		// console.log(donationRequest);
 	}
 	/**

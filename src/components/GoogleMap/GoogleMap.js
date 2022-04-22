@@ -52,6 +52,8 @@ class GoogleMap extends Component {
 		return(
 			<div className="container">
 				<Map 
+					donationId={this.props.location.state.donationId}
+					isEdit={this.props.location.state.isEdit}
 					redirect={this.props.history}
 					donationDetails={this.props.location.state.data}
 					google={this.props.google}

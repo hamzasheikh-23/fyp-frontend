@@ -35,6 +35,7 @@ const initialDonationState = {
   expirationDate: new Date(),
   expirationDateErr: null,
   base64Images: [],
+  donationId: null,
 };
 
 const requireExpirationDate = [3, 2];
@@ -97,6 +98,7 @@ class DonationForm extends Component {
           } = this.props.history.location.state.data;
           this.setState({
             rating,
+            donationId,
             itemDescription: description,
             itemQuantity: quantity,
             itemQuantityPerUnit: quantityPerUnit,
@@ -339,6 +341,7 @@ class DonationForm extends Component {
           : null,
       };
       console.log("data", DonationData);
+      const isEdit = this.props.history.location.state?.data ? true : false;
       // axios
       // .post("https://localhost:44357/donation/post", DonationData)
       // .then((res) => {
@@ -356,7 +359,7 @@ class DonationForm extends Component {
       this.setState(initialDonationState);
       this.props.history.push({
         pathname: "/googleMap",
-        state: { data: DonationData },
+        state: { data: DonationData, isEdit, donationId: this.state.donationId },
       });
     }
   };
