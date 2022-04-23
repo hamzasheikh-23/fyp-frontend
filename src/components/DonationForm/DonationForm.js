@@ -119,9 +119,9 @@ class DonationForm extends Component {
             expirationDate: moment(date,'LL hh:mm:ss').utc(true).toDate(),
             expirationDateErr: null,
             base64Images: [
-              (image1Name && itemImg1) && { name: image1Name, base64: itemImg1 },
-              (image2Name && itemImg2) && { name: image2Name, base64: itemImg2 },
-              (image3Name && itemImg3) && { name: image3Name, base64: itemImg3 },
+              (image1Name && itemImg1) && { name: image1Name, base64: itemImg1, edit: true },
+              (image2Name && itemImg2) && { name: image2Name, base64: itemImg2, edit: true },
+              (image3Name && itemImg3) && { name: image3Name, base64: itemImg3, edit: true },
             ].filter(item=>item),
           },()=>console.log('check state', this.state));
         }
@@ -165,15 +165,17 @@ class DonationForm extends Component {
   ImagefileSelectedHandler = (e) => {
     console.log("file", e.target.files);
     const isEdit = this.props.history.location.state?.data ? true : false;
+    console.log('edit wala',isEdit);
     // let idCardBase64 = "";
     var pattern = /[\/](jpg|png|jpeg)$/i;
     e.persist();
     if (e.target.files[0].type.match(pattern)) {
       this.getBase64(e.target.files[0], (result) => {
+        console.log('173 wala', isEdit);
         this.setState({
           base64Images: [
             ...this.state.base64Images,
-            { name: e.target.files[0].name, base64: result, edit: isEdit },
+            { name: e.target.files[0].name, base64: result, edit: false },
           ],
           imageErr: null,
         });
@@ -203,7 +205,8 @@ class DonationForm extends Component {
     // const isEdit = this.props.history.location.state?.data ? true : false;
     console.log('display image', this.state.itemPic, this.state.base64Images)
        const images = this.state.base64Images.map((img,i) => {
-         if(img.edit){
+        console.log('latest',img); 
+        if(img.edit){
           return (
             <div key={i}>
               <i onClick={(event) => this.RemoveImg(event, img)}>
