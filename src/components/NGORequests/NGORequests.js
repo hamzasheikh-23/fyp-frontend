@@ -61,6 +61,9 @@ class NGORequests extends React.Component {
     })
     .catch((error) => console.log(error));
   }
+
+
+
   state = {
     siderDrawerOpen: false,
     donor: true,
@@ -413,6 +416,7 @@ class NGORequests extends React.Component {
                   ngoname={request.ngoName || ""}
                   des={request.description}
                   date={moment(request.postedDate).format("LL hh:mm:ss")}
+                  fetchData={this.filteredContent}
                 />
               );
             })}

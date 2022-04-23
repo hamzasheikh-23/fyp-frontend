@@ -10,7 +10,8 @@ class ProceedOrderModal extends Component {
     this.state = {
       msg: "",
       msgErr: "",
-      remainingRequiredQuantity:0,
+      remainingRequiredQuantity:50,
+      remainingRequiredQuantityErr:"",
       donationQuantity:0,
       donationQuantityErr: "",
       address:"",
@@ -18,22 +19,95 @@ class ProceedOrderModal extends Component {
 
     };
   }
-  ResponseFormSubmitHandler = () => {
-    const response = {
-      responseMessage: this.state.msg,
-      requestedItem_id: this.props.reqId,
-      donor_id: localStorage.getItem("userID"),
-    };
-    console.log("data of response", response);
-    axios
-      .post("/api/storeResponse", response)
-      .then((res) => {
-        console.log("success", res);
-        this.props.onHide();
-      })
-      .catch((err) => console.log("error", err));
+
+  validation=()=>{
+    let donationQuantityErr = "";
+    let msgErr = "";
+    let addressErr = "";
+    let remainingRequiredQuantityErr="";
+
+    const validText = /^[^\s]+(?: [^\s]+)*$/; //no concurrent spaces and no boundary spaces
+   
+   if (!this.state.address) {
+      addressErr = "required";
+    } else if (!validText.test(this.state.address)) {
+      addressErr =
+        "remove extra and unnecessary spaces";
+    }
+
+    if(!validText.test(this.state.msg)){
+      msgErr="required"
+    }
+
+    if (!this.state.donationQuantity) {
+      donationQuantityErr = "required";
+    } else if (this.state.donationQuantity < 1 || this.state.donationQuantity > 1000) {
+      donationQuantityErr = "Quantity must be in range 1 to the required quantity";
+    }
+
+    let validQuantity= parseFloat(this.state.remainingRequiredQuantity)-parseFloat(this.state.donationQuantity)
+
+    if (validQuantity<0) {
+      remainingRequiredQuantityErr = "Your donation is exceeding the requested quantity";
+    } 
+
+    if (
+      remainingRequiredQuantityErr ||
+      donationQuantityErr ||
+      msgErr ||
+      addressErr
+    ) {
+      this.setState({
+        remainingRequiredQuantityErr,
+        donationQuantityErr,
+        msgErr,
+        addressErr,
+      });
+      return false;
+    }
+
+    return true;
+  }
+
+  ResponseFormSubmitHandler = (e) => {
+    e.preventDefault();
+    const isValid = this.validation();
+    console.log("isValid: ", isValid, this.state);
+    if (isValid) {
+      const response = {
+        Message: this.state.msg,
+        CaseId: this.props.reqId,
+        DonorId: localStorage.getItem("donorID"),
+        Quantity: this.state.donationQuantity
+      };
+      console.log("data of response", response);
+      axios
+        .post("/api/storeResponse", response)
+        .then((res) => {
+          console.log("success", res);
+          this.props.fetchData();
+          this.props.onHide();
+        })
+        .catch((err) => console.log("error", err));
+    }
+
   };
-  responseMsgHandler = (event, fieldName) => {
+
+  amountGenerator=(e)=>{
+    let amount= e.target.value;
+    let remaining=this.state.remainingRequiredQuantity
+    if(isNaN(parseFloat(e.target.value))){
+      amount=0;
+    }
+    // if(parseFloat(remaining)<0){
+    //   remaining=0;
+    // }
+
+    console.log('amountGenerator', parseFloat(remaining),amount,parseFloat(remaining)-amount )
+    this.setState({remainingRequiredQuantity: parseFloat(remaining)-amount})
+  }
+
+  changeHandler = (event, fieldName) => {
     this.setState({ [fieldName]: event.target.value });
     // console.log(event.target.value);
   };
@@ -62,9 +136,11 @@ class ProceedOrderModal extends Component {
                 <input
                   name="item-quantity"
                   value={this.state.donationQuantity}
-                  onChange={(event) =>
-                    this.DonationFormInputChange(event, "donationQuantity")
-                  }
+                  onChange={(event) =>{
+                    this.changeHandler(event, "donationQuantity");
+                    
+                  }}
+                  onBlur={(event)=>this.amountGenerator(event)}
                   type="number"
                   id="item-quantity"
                   placeholder="Quantity"
@@ -88,9 +164,9 @@ class ProceedOrderModal extends Component {
                   name="remaining-quantity"
                   value={this.state.remainingRequiredQuantity}
                   onChange={(event) =>
-                    this.DonationFormInputChange(event, "remainingRequiredQuantity")
+                    this.changeHandler(event, "remainingRequiredQuantity")
                   }
-                  style={{color: this.state.remainingRequiredQuantityErr ? 'red' : '#212529'}}
+                  style={{color: this.state.remainingRequiredQuantity<0 ? 'red' : '#212529'}}
                   type="number"
                   id="remaining-quantity"
                   placeholder="Remaining quantity"
@@ -109,18 +185,18 @@ class ProceedOrderModal extends Component {
               </div>
               </div>
               <div className="form-group">
-                <label htmlFor="item-quantity" className="my-donation-label mb-2">
-                  Add quantity you want to donate
+                <label htmlFor="address" className="my-donation-label mb-2">
+                  Pickup Address
                 </label>
                 <input
-                  name="item-quantity"
-                  value={this.state.donationQuantity}
+                  name="address"
+                  value={this.state.address}
                   onChange={(event) =>
-                    this.DonationFormInputChange(event, "donationQuantity")
+                    this.changeHandler(event, "address")
                   }
                   type="number"
-                  id="item-quantity"
-                  placeholder="Quantity"
+                  id="address"
+                  placeholder="Address here..."
                   className="form-control"
                 />
                 <div
@@ -130,7 +206,7 @@ class ProceedOrderModal extends Component {
                     marginLeft: "10px",
                   }}
                 >
-                  {this.state.donationQuantityErr}
+                  {this.state.addressErr}
                 </div>
               </div>
               <div className="form-group">
@@ -139,10 +215,10 @@ class ProceedOrderModal extends Component {
                 </label>
                 <textarea
                   name="requestResponse"
-                  rows="10"
+                  rows="8"
                   // cols="50"
                   value={this.state.msg}
-                  onChange={(event) => this.responseMsgHandler(event, "msg")}
+                  onChange={(event) => this.changeHandler(event, "msg")}
                   id="requestResponse"
                   placeholder="Send a message to NGO"
                   className="form-control"
