@@ -18,10 +18,10 @@ class SubscriptionPage extends React.Component {
       .then((res) => {
         console.log(res)
         this.setState({ data: res.data.map(item=>({
-          id: item.planID,
-          name: item.planName,
+          id: item.PlanID,
+          name: item.PlanName,
           amountPerMonth: item.Amount,
-          description: item.Description.split('\n')
+          description: item.Description.split('\\n')
         })) });
       })
       .catch((err) => console.log(err));
@@ -93,7 +93,7 @@ class SubscriptionPage extends React.Component {
         <SideDrawer about={true} show={this.state.siderDrawerOpen} />
         {backdrop}
         <div className="alert alert-color text-center " role="alert">
-          <strong>Subscribe</strong> for the greatest cause !
+          <strong>Subscribe</strong> for the greater cause !
         </div>
         <div className="container">
           <div className="row">

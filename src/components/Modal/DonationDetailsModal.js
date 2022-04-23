@@ -20,7 +20,7 @@ class DonationDetailsModal extends Component{
     // }
 
     render(){
-      // console.log('detail',this.props)
+      console.log('detail',this.props)
       const {data}=this.props
         return(
             <Modal

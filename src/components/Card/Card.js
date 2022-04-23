@@ -88,7 +88,7 @@ class Card extends React.Component {
       this.props.image2Name,
       this.props.image3Name,
     ];
-
+    
     return (
       <div style={{ margin: "0 10px" }}>
         <div
@@ -99,14 +99,19 @@ class Card extends React.Component {
           }}
           class="card"
         >
-          <img
-            src={
-              require(`../../serverImages/${this.props.image1Name}`) ||
-              "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
-            }
-            alt=".."
-            className="card-image"
-          />
+          {this.props.image2Name ? 
+           <img
+           src={require(`../../serverImages/${this.props.image2Name}`)}
+           alt=".."
+           className="card-image"
+         />
+         :
+         <img
+           src={"https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="}
+           alt=".."
+           className="card-image"
+         />
+          }
           <div
             style={{ display: "flex", flexDirection: "column" }}
             class="card-body"
