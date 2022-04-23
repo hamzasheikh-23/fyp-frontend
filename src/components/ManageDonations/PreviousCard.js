@@ -70,7 +70,7 @@ class PreviousCard extends React.Component {
     });
   };
   render() {
-    // console.log("card", this.props);
+    console.log("card", this.props);
     let addDetailModalClose = () =>
       this.setState({ addDetailModalShow: false });
   

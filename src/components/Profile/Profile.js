@@ -53,6 +53,7 @@ class Profile extends React.Component {
         this.setState({
           items: res.data.map((item) => ({
             title: item.Title,
+            address: item.Address,
             quantity: item.Quantity,
             quantityPerUnit: item.QuantityPerUnit,
             date: item.ExpiryDate,

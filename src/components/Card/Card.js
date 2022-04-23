@@ -24,6 +24,7 @@ class Card extends React.Component {
     const {
       title,
       quantity,
+      address,
       quantityPerUnit,
       date,
       weight,
@@ -48,6 +49,7 @@ class Card extends React.Component {
         data: {
           title,
           quantity,
+          address,
           quantityPerUnit,
           date,
           weight,
