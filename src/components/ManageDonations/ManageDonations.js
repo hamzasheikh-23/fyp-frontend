@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
 
 import Footer from "../Footer/Footer";
 import Toolbar from "../Toolbar/Toolbar";
@@ -17,6 +18,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./ManageDonations.css";
 import PreviousCard from "./PreviousCard";
+import { checkProperty } from "../../assets/utils";
 
 class ManageDonations extends Component {
   componentDidMount() {
@@ -24,11 +26,22 @@ class ManageDonations extends Component {
       `/api/getRequestedItemsByNgoId/${localStorage.getItem("userID")}`
     );
     axios
-      .get(`/api/getRequestedItemsByNgoId/${localStorage.getItem("userID")}`)
+      .get(`https://localhost:44357/case/get?ngoId=${localStorage.getItem("ngoID")}`)
       .then((res) => {
-        const stories = res.data.filter(
-          (story) => story.status === "Pending" || story.status === "Approved"
-        );
+        const stories = res.data.map(item=>({
+          caseId: item.CaseId,
+            ngoID: item.NGOId,
+            caseTitle: item.CaseTitle,
+            Quantity: item.Quantity,
+            Unit: item.Unit,
+            postedDate: item.PostedDate,
+            description: item.Description,
+            imageBase64: item.ImageBase64,
+            imageName: item.ImageName,
+            status: item.Status,
+            isActive: item.IsActive,
+            postedDate: checkProperty('PostedDate',item) ? moment(item.PostedDate).format('LL hh:mm:ss')  : "",
+        }))
 
         this.setState({ arrayforcards: [...stories] });
       })
@@ -45,21 +58,24 @@ class ManageDonations extends Component {
       //****THIS arrayforcards is for testing, its contents will be replaced by actual values from DATABASE***
 
       arrayforcards: [
-        {
-          caseId:"",
-          title:'abc',
-          description:'abs'
-        },
-        {
-          title:'abc',
-          description:'abs'
-        },{
-          title:'abc',
-          description:'abs'
-        },{
-          title:'abc',
-          description:'abs'
-        }
+        // {
+        //   caseId:"1",
+        //   title:'abc',
+        //   description:'abs'
+        // },
+        // {
+        //   caseId:"2",
+        //   title:'abc',
+        //   description:'abs'
+        // },{
+        //   caseId:"3",
+        //   title:'abc',
+        //   description:'abs'
+        // },{
+        //   caseId:"4",
+        //   title:'abc',
+        //   description:'abs'
+        // }
       ],
 
       //****THIS arrayforcards is for testing, its contents will be replaced by actual values from DATABASE***

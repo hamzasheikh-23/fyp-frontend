@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Modal, Button, Row, Col, Form} from 'react-bootstrap';
 import axios from 'axios';
 import moment from 'moment';
+import {checkProperty} from '../../assets/utils';
 
 class DonationDetailsModal extends Component{
     // componentDidMount(){
@@ -82,6 +83,10 @@ class DonationDetailsModal extends Component{
               <tr>
                 <td>Status:</td>
                 <td>{data.status}</td>
+              </tr>
+              <tr>
+                <td>Pickup Address:</td>
+                <td>{checkProperty('address',data)}</td>
               </tr>
               </tbody>
          

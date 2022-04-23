@@ -85,14 +85,22 @@ class PreviousCard extends React.Component {
           }}
           class="card"
         >
+          {this.props.imageName ?
           <img
+          src={require(`../../serverImages/${this.props.imageName}`)}
+          alt=".."
+          className="card-image"
+        />
+        :
+        <img
             src={
-              this.props.image ||
               "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
             }
             alt=".."
             className="card-image"
           />
+          }
+          
           <div
             style={{ display: "flex", flexDirection: "column" }}
             class="card-body"
@@ -112,7 +120,7 @@ class PreviousCard extends React.Component {
                 }}
                 class="card-title"
               >
-                {this.props.title}{" "}
+                {this.props.cardTitle}{" "}
                 {!this.props.isActive && (
                   <span style={{ fontSize: "small" }}>(Not Active)</span>
                 )}{" "}

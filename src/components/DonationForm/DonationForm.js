@@ -10,11 +10,12 @@ import history from "../../assets/history";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { ItemDonation } from "../../actions";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 // import FileBase64 from "react-file-base64";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import { faExpeditedssl } from "@fortawesome/free-brands-svg-icons";
 
 const initialDonationState = {
   rating: 0,
@@ -37,8 +38,8 @@ const initialDonationState = {
   expirationDateErr: null,
   base64Images: [],
   donationId: null,
-  address:"",
-  addressError:"",
+  address: "",
+  addressError: "",
 };
 
 const requireExpirationDate = [3, 2];
@@ -100,36 +101,57 @@ class DonationForm extends Component {
             status,
             isActive,
           } = this.props.history.location.state.data;
-          this.setState({
-            address,
-            rating,
-            donationId,
-            itemDescription: description,
-            itemQuantity: quantity,
-            itemQuantityPerUnit: quantityPerUnit,
-            itemTitle: title,
-            itemWeight: weight,
-            condition: condition == "Unused" ? 1 : 2,
-            // itemPic: [
-            //   (image1Name && itemImg1) && { name: image1Name, base64: itemImg1 },
-            //   (image2Name && itemImg2) && { name: image2Name, base64: itemImg2 },
-            //   (image3Name && itemImg3) && { name: image3Name, base64: itemImg3 },
-            // ].filter(item=>item),
-            categoriesArr: [],
-            expirationDate: moment(date,'LL hh:mm:ss').utc(true).toDate(),
-            expirationDateErr: null,
-            base64Images: [
-              (image1Name && itemImg1) && { name: image1Name, base64: itemImg1, edit: true },
-              (image2Name && itemImg2) && { name: image2Name, base64: itemImg2, edit: true },
-              (image3Name && itemImg3) && { name: image3Name, base64: itemImg3, edit: true },
-            ].filter(item=>item),
-          },()=>console.log('check state', this.state));
+          this.setState(
+            {
+              address,
+              rating,
+              donationId,
+              itemDescription: description,
+              itemQuantity: quantity,
+              itemQuantityPerUnit: quantityPerUnit,
+              itemTitle: title,
+              itemWeight: weight,
+              condition: condition == "Unused" ? 1 : 2,
+              // itemPic: [
+              //   (image1Name && itemImg1) && { name: image1Name, base64: itemImg1 },
+              //   (image2Name && itemImg2) && { name: image2Name, base64: itemImg2 },
+              //   (image3Name && itemImg3) && { name: image3Name, base64: itemImg3 },
+              // ].filter(item=>item),
+              categoriesArr: [],
+              expirationDate: moment(date, "LL hh:mm:ss").utc(true).toDate(),
+              expirationDateErr: null,
+              base64Images: [
+                image1Name &&
+                  itemImg1 && {
+                    name: image1Name,
+                    base64: itemImg1,
+                    edit: true,
+                  },
+                image2Name &&
+                  itemImg2 && {
+                    name: image2Name,
+                    base64: itemImg2,
+                    edit: true,
+                  },
+                image3Name &&
+                  itemImg3 && {
+                    name: image3Name,
+                    base64: itemImg3,
+                    edit: true,
+                  },
+              ].filter((item) => item),
+            },
+            () => console.log("check state", this.state)
+          );
         }
         // console.log(res)
         this.setState({
           category: isEdit
-            ? res.data.find((item) => item.DonationCategory === this.props.history.location.state?.data?.category)
-                ?.CategoryId
+            ? res.data.find(
+                (item) =>
+                  item.DonationCategory ===
+                  this.props.history.location.state?.data?.category
+              )?.CategoryId
             : res.data.length > 0
             ? res.data[0].CategoryId
             : 0,
@@ -148,7 +170,7 @@ class DonationForm extends Component {
 
   DonationFormInputChange = (event, fieldName) => {
     this.setState({ [fieldName]: event.target.value });
-    console.log('DonationFormInputChange',event.target.value);
+    console.log("DonationFormInputChange", event.target.value);
   };
 
   getBase64(file, cb) {
@@ -165,13 +187,13 @@ class DonationForm extends Component {
   ImagefileSelectedHandler = (e) => {
     console.log("file", e.target.files);
     const isEdit = this.props.history.location.state?.data ? true : false;
-    console.log('edit wala',isEdit);
+    console.log("edit wala", isEdit);
     // let idCardBase64 = "";
     var pattern = /[\/](jpg|png|jpeg)$/i;
     e.persist();
     if (e.target.files[0].type.match(pattern)) {
       this.getBase64(e.target.files[0], (result) => {
-        console.log('173 wala', isEdit);
+        console.log("173 wala", isEdit);
         this.setState({
           base64Images: [
             ...this.state.base64Images,
@@ -203,35 +225,34 @@ class DonationForm extends Component {
 
   displayImg = () => {
     // const isEdit = this.props.history.location.state?.data ? true : false;
-    console.log('display image', this.state.itemPic, this.state.base64Images)
-       const images = this.state.base64Images.map((img,i) => {
-        console.log('latest',img); 
-        if(img.edit){
-          return (
-            <div key={i}>
-              <i onClick={(event) => this.RemoveImg(event, img)}>
-                <FaTimesCircle size="1.15rem" />
-              </i>
-              <div className="upload-pic-container">
-                <img src={require(`../../serverImages/${img.name}`)} alt="..." />
-              </div>
+    console.log("display image", this.state.itemPic, this.state.base64Images);
+    const images = this.state.base64Images.map((img, i) => {
+      console.log("latest", img);
+      if (img.edit) {
+        return (
+          <div key={i}>
+            <i onClick={(event) => this.RemoveImg(event, img)}>
+              <FaTimesCircle size="1.15rem" />
+            </i>
+            <div className="upload-pic-container">
+              <img src={require(`../../serverImages/${img.name}`)} alt="..." />
             </div>
-          );
-         }else{
-          return (
-            <div key={i}>
-              <i onClick={(event) => this.RemoveImg(event, img)}>
-                <FaTimesCircle size="1.15rem" />
-              </i>
-              <div className="upload-pic-container">
-                <img src={img?.base64} alt="..." />
-              </div>
+          </div>
+        );
+      } else {
+        return (
+          <div key={i}>
+            <i onClick={(event) => this.RemoveImg(event, img)}>
+              <FaTimesCircle size="1.15rem" />
+            </i>
+            <div className="upload-pic-container">
+              <img src={img?.base64} alt="..." />
             </div>
-          );
-         }
-        
-      });
-    
+          </div>
+        );
+      }
+    });
+
     return <div className="item-pic ">{images}</div>;
   };
 
@@ -333,6 +354,8 @@ class DonationForm extends Component {
       // let picnames= this.state.itemPic.map((pic)=>{
       //     return pic.name;
       //     });
+      const isEdit = this.props.history.location.state?.data ? true : false;
+
       const DonationData = {
         Address: this.state.address,
         Rating: this.state.rating,
@@ -349,71 +372,107 @@ class DonationForm extends Component {
         Image1base64:
           this.state.base64Images[0] === undefined
             ? null
+            : !isEdit
+            ? this.state.base64Images[0].base64
+            : this.state.base64Images[0].base64 ===
+              this.props.history.location.state?.data?.itemImg1
+            ? null
             : this.state.base64Images[0].base64,
         Image2base64:
           this.state.base64Images[1] === undefined
+            ? null
+            : !isEdit
+            ? this.state.base64Images[1].base64
+            : this.state.base64Images[1].base64 ===
+              this.props.history.location.state?.data?.itemImg2
             ? null
             : this.state.base64Images[1].base64,
         Image3base64:
           this.state.base64Images[2] === undefined
             ? null
+            : !isEdit
+            ? this.state.base64Images[2].base64
+            : this.state.base64Images[2].base64 ===
+              this.props.history.location.state?.data?.itemImg3
+            ? null
             : this.state.base64Images[2].base64,
         Image1Name:
           this.state.base64Images[0] === undefined
+            ? null
+            : !isEdit
+            ? this.state.base64Images[0].name
+            : this.state.base64Images[0].name ===
+              this.props.history.location.state?.data?.image1Name
             ? null
             : this.state.base64Images[0].name,
         Image2Name:
           this.state.base64Images[1] === undefined
             ? null
+            : !isEdit
+            ? this.state.base64Images[1].name
+            : this.state.base64Images[1].name ===
+              this.props.history.location.state?.data?.image2Name
+            ? null
             : this.state.base64Images[1].name,
         Image3Name:
           this.state.base64Images[2] === undefined
             ? null
+            : !isEdit
+            ? this.state.base64Images[2].name
+            : this.state.base64Images[2].name ===
+              this.props.history.location.state?.data?.image3Name
+            ? null
             : this.state.base64Images[2].name,
 
-        ExpirationDate: requireExpirationDate.includes(Number(this.state.category))
+        ExpirationDate: requireExpirationDate.includes(
+          Number(this.state.category)
+        )
           ? this.state.expirationDate
           : null,
       };
-      console.log("data", DonationData);
-      const isEdit = this.props.history.location.state?.data ? true : false;
 
-      if(isEdit){
-        axios.put(`https://localhost:44357/donation/edit/${this.state.donationId} `,DonationData)
-        .then(res=>{
-          this.props.history.push('/profile');
-          
-        })
-        .catch(err=>{
-          console.log('Put Error',err)
-          toast.error(`Some error Occured: ${err}`, {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+      console.log("data", DonationData);
+      // const isEdit = this.props.history.location.state?.data ? true : false;
+
+      if (isEdit) {
+        axios
+          .put(
+            `https://localhost:44357/donation/edit/${this.state.donationId} `,
+            DonationData
+          )
+          .then((res) => {
+            this.props.history.push("/profile");
+          })
+          .catch((err) => {
+            console.log("Put Error", err);
+            toast.error(`Some error Occured: ${err}`, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
             });
-        });
-      }else{
-        axios.post(`https://localhost:44357/donation/post`,DonationData)
-        .then(res=>{
-          this.props.history.push('/profile');
-          
-        })
-        .catch(err=>{
-          console.log('Post Error',err);
-          toast.error(`Some error Occured: ${err}`, {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+          });
+      } else {
+        axios
+          .post(`https://localhost:44357/donation/post`, DonationData)
+          .then((res) => {
+            this.props.history.push("/profile");
+          })
+          .catch((err) => {
+            console.log("Post Error", err);
+            toast.error(`Some error Occured: ${err}`, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
             });
-        });
+          });
       }
 
       // this.setState(initialDonationState);
@@ -496,7 +555,9 @@ class DonationForm extends Component {
                     className="form-control"
                   >
                     {this.state.categoriesArr.map((option) => (
-                      <option key={option.id} value={option.id}>{option.name}</option>
+                      <option key={option.id} value={option.id}>
+                        {option.name}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -650,7 +711,9 @@ class DonationForm extends Component {
                 />
 
                 <div>
-                  {this.state.base64Images.length > 0 ? this.displayImg() : null}
+                  {this.state.base64Images.length > 0
+                    ? this.displayImg()
+                    : null}
                 </div>
               </div>
               <div
@@ -725,7 +788,9 @@ class DonationForm extends Component {
                   />
                 </div>
               </div>
-              {requireExpirationDate.includes(parseFloat(this.state.category)) && (
+              {requireExpirationDate.includes(
+                parseFloat(this.state.category)
+              ) && (
                 <div className="col-md-4 col-sm-12">
                   <div className="form-group">
                     <label>Expiration Date:</label>
@@ -734,7 +799,13 @@ class DonationForm extends Component {
                       dateFormat="dd/MM/yyyy"
                       selected={this.state.expirationDate}
                       onChange={(date) => {
-                        console.log("date", date, moment(date).isAfter(), date.getDate(), date.getMonth());
+                        console.log(
+                          "date",
+                          date,
+                          moment(date).isAfter(),
+                          date.getDate(),
+                          date.getMonth()
+                        );
                         if (moment(date).isAfter()) {
                           this.setState({
                             expirationDate: date,
