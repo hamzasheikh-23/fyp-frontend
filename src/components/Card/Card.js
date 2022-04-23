@@ -84,9 +84,9 @@ class Card extends React.Component {
       badgeClass = "warning";
     }
     let images = [
-      this.props.itemImg1,
-      this.props.itemImg2,
-      this.props.itemImg3,
+      this.props.image1Name,
+      this.props.image2Name,
+      this.props.image3Name,
     ];
 
     return (
@@ -101,7 +101,7 @@ class Card extends React.Component {
         >
           <img
             src={
-              this.props.itemImg1 ||
+              require(`../../serverImages/${this.props.image1Name}`) ||
               "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
             }
             alt=".."

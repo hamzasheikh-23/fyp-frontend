@@ -89,16 +89,16 @@ class DonationDetailsModal extends Component{
             <div  className="container"> 
             <div className="row">
               <div className="col-lg-4 col-md-6 col-sm-12">
-                {this.props.itemImages[0]===null? null : <img src={this.props.itemImages[0]} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />}
+                {this.props.itemImages[0]===null? null : <img src={require(`../../serverImages/${this.props.itemImages[0]}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />}
               </div>
               
               {this.props.itemImages[1]===null? null : <div className="col-lg-4 col-md-6 col-sm-12">
-                <img src={this.props.itemImages[1]} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />
+                <img src={require(`../../serverImages/${this.props.itemImages[1]}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />
                 </div>}
             
               
               {this.props.itemImages[2]===null? null : <div className="col-lg-4 col-md-6 col-sm-12">
-                <img src={this.props.itemImages[2]} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />
+                <img src={require(`../../serverImages/${this.props.itemImages[2]}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />
                 </div>}
             
             </div>
