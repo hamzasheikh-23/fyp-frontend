@@ -15,66 +15,66 @@ import moment from "moment";
 
 class Profile extends React.Component {
   componentDidMount() {
-    this.setState({
-      items: data.map((item) => ({
-        title: item.Title,
-        quantity: item.Quantity,
-        quantityPerUnit: item.QuantityPerUnit,
-        date: item.ExpiryDate ? moment(item.ExpiryDate).format('LL hh:mm:ss'): null,
-        weight: item.Weight,
-        description: item.Description,
-        category: item.Category,
-        donationId: item.DonationId,
-        rating: item.Rating,
-        condition: item.Condition,
-        itemImg1: item.Image1base64,
-        itemImg2: item.Image2base64,
-        itemImg3: item.Image3base64,
-        image1Name: item.Image1Name,
-        image2Name: item.Image2Name,
-        image3Name: item.Image3Name,
-        postedDate: item.PostedDate ? moment(item.PostedDate).format('LL hh:mm:ss'): null,
-        status: item.Status,
-        isActive: item.IsActive,
-      })),
-    });
-    // this.getData()
+    // this.setState({
+    //   items: data.map((item) => ({
+    //     title: item.Title,
+    //     quantity: item.Quantity,
+    //     quantityPerUnit: item.QuantityPerUnit,
+    //     date: item.ExpiryDate ? moment(item.ExpiryDate).format('LL hh:mm:ss'): null,
+    //     weight: item.Weight,
+    //     description: item.Description,
+    //     category: item.Category,
+    //     donationId: item.DonationId,
+    //     rating: item.Rating,
+    //     condition: item.Condition,
+    //     itemImg1: item.Image1base64,
+    //     itemImg2: item.Image2base64,
+    //     itemImg3: item.Image3base64,
+    //     image1Name: item.Image1Name,
+    //     image2Name: item.Image2Name,
+    //     image3Name: item.Image3Name,
+    //     postedDate: item.PostedDate ? moment(item.PostedDate).format('LL hh:mm:ss'): null,
+    //     status: item.Status,
+    //     isActive: item.IsActive,
+    //   })),
+    // });
+    this.getData()
   }
 
   getData = () => {
-    // axios
-    //   .get(
-    //     `https://localhost:44357/donation/get/${localStorage.getItem(
-    //       "donorID"
-    //     )}?status=""&isActive=""`
-    //   )
-    //   .then((res) => {
-    //     console.log(res);
-    //     this.setState({
-    //       items: res.data.map((item) => ({
-    //         title: item.Title,
-    //         quantity: item.Quantity,
-    //         quantityPerUnit: item.QuantityPerUnit,
-    //         date: item.ExpiryDate,
-    //         weight: item.Weight,
-    //         description: item.Description,
-    //         category: item.Category,
-    //         donationId: item.DonationId,
-    //         rating: item.Rating,
-    //         condition: item.Condition,
-    //         itemImg1: item.Image1base64,
-    //         itemImg2: item.Image2base64,
-    //         itemImg3: item.Image3base64,
-    //         image1Name: item.Image1Name,
-    //         image2Name: item.Image2Name,
-    //         image3Name: item.Image3Name,
-    //         postedDate: item.PostedDate,
-    //         status: item.Status,
-    //         isActive: item.IsActive,
-    //       })),
-    //     });
-    //   })
-    //   .catch((err) => console.log(err));
+    axios
+      .get(
+        `https://localhost:44357/donation/get/${localStorage.getItem(
+          "donorID"
+        )}?status=""&isActive=""`
+      )
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          items: res.data.map((item) => ({
+            title: item.Title,
+            quantity: item.Quantity,
+            quantityPerUnit: item.QuantityPerUnit,
+            date: item.ExpiryDate,
+            weight: item.Weight,
+            description: item.Description,
+            category: item.Category,
+            donationId: item.DonationId,
+            rating: item.Rating,
+            condition: item.Condition,
+            itemImg1: item.Image1base64,
+            itemImg2: item.Image2base64,
+            itemImg3: item.Image3base64,
+            image1Name: item.Image1Name,
+            image2Name: item.Image2Name,
+            image3Name: item.Image3Name,
+            postedDate: item.PostedDate,
+            status: item.Status,
+            isActive: item.IsActive,
+          })),
+        });
+      })
+      .catch((err) => console.log(err));
   };
 
   state = {

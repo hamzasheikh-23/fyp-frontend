@@ -8,7 +8,8 @@ class ProceedOrderModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // msg: "",
+      msg: "",
+      msgErr: "",
       remainingRequiredQuantity:0,
       donationQuantity:0,
       donationQuantityErr: "",
@@ -53,9 +54,9 @@ class ProceedOrderModal extends Component {
         <Modal.Body>
           <div className="container">
             <form action="/" noValidate>
-              <div className="row">
+              <div className="row mb-2">
               <div className="col-lg-6 col-md-12">
-                <label htmlFor="item-quantity" className="my-donation-label">
+                <label htmlFor="item-quantity" className="my-donation-label mb-2">
                   Add quantity you want to donate
                 </label>
                 <input
@@ -80,7 +81,7 @@ class ProceedOrderModal extends Component {
                 </div>
               </div>
               <div className="col-lg-6 col-md-12">
-                <label htmlFor="item-quantity" className="my-donation-label">
+                <label htmlFor="item-quantity" className="my-donation-label mb-2">
                   Remaining quantity required for the case
                 </label>
                 <input
@@ -108,7 +109,7 @@ class ProceedOrderModal extends Component {
               </div>
               </div>
               <div className="form-group">
-                <label htmlFor="requestResponse">
+                <label className="mb-2" htmlFor="requestResponse">
                   Response Message (optional)
                 </label>
                 <textarea
