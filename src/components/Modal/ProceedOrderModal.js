@@ -81,19 +81,19 @@ class ProceedOrderModal extends Component {
                 </div>
               </div>
               <div className="col-lg-6 col-md-12">
-                <label htmlFor="item-quantity" className="my-donation-label mb-2">
+                <label htmlFor="remaining-quantity" className="my-donation-label mb-2">
                   Remaining quantity required for the case
                 </label>
                 <input
-                  name="item-quantity"
+                  name="remaining-quantity"
                   value={this.state.remainingRequiredQuantity}
                   onChange={(event) =>
                     this.DonationFormInputChange(event, "remainingRequiredQuantity")
                   }
                   style={{color: this.state.remainingRequiredQuantityErr ? 'red' : '#212529'}}
                   type="number"
-                  id="item-quantity"
-                  placeholder="Quantity"
+                  id="remaining-quantity"
+                  placeholder="Remaining quantity"
                   className="form-control"
                   disabled={true}
                 />
@@ -107,6 +107,31 @@ class ProceedOrderModal extends Component {
                   {this.state.remainingRequiredQuantityErr}
                 </div>
               </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="item-quantity" className="my-donation-label mb-2">
+                  Add quantity you want to donate
+                </label>
+                <input
+                  name="item-quantity"
+                  value={this.state.donationQuantity}
+                  onChange={(event) =>
+                    this.DonationFormInputChange(event, "donationQuantity")
+                  }
+                  type="number"
+                  id="item-quantity"
+                  placeholder="Quantity"
+                  className="form-control"
+                />
+                <div
+                  style={{
+                    fontSize: "12.8px",
+                    color: "#DC3545",
+                    marginLeft: "10px",
+                  }}
+                >
+                  {this.state.donationQuantityErr}
+                </div>
               </div>
               <div className="form-group">
                 <label className="mb-2" htmlFor="requestResponse">

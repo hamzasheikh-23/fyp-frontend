@@ -44,9 +44,9 @@ class Profile extends React.Component {
   getData = () => {
     axios
       .get(
-        `https://localhost:44357/donation/get/${localStorage.getItem(
+        `https://localhost:44357/donation/get?donorId=${localStorage.getItem(
           "donorID"
-        )}?status=""&isActive=""`
+        )}`
       )
       .then((res) => {
         console.log(res);
