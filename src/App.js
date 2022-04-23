@@ -218,15 +218,17 @@ const App = () => {
          <RoleRouteProtection
           exact
           path="/askdonation"
-          component={() => (
-            <AskDonationForm
-              formheading={"Ask for a Donation!"}
-              descplaceholder={"Describe the need in detail"}
-              buttontext={"Submit Request"}
-              iconimageurl={"../../images/pngdonat.png"}
-              bgclass={"my-background-4"}
-            />
-          )}
+          component={AskDonationForm}
+          // component={() => (
+          //   <AskDonationForm
+          //     history={props.history}
+          //     formheading={"Ask for a Donation!"}
+          //     descplaceholder={"Describe the need in detail"}
+          //     buttontext={"Submit Request"}
+          //     iconimageurl={"../../images/pngdonat.png"}
+          //     bgclass={"my-background-4"}
+          //   />
+          // )}
           validUser="ngo"
           // redirectTo="/"
         />

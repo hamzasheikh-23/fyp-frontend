@@ -1,10 +1,10 @@
 import React from "react";
-import DonationDetailsModal from "../Modal/DonationDetailsModal";
+import DetailModal from "./DetailModal";
 import { Badge } from "react-bootstrap";
 import axios from "axios";
 import { FaTrash, FaPen } from "react-icons/fa";
 
-class Card extends React.Component {
+class PreviousCard extends React.Component {
   state = {
     addDetailModalShow: false,
   };
@@ -73,21 +73,7 @@ class Card extends React.Component {
     // console.log("card", this.props);
     let addDetailModalClose = () =>
       this.setState({ addDetailModalShow: false });
-    let badgeClass = "primary";
-    if (this.props.status === "reject") {
-      badgeClass = "danger";
-    }
-    if (this.props.status === "approve") {
-      badgeClass = "success";
-    }
-    if (this.props.status === "pending") {
-      badgeClass = "warning";
-    }
-    let images = [
-      this.props.itemImg1,
-      this.props.itemImg2,
-      this.props.itemImg3,
-    ];
+  
 
     return (
       <div style={{ margin: "0 10px" }}>
@@ -101,7 +87,7 @@ class Card extends React.Component {
         >
           <img
             src={
-              this.props.itemImg1 ||
+              this.props.image ||
               "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
             }
             alt=".."
@@ -184,16 +170,16 @@ class Card extends React.Component {
             </button>
             
           </div>
-        </div>
-        <DonationDetailsModal
-          itemImages={images}
+          <DetailModal
           data={this.props}
           show={this.state.addDetailModalShow}
           onHide={addDetailModalClose}
         />
+        </div>
+        
       </div>
     );
   }
 }
 
-export default Card;
+export default PreviousCard;

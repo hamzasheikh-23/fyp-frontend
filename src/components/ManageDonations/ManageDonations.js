@@ -16,6 +16,7 @@ import CardsGrid from "../CardsGrid/CardsGrid";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./ManageDonations.css";
+import PreviousCard from "./PreviousCard";
 
 class ManageDonations extends Component {
   componentDidMount() {
@@ -43,7 +44,22 @@ class ManageDonations extends Component {
 
       //****THIS arrayforcards is for testing, its contents will be replaced by actual values from DATABASE***
 
-      arrayforcards: [],
+      arrayforcards: [
+        {
+          title:'abc',
+          description:'abs'
+        },
+        {
+          title:'abc',
+          description:'abs'
+        },{
+          title:'abc',
+          description:'abs'
+        },{
+          title:'abc',
+          description:'abs'
+        }
+      ],
 
       //****THIS arrayforcards is for testing, its contents will be replaced by actual values from DATABASE***
 
@@ -124,54 +140,26 @@ class ManageDonations extends Component {
             <br></br>
             <ul className="u-list">
               <div className="divforbuttons">
-                <Link to="/askdonation" target="_blank">
+                <Link to="/askdonation" >
                   <Button variant="outline-info" className="buttonlist">
                     <li>Ask for a new Donation</li>
                   </Button>
                 </Link>
 
-                <Link to="/donor-replies" target="_blank">
+                <Link to="/donor-replies" >
                   <Button variant="outline-info" className="buttonlist">
                     <li>View replies from Donors</li>
                   </Button>
                 </Link>
               </div>
               <hr></hr>
-              <li>Previously Asked Donations:</li>
+              <h3>Previously Asked Donations:</h3>
 
-              <Card className="carddeckclass">
+              <div className="cards-container-ngo">
                 {this.state.arrayforcards.map((data) => (
-                  <div className="">
-                    <Card className="bg-dark text-white  ">
-                      <Card.Img
-                        src={`http://localhost:8000/storage/cover_images/${data.image[0].imageurl}`}
-                        alt="Card image"
-                        className="img-in-card cardimgsize"
-                      />
-                      <Card.ImgOverlay
-                        className="img-in-card allowscroll"
-                        id="style-1"
-                      >
-                        <Card.Title>{data.title}</Card.Title>
-
-                        <Card.Text
-                          className="img-in-card"
-                          style={{ align: "justify" }}
-                        >
-                          {data.description}
-                        </Card.Text>
-                      </Card.ImgOverlay>
-                      <Button
-                        variant="primary"
-                        className="bold-text"
-                        onClick={() => this.deleteCard(data.requestedItem_id)}
-                      >
-                        {"Delete Request"}
-                      </Button>
-                    </Card>
-                  </div>
+                  <PreviousCard {...data} />
                 ))}
-              </Card>
+              </div>
             </ul>
           </div>
         </div>

@@ -36,6 +36,8 @@ const initialDonationState = {
   expirationDateErr: null,
   base64Images: [],
   donationId: null,
+  address:"",
+  addressError:"",
 };
 
 const requireExpirationDate = [3, 2];
@@ -76,6 +78,7 @@ class DonationForm extends Component {
         const isEdit = this.props.history.location.state?.data ? true : false;
         if (isEdit) {
           const {
+            address,
             title,
             quantity,
             quantityPerUnit,
@@ -97,6 +100,7 @@ class DonationForm extends Component {
             isActive,
           } = this.props.history.location.state.data;
           this.setState({
+            address,
             rating,
             donationId,
             itemDescription: description,
@@ -218,6 +222,8 @@ class DonationForm extends Component {
     let itemQuantityError = "";
     let itemQuantityPerUnitError = "";
     let itemWeightError = "";
+    let addressError = "";
+
     const validTitle = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
     const validWeight = /^[0-9]*(\.[0-9]{0,2})?$/;
     const validDesc = /^[^\s]+(?: [^\s]+)*$/; //no concurrent spaces and no boundary spaces
@@ -226,6 +232,12 @@ class DonationForm extends Component {
       itemDescriptionError = "required";
     } else if (!validDesc.test(this.state.itemDescription)) {
       itemDescriptionError = "No boundary spaces allowed";
+    }
+
+    if (!this.state.address) {
+      addressError = "required";
+    } else if (!validDesc.test(this.state.address)) {
+      addressError = "No boundary spaces allowed";
     }
 
     if (!this.state.itemTitle) {
@@ -275,10 +287,12 @@ class DonationForm extends Component {
       itemQuantityPerUnitError ||
       itemTitleError ||
       this.state.imageErr ||
-      this.state.expirationDateErr
+      this.state.expirationDateErr ||
+      addressError
     ) {
       this.setState({
         ratingError,
+        addressError,
         itemDescriptionError,
         itemWeightError,
         itemQuantityError,
@@ -300,6 +314,7 @@ class DonationForm extends Component {
       //     return pic.name;
       //     });
       const DonationData = {
+        Address: this.state.address,
         Rating: this.state.rating,
         Category: parseFloat(this.state.category),
         Description: this.state.itemDescription,
@@ -342,25 +357,28 @@ class DonationForm extends Component {
       };
       console.log("data", DonationData);
       const isEdit = this.props.history.location.state?.data ? true : false;
-      // axios
-      // .post("https://localhost:44357/donation/post", DonationData)
-      // .then((res) => {
-      //    // this.props.history.push("/profile")
-      //       this.props.history.push({
-      //   pathname: "/googleMap",
-      //   state: { data: DonationData },
-      // });
-      //   console.log("response: ", res);
-      // })
-      // .catch((err) => {
-      //   console.log("error: ", err);
-      // });
 
-      this.setState(initialDonationState);
-      this.props.history.push({
-        pathname: "/googleMap",
-        state: { data: DonationData, isEdit, donationId: this.state.donationId },
-      });
+      if(isEdit){
+        axios.put(`https://localhost:44357/donation/edit/${this.state.donationId} `,DonationData)
+        .then(res=>{
+          this.props.history.push('/profile');
+          
+        })
+        .catch(err=>console.log('Put Error',err));
+      }else{
+        axios.post(`https://localhost:44357/donation/post`,DonationData)
+        .then(res=>{
+          this.props.history.push('/profile');
+          
+        })
+        .catch(err=>console.log('Post Error',err));
+      }
+
+      // this.setState(initialDonationState);
+      // this.props.history.push({
+      //   pathname: "/googleMap",
+      //   state: { data: DonationData, isEdit, donationId: this.state.donationId },
+      // });
     }
   };
   // getFiles(files){
@@ -520,6 +538,33 @@ class DonationForm extends Component {
                 >
                   {this.state.itemWeightError}
                 </div>
+              </div>
+            </div>
+            <div className="form-group">
+              <label htmlFor="pickup-address" className="my-donation-label">
+                Pickup Address
+              </label>
+
+              <textarea
+                name="pickup-address"
+                // rows="10"
+                // cols="50"
+                value={this.state.address}
+                onChange={(event) =>
+                  this.DonationFormInputChange(event, "address")
+                }
+                id="pickup-address"
+                placeholder="Add Pickup Address"
+                className="form-control"
+              ></textarea>
+              <div
+                style={{
+                  fontSize: "12.8px",
+                  color: "#DC3545",
+                  marginLeft: "10px",
+                }}
+              >
+                {this.state.addressError}
               </div>
             </div>
             <div className="form-group">

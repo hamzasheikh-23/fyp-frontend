@@ -4,7 +4,7 @@ import axios from 'axios';
 import Geocode from "react-geocode";
 import Autocomplete from 'react-google-autocomplete';
 
-Geocode.setApiKey( "AIzaSyDoJnlxSdzT8YfshmuwdxG-BJL3r7biC5Y" );
+Geocode.setApiKey( "AIzaSyDoJnlxSdzT8YfshmuwdxG-BJL3r7biC5Y" ); //AIzaSyB0l8QlzV5lUXv-lmk6GMF-MIDenVRhaEw
 Geocode.enableDebug();
 
 class Map extends Component{

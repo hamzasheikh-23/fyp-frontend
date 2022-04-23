@@ -65,7 +65,7 @@
 
 
 #container{
-    max-width: max-content;
+    max-width: 500px;
     display: inline-block;
 
 }

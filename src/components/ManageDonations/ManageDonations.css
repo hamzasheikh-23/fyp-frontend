@@ -5,6 +5,15 @@ list-style-type: none;
 
 }
 
+.cards-container-ngo{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+   margin-bottom: 3rem;
+   min-width: 100%;
+   background-color: transparent;
+}
+
 .u-list li{
   background: url('../../images/diamond-bullet.png') no-repeat left top;
   background-size: 30px;
