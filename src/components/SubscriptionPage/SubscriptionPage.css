@@ -31,12 +31,12 @@
 }
 
 .subscription .card .card-body .amount{
-    font-size: x-large;
+    font-size: 40px;
     font-weight: bold;
     color: rgb(38, 93, 165);
 }
 
 .subscription .card .card-body .amount-tag{
     white-space: nowrap;
-    font-size: 10px;
+    font-size: 16px;
 }

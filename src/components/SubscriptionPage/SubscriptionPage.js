@@ -12,47 +12,59 @@ import item5 from "../../images/hope.png";
 import axios from "axios";
 
 class SubscriptionPage extends React.Component {
-  // componentDidMount() {
-  //   axios
-  //     .get(`https://localhost:44357/donation/get/${localStorage.getItem("donorID")}`)
-  //     .then((res) => {
-  //       console.log(res)
-  //       this.setState({ data: res.data.map(item=>({
-  //         title:item.Title,
-  //               quantity:item.Quantity,
-  //               date:item.ExpiryDate,
-  //               weight:item.Weight,
-  //               quantityPerUnit:item.QuantityPerUnit,
-  //               description:item.Description,
-  //       })) });
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
+  componentDidMount() {
+    axios
+      .get(`https://localhost:44357/subscription/get`)
+      .then((res) => {
+        console.log(res)
+        this.setState({ data: res.data.map(item=>({
+          id: item.planID,
+          name: item.planName,
+          amountPerMonth: item.Amount,
+          description: item.Description.split('\n')
+        })) });
+      })
+      .catch((err) => console.log(err));
+  }
   state = {
     siderDrawerOpen: false,
     donor: true,
     data: [
-      {
-        id: 0,
-        name: "SILVER",
-        amountPerMonth: 10,
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-      },
-      {
-        id: 1,
-        name: "GOLD",
-        amountPerMonth: 100,
-        description:
-          "Lorem ipsum tion ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-      },
-      {
-        id: 2,
-        name: "PLATINUM",
-        amountPerMonth: 1000,
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-      },
+      // {
+      //   id: 0,
+      //   name: "SILVER",
+      //   amountPerMonth: 10,
+      //   description:
+      //     ["Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut", "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"],
+      // },
+      // {
+      //   id: 0,
+      //   name: "SILVER",
+      //   amountPerMonth: 10,
+      //   description:
+      //     ["Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut", "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"],
+      // },
+      // {
+      //   id: 0,
+      //   name: "SILVER",
+      //   amountPerMonth: 10,
+      //   description:
+      //     ["Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut", "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"],
+      // },
+      // {
+      //   id: 1,
+      //   name: "GOLD",
+      //   amountPerMonth: 100,
+      //   description:
+      //     "Lorem ipsum tion ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+      // },
+      // {
+      //   id: 2,
+      //   name: "PLATINUM",
+      //   amountPerMonth: 1000,
+      //   description:
+      //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+      // },
     ],
   };
 
@@ -99,12 +111,12 @@ class SubscriptionPage extends React.Component {
                         <span className="amount">{plan.amountPerMonth}</span>{" "}
                         PKR/month
                       </div>
-                      <div className="amount-tag">
+                      {/* <div className="amount-tag">
                         <span className="amount">
                           {plan.amountPerMonth * 12}
                         </span>{" "}
                         PKR/year
-                      </div>
+                      </div> */}
                     </div>
                     <button
                       onClick={() => this.subscribe(plan.id)}
@@ -112,8 +124,14 @@ class SubscriptionPage extends React.Component {
                     >
                       GET STARTED
                     </button>
-
-                    <p class="card-text">{plan.description}</p>
+                    <ul>
+                    {
+                        plan.description.map(text=>(
+                          <li><p class="card-text">{text}</p></li>
+                        ))
+                      }
+                    </ul>
+                      
                   </div>
                 </div>
               </div>

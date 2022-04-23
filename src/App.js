@@ -41,6 +41,7 @@ const App = () => {
 
   return (
     <Router>
+      {/* <img src={require('./images/book.png')} /> */}
       <Switch>
         <Route path="/" exact component={MainPage} />
         <RoleRouteProtection

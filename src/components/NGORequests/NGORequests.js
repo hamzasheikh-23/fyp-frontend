@@ -79,13 +79,13 @@ class NGORequests extends React.Component {
     console.log('filteredContect')
 
     if (this.state.selectedNgo & this.state.selectedCategory) {
-      url = `https://localhost:44357/case/get/${this.state.selectedNgo}?status=approve&isActive=true&category=${this.state.selectedCategory}`;
+      url = `https://localhost:44357/case/get?ngoId=${this.state.selectedNgo}&status=approve&isActive=true&category=${this.state.selectedCategory}`;
     } else if (this.state.selectedNgo & !this.state.selectedCategory) {
-      url = `https://localhost:44357/case/get/${this.state.selectedNgo}?status=approve&isActive=true&category=all`;
+      url = `https://localhost:44357/case/get?ngoId=${this.state.selectedNgo}&status=approve&isActive=true`;
     } else if (!this.state.selectedNgo & this.state.selectedCategory) {
       url = `https://localhost:44357/case/get?status=approve&isActive=true&category=${this.state.selectedCategory}`;
     } else if (!this.state.selectedNgo & !this.state.selectedCategory) {
-      url = `https://localhost:44357/case/get?status=approve&isActive=true&category=all`;
+      url = `https://localhost:44357/case/get?status=approve&isActive=true`;
     }
     console.log('filteredContect',url)
 
