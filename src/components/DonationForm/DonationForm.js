@@ -10,6 +10,7 @@ import history from "../../assets/history";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { ItemDonation } from "../../actions";
+import { toast } from 'react-toastify';
 // import FileBase64 from "react-file-base64";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -147,7 +148,7 @@ class DonationForm extends Component {
 
   DonationFormInputChange = (event, fieldName) => {
     this.setState({ [fieldName]: event.target.value });
-    console.log(event.target.value);
+    console.log('DonationFormInputChange',event.target.value);
   };
 
   getBase64(file, cb) {
@@ -321,7 +322,7 @@ class DonationForm extends Component {
         Title: this.state.itemTitle,
         Quantity: parseFloat(this.state.itemQuantity),
         Weight: parseFloat(this.state.itemWeight),
-        Condition: this.state.condition,
+        ConditionId: this.state.condition,
         DonorId: localStorage.getItem("donorID"),
         QuantityPerUnit: parseFloat(this.state.itemQuantityPerUnit),
         // status: "Pending",
@@ -364,14 +365,36 @@ class DonationForm extends Component {
           this.props.history.push('/profile');
           
         })
-        .catch(err=>console.log('Put Error',err));
+        .catch(err=>{
+          console.log('Put Error',err)
+          toast.error(`Some error Occured: ${err}`, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+        });
       }else{
         axios.post(`https://localhost:44357/donation/post`,DonationData)
         .then(res=>{
           this.props.history.push('/profile');
           
         })
-        .catch(err=>console.log('Post Error',err));
+        .catch(err=>{
+          console.log('Post Error',err);
+          toast.error(`Some error Occured: ${err}`, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+        });
       }
 
       // this.setState(initialDonationState);
@@ -633,7 +656,7 @@ class DonationForm extends Component {
                         type="radio"
                         name="condition"
                         value={2}
-                        checked={this.state.condition === 2}
+                        checked={this.state.condition == 2}
                         onChange={(event) =>
                           this.DonationFormInputChange(event, "condition")
                         }
@@ -646,7 +669,7 @@ class DonationForm extends Component {
                         type="radio"
                         name="condition"
                         value={1}
-                        checked={this.state.condition === 1}
+                        checked={this.state.condition == 1}
                         onChange={(event) =>
                           this.DonationFormInputChange(event, "condition")
                         }

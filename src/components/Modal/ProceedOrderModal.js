@@ -8,7 +8,13 @@ class ProceedOrderModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      msg: "",
+      // msg: "",
+      remainingRequiredQuantity:0,
+      donationQuantity:0,
+      donationQuantityErr: "",
+      address:"",
+      addressErr:"",
+
     };
   }
   ResponseFormSubmitHandler = () => {
@@ -47,6 +53,60 @@ class ProceedOrderModal extends Component {
         <Modal.Body>
           <div className="container">
             <form action="/" noValidate>
+              <div className="row">
+              <div className="col-lg-6 col-md-12">
+                <label htmlFor="item-quantity" className="my-donation-label">
+                  Add quantity you want to donate
+                </label>
+                <input
+                  name="item-quantity"
+                  value={this.state.donationQuantity}
+                  onChange={(event) =>
+                    this.DonationFormInputChange(event, "donationQuantity")
+                  }
+                  type="number"
+                  id="item-quantity"
+                  placeholder="Quantity"
+                  className="form-control"
+                />
+                <div
+                  style={{
+                    fontSize: "12.8px",
+                    color: "#DC3545",
+                    marginLeft: "10px",
+                  }}
+                >
+                  {this.state.donationQuantityErr}
+                </div>
+              </div>
+              <div className="col-lg-6 col-md-12">
+                <label htmlFor="item-quantity" className="my-donation-label">
+                  Remaining quantity required for the case
+                </label>
+                <input
+                  name="item-quantity"
+                  value={this.state.remainingRequiredQuantity}
+                  onChange={(event) =>
+                    this.DonationFormInputChange(event, "remainingRequiredQuantity")
+                  }
+                  style={{color: this.state.remainingRequiredQuantityErr ? 'red' : '#212529'}}
+                  type="number"
+                  id="item-quantity"
+                  placeholder="Quantity"
+                  className="form-control"
+                  disabled={true}
+                />
+                <div
+                  style={{
+                    fontSize: "12.8px",
+                    color: "#DC3545",
+                    marginLeft: "10px",
+                  }}
+                >
+                  {this.state.remainingRequiredQuantityErr}
+                </div>
+              </div>
+              </div>
               <div className="form-group">
                 <label htmlFor="requestResponse">
                   Response Message (optional)

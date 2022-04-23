@@ -1,5 +1,6 @@
 import React from "react";
 import ProceedOrderModal from "../Modal/ProceedOrderModal";
+import {checkProperty}  from '../../assets/utils'
 
 class RequestCard extends React.Component {
   state = {
@@ -22,7 +23,7 @@ class RequestCard extends React.Component {
             {this.props.ngoname}
           </h6>
           <p class="card-text ngo-request-card-text ">{this.props.des}</p>
-          <p class="card-text ngo-request-card-text mb-5"><span style={{fontWeight:'bold'}}>Required:</span> &nbsp; {`${this.props.quantity} ${this.props.unit}`}</p>
+          <p class="card-text ngo-request-card-text mb-5"><span style={{fontWeight:'bold'}}>Required:</span> &nbsp; {`${checkProperty('quantity',this.props)} ${checkProperty('unit',this.props)}`}</p>
           <div style={{display:'flex', justifyContent:'space-between', flexWrap:'wrap', alignItems:'center'}} >
           <h6 className="text-muted ">
             {this.props.date}

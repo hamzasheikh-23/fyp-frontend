@@ -408,8 +408,8 @@ class NGORequests extends React.Component {
                   }
                   title={request.caseTitle}
                   reqId={request.caseId}
-                  quantity={10}
-                  unit={"pieces"}
+                  quantity={request.quantity}
+                  unit={request.unit}
                   ngoname={request.ngoName || ""}
                   des={request.description}
                   date={moment(request.postedDate).format("LL hh:mm:ss")}

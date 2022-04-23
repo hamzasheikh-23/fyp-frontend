@@ -31,6 +31,8 @@ import DoubleLoginProtection from "./components/RouteProtection/DoubleLoginProte
 import AlreadyLoggedIn from "./components/AlreadyLoggedIn/AlreadyLoggedIn";
 import RoleRouteProtection from "./components/RouteProtection/RoleRouteProtection";
 import UnauthorizePage from "./components/UnauthorizePage/UnauthorizePage";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   useEffect(() => {
@@ -282,6 +284,22 @@ const App = () => {
           // redirectTo="/"
         />
       </Switch>
+      <ToastContainer
+          position="top-center"
+          // autoClose={false}
+          // hideProgressBar
+          // newestOnTop={false}
+          // closeOnClick
+          rtl={false}
+          // pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover
+
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+pauseOnFocusLoss
+        />
     </Router>
   );
 };
