@@ -12,6 +12,7 @@ class ProceedOrderModal extends Component {
       msgErr: "",
       remainingRequiredQuantity:50,
       remainingRequiredQuantityErr:"",
+      remainingRequiredQuantityOriginal: 50,
       donationQuantity:0,
       donationQuantityErr: "",
       address:"",
@@ -78,24 +79,25 @@ class ProceedOrderModal extends Component {
         Message: this.state.msg,
         CaseId: this.props.reqId,
         DonorId: localStorage.getItem("donorID"),
-        Quantity: this.state.donationQuantity
+        Quantity: this.state.donationQuantity,
+        RemainingQuantity: this.state.remainingRequiredQuantity
       };
       console.log("data of response", response);
-      axios
-        .post("/api/storeResponse", response)
-        .then((res) => {
-          console.log("success", res);
-          this.props.fetchData();
-          this.props.onHide();
-        })
-        .catch((err) => console.log("error", err));
+      // axios
+      //   .post("/api/storeResponse", response)
+      //   .then((res) => {
+      //     console.log("success", res);
+      //     this.props.fetchData();
+      //     this.props.onHide();
+      //   })
+      //   .catch((err) => console.log("error", err));
     }
 
   };
 
   amountGenerator=(e)=>{
     let amount= e.target.value;
-    let remaining=this.state.remainingRequiredQuantity
+    let remaining=this.state.remainingRequiredQuantityOriginal
     if(isNaN(parseFloat(e.target.value))){
       amount=0;
     }
@@ -194,7 +196,7 @@ class ProceedOrderModal extends Component {
                   onChange={(event) =>
                     this.changeHandler(event, "address")
                   }
-                  type="number"
+                  type="text"
                   id="address"
                   placeholder="Address here..."
                   className="form-control"

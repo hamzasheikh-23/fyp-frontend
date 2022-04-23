@@ -164,6 +164,7 @@ class DonationForm extends Component {
 
   ImagefileSelectedHandler = (e) => {
     console.log("file", e.target.files);
+    const isEdit = this.props.history.location.state?.data ? true : false;
     // let idCardBase64 = "";
     var pattern = /[\/](jpg|png|jpeg)$/i;
     e.persist();
@@ -172,7 +173,7 @@ class DonationForm extends Component {
         this.setState({
           base64Images: [
             ...this.state.base64Images,
-            { name: e.target.files[0].name, base64: result },
+            { name: e.target.files[0].name, base64: result, edit: isEdit },
           ],
           imageErr: null,
         });
@@ -199,36 +200,35 @@ class DonationForm extends Component {
   };
 
   displayImg = () => {
-    const isEdit = this.props.history.location.state?.data ? true : false;
+    // const isEdit = this.props.history.location.state?.data ? true : false;
     console.log('display image', this.state.itemPic, this.state.base64Images)
-    let images;
-    if(isEdit){
-       images = this.state.base64Images.map((img,i) => {
-        return (
-          <div key={i}>
-            <i onClick={(event) => this.RemoveImg(event, img)}>
-              <FaTimesCircle size="1.15rem" />
-            </i>
-            <div className="upload-pic-container">
-              <img src={require(`../../serverImages/${img.name}`)} alt="..." />
+       const images = this.state.base64Images.map((img,i) => {
+         if(img.edit){
+          return (
+            <div key={i}>
+              <i onClick={(event) => this.RemoveImg(event, img)}>
+                <FaTimesCircle size="1.15rem" />
+              </i>
+              <div className="upload-pic-container">
+                <img src={require(`../../serverImages/${img.name}`)} alt="..." />
+              </div>
             </div>
-          </div>
-        );
-      });
-    }else{
-       images = this.state.base64Images.map((img,i) => {
-        return (
-          <div key={i}>
-            <i onClick={(event) => this.RemoveImg(event, img)}>
-              <FaTimesCircle size="1.15rem" />
-            </i>
-            <div className="upload-pic-container">
-              <img src={img?.base64} alt="..." />
+          );
+         }else{
+          return (
+            <div key={i}>
+              <i onClick={(event) => this.RemoveImg(event, img)}>
+                <FaTimesCircle size="1.15rem" />
+              </i>
+              <div className="upload-pic-container">
+                <img src={img?.base64} alt="..." />
+              </div>
             </div>
-          </div>
-        );
+          );
+         }
+        
       });
-    }
+    
     return <div className="item-pic ">{images}</div>;
   };
 
