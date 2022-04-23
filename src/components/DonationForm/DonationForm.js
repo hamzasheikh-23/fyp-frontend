@@ -201,18 +201,34 @@ class DonationForm extends Component {
   displayImg = () => {
     const isEdit = this.props.history.location.state?.data ? true : false;
     console.log('display image', this.state.itemPic, this.state.base64Images)
-    const images = this.state.base64Images.map((img,i) => {
-      return (
-        <div key={i}>
-          <i onClick={(event) => this.RemoveImg(event, img)}>
-            <FaTimesCircle size="1.15rem" />
-          </i>
-          <div className="upload-pic-container">
-            <img src={ img?.base64} alt="..." />
+    let images;
+    if(isEdit){
+       images = this.state.base64Images.map((img,i) => {
+        return (
+          <div key={i}>
+            <i onClick={(event) => this.RemoveImg(event, img)}>
+              <FaTimesCircle size="1.15rem" />
+            </i>
+            <div className="upload-pic-container">
+              <img src={require(`../../serverImages/${img.name}`)} alt="..." />
+            </div>
           </div>
-        </div>
-      );
-    });
+        );
+      });
+    }else{
+       images = this.state.base64Images.map((img,i) => {
+        return (
+          <div key={i}>
+            <i onClick={(event) => this.RemoveImg(event, img)}>
+              <FaTimesCircle size="1.15rem" />
+            </i>
+            <div className="upload-pic-container">
+              <img src={img?.base64} alt="..." />
+            </div>
+          </div>
+        );
+      });
+    }
     return <div className="item-pic ">{images}</div>;
   };
 
