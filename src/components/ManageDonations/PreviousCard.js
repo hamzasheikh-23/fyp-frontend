@@ -10,9 +10,7 @@ class PreviousCard extends React.Component {
   };
   deleteItem = () => {
     axios
-      .put(
-        `https://localhost:44357/donation/delete/${this.props.donationId}`
-      )
+      .put(`https://localhost:44357/case/delete/${this.props.caseId}`)
       .then((res) => {
         if (res.data.isSuccess) {
           this.props.getData();
@@ -22,50 +20,37 @@ class PreviousCard extends React.Component {
   editItem = () => {
     console.log("worked");
     const {
-      title,
+      caseId,
+      ngoID,
+      caseTitle,
       quantity,
-      quantityPerUnit,
-      date,
-      weight,
-      description,
-      category,
-      donationId,
-      rating,
-      condition,
-      itemImg1,
-      itemImg2,
-      itemImg3,
-      image1Name,
-      image2Name,
-      image3Name,
+      unit,
+      category ,
       postedDate,
+      description,
+      imageBase64,
+      imageName,
       status,
       isActive,
     } = this.props;
     this.props.history.push({
-      pathname: "/donationForm",
+      pathname: "/askdonation",
       state: {
         data: {
-          title,
+          caseId,
+          category ,
+          ngoID,
+          caseTitle,
           quantity,
-          quantityPerUnit,
-          date,
-          weight,
-          description,
-          category,
-          donationId,
-          rating,
-          condition,
-          itemImg1,
-          itemImg2,
-          itemImg3,
-          image1Name,
-          image2Name,
-          image3Name,
+          unit,
           postedDate,
+          description,
+          imageBase64,
+          imageName,
           status,
           isActive,
         },
+        isEdit: true
       },
     });
   };
@@ -73,7 +58,6 @@ class PreviousCard extends React.Component {
     console.log("card", this.props);
     let addDetailModalClose = () =>
       this.setState({ addDetailModalShow: false });
-  
 
     return (
       <div style={{ margin: "0 10px" }}>
@@ -85,22 +69,22 @@ class PreviousCard extends React.Component {
           }}
           class="card"
         >
-          {this.props.imageName ?
-          <img
-          src={require(`../../serverImages/${this.props.imageName}`)}
-          alt=".."
-          className="card-image"
-        />
-        :
-        <img
-            src={
-              "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
-            }
-            alt=".."
-            className="card-image"
-          />
-          }
-          
+          {this.props.imageName ? (
+            <img
+              src={require(`../../serverImages/${this.props.imageName}`)}
+              alt=".."
+              className="card-image"
+            />
+          ) : (
+            <img
+              src={
+                "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
+              }
+              alt=".."
+              className="card-image"
+            />
+          )}
+
           <div
             style={{ display: "flex", flexDirection: "column" }}
             class="card-body"
@@ -176,15 +160,13 @@ class PreviousCard extends React.Component {
             >
               View Details
             </button>
-            
           </div>
           <DetailModal
-          data={this.props}
-          show={this.state.addDetailModalShow}
-          onHide={addDetailModalClose}
-        />
+            data={this.props}
+            show={this.state.addDetailModalShow}
+            onHide={addDetailModalClose}
+          />
         </div>
-        
       </div>
     );
   }

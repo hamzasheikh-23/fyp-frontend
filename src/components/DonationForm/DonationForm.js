@@ -148,9 +148,12 @@ class DonationForm extends Component {
         this.setState({
           category: isEdit
             ? res.data.find(
-                (item) =>
-                  item.DonationCategory ===
-                  this.props.history.location.state?.data?.category
+                (item) =>{
+                  console.log('find', item.DonationCategory, this.props.history.location.state?.data?.category, item.DonationCategory ===
+                  this.props.history.location.state?.data?.category)
+                  return (item.DonationCategory ===
+                  this.props.history.location.state?.data?.category)
+                }
               )?.CategoryId
             : res.data.length > 0
             ? res.data[0].CategoryId

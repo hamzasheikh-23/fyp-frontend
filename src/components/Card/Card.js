@@ -101,9 +101,9 @@ class Card extends React.Component {
           }}
           class="card"
         >
-          {this.props.image2Name ? 
+          {this.props.image1Name ? 
            <img
-           src={require(`../../serverImages/${this.props.image2Name}`)}
+           src={require(`../../serverImages/${this.props.image1Name}`)}
            alt=".."
            className="card-image"
          />
