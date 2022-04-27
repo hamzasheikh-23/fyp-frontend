@@ -201,7 +201,7 @@ const App = () => {
          <RoleRouteProtection
           exact
           path="/manage-donations"
-          component={() => <ManageDonations pageheading={"Manage Donations"} />}
+          component={ManageDonations}
           validUser="ngo"
           // redirectTo="/"
         />

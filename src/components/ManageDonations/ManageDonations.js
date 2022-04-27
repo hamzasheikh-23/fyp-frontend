@@ -22,30 +22,32 @@ import { checkProperty } from "../../assets/utils";
 
 class ManageDonations extends Component {
   componentDidMount() {
-    console.log(
-      `/api/getRequestedItemsByNgoId/${localStorage.getItem("userID")}`
-    );
-    axios
-      .get(`https://localhost:44357/case/get?ngoId=${localStorage.getItem("ngoID")}`)
-      .then((res) => {
-        const stories = res.data.map(item=>({
-          caseId: item.CaseId,
-            ngoID: item.NGOId,
-            caseTitle: item.CaseTitle,
-            Quantity: item.Quantity,
-            Unit: item.Unit,
-            postedDate: item.PostedDate,
-            description: item.Description,
-            imageBase64: item.ImageBase64,
-            imageName: item.ImageName,
-            status: item.Status,
-            isActive: item.IsActive,
-            postedDate: checkProperty('PostedDate',item) ? moment(item.PostedDate).format('LL hh:mm:ss')  : "",
-        }))
+    this.getData();
+    console.log('manage donation', this.props.history)
+  }
 
-        this.setState({ arrayforcards: [...stories] });
-      })
-      .catch((err) => console.log("Requested Items", err));
+  getData=()=>{
+    axios
+    .get(`https://localhost:44357/case/get?ngoId=${localStorage.getItem("ngoID")}`)
+    .then((res) => {
+      const stories = res.data.map(item=>({
+        caseId: item.CaseId,
+          ngoID: item.NGOId,
+          caseTitle: item.CaseTitle,
+          quantity: item.Quantity,
+          unit: item.Unit,
+          description: item.Description,
+          imageBase64: item.ImageBase64,
+          imageName: item.ImageName,
+          category : item.CategoryId,
+          status: item.Status,
+          isActive: item.IsActive,
+          postedDate: checkProperty('PostedDate',item) ? moment(item.PostedDate).format('LL hh:mm:ss')  : "",
+      }))
+
+      this.setState({ arrayforcards: [...stories] });
+    })
+    .catch((err) => console.log("Requested Items", err));
   }
 
   constructor() {
@@ -152,7 +154,7 @@ class ManageDonations extends Component {
           <div className="container">
             <hr></hr>
             <h1 className="blue-heading success-main-heading">
-              {this.props.pageheading}
+            Manage Donations
             </h1>
             <br></br>
             <ul className="u-list">
@@ -174,7 +176,7 @@ class ManageDonations extends Component {
 
               <div className="cards-container-ngo">
                 {this.state.arrayforcards.map((data) => (
-                  <PreviousCard {...data} />
+                  <PreviousCard {...data} getData={this.getData} history={this.props.history} />
                 ))}
               </div>
             </ul>

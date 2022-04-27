@@ -5,7 +5,6 @@ import { getCurrentDate } from "../../utils";
 // import { FormTextarea } from "shards-react";
 import { FaTimesCircle } from "react-icons/fa";
 
-
 import "bootstrap/dist/css/bootstrap.min.css";
 // import "shards-ui/dist/css/shards.min.css";
 
@@ -33,11 +32,11 @@ const initialDonationFormState = {
   donationImageError: "",
   askDonationDate: getCurrentDate(),
   categoryType: "",
-  categoriesArr:[],
-  unitsArr:["Kg","Pounds", "Liter","Pieces"],
-  unit:"Kg",
-  unitErr:"",
-  base64Images:[]
+  categoriesArr: [],
+  unitsArr: ["Kg", "Pounds", "Liter", "Pieces"],
+  unit: "Kg",
+  unitErr: "",
+  base64Images: [],
 };
 
 class AskDonationForm extends Component {
@@ -46,61 +45,58 @@ class AskDonationForm extends Component {
     this.state = initialDonationFormState;
   }
 
-  componentDidMount(){
+  componentDidMount() {
     axios
       .get("https://localhost:44357/donation/category/get")
       .then((res) => {
         const isEdit = this.props.history?.location?.state?.data ? true : false;
-        // if (isEdit) {
-        //   const {
-        //     title,
-        //     quantity,
-        //     quantityPerUnit,
-        //     date,
-        //     weight,
-        //     description,
-        //     category,
-        //     donationId,
-        //     rating,
-        //     condition,
-        //     itemImg1,
-        //     itemImg2,
-        //     itemImg3,
-        //     image1Name,
-        //     image2Name,
-        //     image3Name,
-        //     postedDate,
-        //     status,
-        //     isActive,
-        //   } = this.props.history.location.state.data;
-        //   this.setState({
-        //     donationTitle: "",
-        //     donationTitleError: "",
-        //     donationDescription: "",
-        //     donationDescriptionError: "",
-        //     donationCategoryError: "",
-        //     file: "",
-        //     imagePreviewUrl: "",
-        //     donationImageError: "",
-        //     askDonationDate: getCurrentDate(),
-        //     categoryType: "",
-        //   },()=>console.log('check state', this.state));
-        // }
-        // console.log(res)
+        if (isEdit) {
+          const {
+            caseId,
+            ngoID,
+            caseTitle,
+            quantity,
+            unit,
+            postedDate,
+            description,
+            imageBase64,
+            imageName,
+            status,
+            isActive,
+          } = this.props.history.location.state.data;
+          this.setState(
+            {
+              donationTitle: caseTitle,
+              donationTitleError: "",
+              donationDescription: description,
+              donationDescriptionError: "",
+              donationCategoryError: "",
+              donationImageError: "",
+              unit: unit,
+              itemQuantity: quantity,
+              base64Images: [
+                imageName &&
+                  imageBase64 && {
+                    name: imageName,
+                    base64: imageBase64,
+                    edit: true,
+                  },
+              ].filter((item) => item),
+            },
+            () => console.log("check state", this.state)
+          );
+        }
+        console.log(res);
         this.setState({
-          // category: isEdit
-          //   ? res.data.find((item) => item.DonationCategory === this.props.history.location.state?.data?.category)
-          //       ?.CategoryId
-          //   : res.data.length > 0
-          //   ? res.data[0].CategoryId
-          //   : 0,
-          categoriesArr: res.data.map((item) => ({
-            id: item.CategoryId,
-            name: item.DonationCategory,
-          })),
-          categoryType: res.data.length > 0
+          categoryType: isEdit
+            ? this.props.history.location.state?.data?.category
+            : res.data.length > 0
             ? res.data[0].CategoryId
             : 0,
+            categoriesArr: res.data.map((item) => ({
+              id: item.CategoryId,
+              name: item.DonationCategory,
+            })),
         });
       })
       .catch((err) => console.log("error in getting categories api", err));
@@ -129,14 +125,13 @@ class AskDonationForm extends Component {
     let donationDescriptionError = "";
     let donationTitleError = "";
     let donationCategoryError = "";
-    let itemQuantityError="";
-    let unitErr="";
-
+    let itemQuantityError = "";
+    let unitErr = "";
 
     const validTitle = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
     const validDesc = /^[^\s]+(?: [^\s]+)*$/; //no concurrent spaces and no boundary spaces
-   
-   if (!this.state.donationTitle) {
+
+    if (!this.state.donationTitle) {
       donationTitleError = "required";
     } else if (!validTitle.test(this.state.donationTitle)) {
       donationTitleError =
@@ -148,8 +143,8 @@ class AskDonationForm extends Component {
       donationTitleError = "Title must be between 5 to 30 characters";
     }
 
-    if(!this.state.unit){
-      unitErr="required"
+    if (!this.state.unit) {
+      unitErr = "required";
     }
 
     if (!this.state.itemQuantity) {
@@ -177,7 +172,7 @@ class AskDonationForm extends Component {
         itemQuantityError,
         donationDescriptionError,
         donationCategoryError,
-        unitErr
+        unitErr,
       });
       return false;
     }
@@ -207,7 +202,7 @@ class AskDonationForm extends Component {
     e.preventDefault();
 
     const isValid = this.donationValidation();
-    console.log('isValid', isValid, this.state)
+    console.log("isValid", isValid, this.state);
     if (isValid) {
       const askDonationData = {
         NGOId: parseFloat(localStorage.getItem("ngoID")),
@@ -235,12 +230,14 @@ class AskDonationForm extends Component {
       //   // headers: { "Content-Type": "multipart/form-data" }, //to submit documents
       // });
 
-      axios.post('https://localhost:44357/case/post ',askDonationData)
-      .then(res=>{
-        console.log(res.data)
-        this.setState(initialDonationFormState);
-        this.props.history.push('/')
-      }).catch(console.log)
+      axios
+        .post("https://localhost:44357/case/post ", askDonationData)
+        .then((res) => {
+          console.log(res.data);
+          this.setState(initialDonationFormState);
+          this.props.history.push("/");
+        })
+        .catch(console.log);
     }
   };
 
@@ -257,15 +254,18 @@ class AskDonationForm extends Component {
 
   ImagefileSelectedHandler = (e) => {
     console.log("file", e.target.files);
+    const isEdit = this.props.history.location.state?.data ? true : false;
+    console.log("edit wala", isEdit);
     // let idCardBase64 = "";
     var pattern = /[\/](jpg|png|jpeg)$/i;
     e.persist();
     if (e.target.files[0].type.match(pattern)) {
       this.getBase64(e.target.files[0], (result) => {
+        console.log("173 wala", isEdit);
         this.setState({
           base64Images: [
             ...this.state.base64Images,
-            { name: e.target.files[0].name, base64: result },
+            { name: e.target.files[0].name, base64: result, edit: false },
           ],
           imageErr: null,
         });
@@ -291,22 +291,36 @@ class AskDonationForm extends Component {
     // console.log(this.state.itemPic);
   };
 
-
   displayImg = () => {
-    const isEdit = this.props.history?.location?.state?.data ? true : false;
-    // console.log('display image', this.state.itemPic, this.state.base64Images)
-    const images = this.state.base64Images.map((img,i) => {
-      return (
-        <div key={i}>
-          <i onClick={(event) => this.RemoveImg(event, img)}>
-            <FaTimesCircle size="1.15rem" />
-          </i>
-          <div className="upload-pic-container">
-            <img src={ img?.base64} alt="..." />
+    // const isEdit = this.props.history.location.state?.data ? true : false;
+    console.log("display image", this.state.itemPic, this.state.base64Images);
+    const images = this.state.base64Images.map((img, i) => {
+      console.log("latest", img);
+      if (img.edit) {
+        return (
+          <div key={i}>
+            <i onClick={(event) => this.RemoveImg(event, img)}>
+              <FaTimesCircle size="1.15rem" />
+            </i>
+            <div className="upload-pic-container">
+              <img src={require(`../../serverImages/${img.name}`)} alt="..." />
+            </div>
           </div>
-        </div>
-      );
+        );
+      } else {
+        return (
+          <div key={i}>
+            <i onClick={(event) => this.RemoveImg(event, img)}>
+              <FaTimesCircle size="1.15rem" />
+            </i>
+            <div className="upload-pic-container">
+              <img src={img?.base64} alt="..." />
+            </div>
+          </div>
+        );
+      }
     });
+
     return <div className="item-pic ">{images}</div>;
   };
 
@@ -334,10 +348,10 @@ class AskDonationForm extends Component {
         <SideDrawer about={true} show={this.state.siderDrawerOpen} />
         {backdrop}
 
-        <div className={'my-background-4'}>
+        <div className={"my-background-4"}>
           <div className="container" id="container">
             <h1 className="blue-heading success-main-heading">
-            Ask for a Donation!
+              Ask for a Donation!
             </h1>
 
             {/* iconpicture */}
@@ -381,24 +395,26 @@ class AskDonationForm extends Component {
                 </div>
               </div>
 
-                  {/* catgories */}
+              {/* catgories */}
               <div className="form-group mb-2">
-                  <label htmlFor="category" className="my-donation-label">
-                    Category
-                  </label>
-                  <select
-                   name="categoryType"
-                   value={this.state.categoryType}
-                   onChange={(event) =>
-                     this.askDonationFormInputChange(event, "categoryType")
-                   }
-                   id="category"
-                    className="form-control"
-                  >
-                    {this.state.categoriesArr.map((option) => (
-                      <option key={option.id} value={option.id}>{option.name}</option>
-                    ))}
-                  </select>
+                <label htmlFor="category" className="my-donation-label">
+                  Category
+                </label>
+                <select
+                  name="categoryType"
+                  value={this.state.categoryType}
+                  onChange={(event) =>
+                    this.askDonationFormInputChange(event, "categoryType")
+                  }
+                  id="category"
+                  className="form-control"
+                >
+                  {this.state.categoriesArr.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.name}
+                    </option>
+                  ))}
+                </select>
                 <div
                   style={{
                     fontSize: "12.8px",
@@ -408,11 +424,9 @@ class AskDonationForm extends Component {
                 >
                   {this.state.donationCategoryError}
                 </div>
-                </div>
+              </div>
 
-                
-
-                <div className="form-group mb-2">
+              <div className="form-group mb-2">
                 <label htmlFor="item-quantity" className="my-donation-label">
                   Quantity
                 </label>
@@ -439,22 +453,24 @@ class AskDonationForm extends Component {
               </div>
 
               <div className="form-group mb-2">
-                  <label htmlFor="unit" className="my-donation-label">
-                    Unit
-                  </label>
-                  <select
-                   name="unit"
-                   value={this.state.unit}
-                   onChange={(event) =>
-                     this.askDonationFormInputChange(event, "unit")
-                   }
-                   id="unit"
-                    className="form-control"
-                  >
-                    {this.state.unitsArr.map((option) => (
-                      <option key={option} value={option}>{option}</option>
-                    ))}
-                  </select>
+                <label htmlFor="unit" className="my-donation-label">
+                  Unit
+                </label>
+                <select
+                  name="unit"
+                  value={this.state.unit}
+                  onChange={(event) =>
+                    this.askDonationFormInputChange(event, "unit")
+                  }
+                  id="unit"
+                  className="form-control"
+                >
+                  {this.state.unitsArr.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
                 <div
                   style={{
                     fontSize: "12.8px",
@@ -464,7 +480,7 @@ class AskDonationForm extends Component {
                 >
                   {this.state.unitErr}
                 </div>
-                </div>
+              </div>
 
               <div className="form-group mb-2">
                 <label
@@ -484,7 +500,7 @@ class AskDonationForm extends Component {
                     )
                   }
                   id="donation-description"
-                  placeholder={'Describe the need in detail'}
+                  placeholder={"Describe the need in detail"}
                   className="form-control"
                   rows="3"
                 />
@@ -529,31 +545,33 @@ class AskDonationForm extends Component {
               </div> */}
 
               <div className="form-group mb-2">
-              <label>Upload Cover Image</label>
-              <div className="item-pic-container ">
-                {/* <FileBase64 disabled={this.state.itemPic.length > 2 ? true : false} multiple={true} onDone={this.getFiles.bind(this)} /> */}
-                <input
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={this.ImagefileSelectedHandler}
-                  disabled={this.state.base64Images.length > 0 ? true : false}
-                />
+                <label>Upload Cover Image</label>
+                <div className="item-pic-container ">
+                  {/* <FileBase64 disabled={this.state.itemPic.length > 2 ? true : false} multiple={true} onDone={this.getFiles.bind(this)} /> */}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={this.ImagefileSelectedHandler}
+                    disabled={this.state.base64Images.length > 0 ? true : false}
+                  />
 
-                <div>
-                  {this.state.base64Images.length > 0 ? this.displayImg() : null}
+                  <div>
+                    {this.state.base64Images.length > 0
+                      ? this.displayImg()
+                      : null}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: "12.8px",
+                    color: "#DC3545",
+                    marginLeft: "10px",
+                  }}
+                >
+                  {this.state.imageErr}
                 </div>
               </div>
-              <div
-                style={{
-                  fontSize: "12.8px",
-                  color: "#DC3545",
-                  marginLeft: "10px",
-                }}
-              >
-                {this.state.imageErr}
-              </div>
-            </div>
 
               {/* <hr></hr> */}
               <button
@@ -561,7 +579,7 @@ class AskDonationForm extends Component {
                 type="submit"
                 onClick={this.askDonationFormSubmitHandler}
               >
-               Submit Request
+                Submit Request
               </button>
             </form>
 
