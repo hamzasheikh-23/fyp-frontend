@@ -1,0 +1,104 @@
+.page-heading-donation-requests {
+    color: #4A89DC;
+    font-weight: 700;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.table-donation-requests {
+    margin: 0 20px;
+}
+
+.action-icons-donation-requests {
+    font-size: 1.5em;
+    margin-right: 5px;
+    cursor: pointer;
+    color: #4A89DC;
+}
+
+.modalContainer-donation-requests-modal {
+    width: 50%;
+    position: fixed;
+    top: 15%;
+    left: 22.5%;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.campaignInfoPopup-donation-requests-modal {
+    background: rgba(255, 255, 255);
+    border: 1px solid #4A89DC;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 100%
+}
+
+.header-donation-requests-modal {
+    margin: 15px;
+    border-bottom: 2px solid #4A89DC;
+    height: 25%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    flex-direction: row;
+    display: flex
+}
+
+.headerTextLeft-donation-requests-modal {
+    margin-bottom: 10px
+}
+
+.crossIcon-donation-requests-modal {
+    cursor: pointer;
+    color: #FFF;
+}
+
+.content-donation-requests-modal {
+    margin: 15px;
+    height: 50%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+
+.contentTile-donation-requests-modal {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    align-items: baseline;
+}
+
+.infoLabels-donation-requests-modal {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-right: 5px
+}
+
+.infoData-donation-requests-modal {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.divideContent-donation-requests-modal {
+    width: 50%
+}
+
+.imagesContainer-donation-requests-modal {
+    display: flex;
+    justify-content: space-between;
+}
+
+.images-donation-requests-modal {
+    object-fit: cover;
+    width: 30%;
+    height: 179px;
+    border-radius: 5px;
+    padding: 5px;
+}
