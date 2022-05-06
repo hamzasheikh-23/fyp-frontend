@@ -58,7 +58,7 @@ class NGORequests extends React.Component {
         console.log("ngo list", list);
         this.setState({
           ngoList: list.data.map((item) => ({
-            id: item.UserId,
+            id: item.NgoId,
             name: `${item.FirstName} ${item.LastName ? item.LastName : ""}`,
           })),
         });

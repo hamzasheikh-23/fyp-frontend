@@ -103,13 +103,70 @@ class RequestCard extends React.Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Proceed Donation
+            Case Title here
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="container">
-          check
-          </div>
+        <div className="container">
+            <table className="table">
+              <tbody>
+              <tr>
+                <td>Date & Time of Reply:</td>
+                <td>{'March 3, 2022 12:00:00'}</td>
+
+                {/* <td>{moment(data.posted).format('LL hh:mm:ss')}</td> */}
+              </tr>
+              <tr>
+                <td>Case ID:</td>
+                <td>{2}</td>
+              </tr>
+              <tr>
+                <td>Donation ID:</td>
+                <td>{5}</td>
+              </tr>
+              {/* <tr>
+                <td>Address:</td>
+                <td>{this.state.selectedItem.donationAddress}</td>
+              </tr> */}
+              {/* <tr><td></td><td></td></tr>
+              <tr>
+                <td colSpan={2}>ORDER BILL</td>
+              </tr> */}
+              <tr>
+                <td>Service Charges:</td>
+                <td>{'300 PKR'}</td>
+              </tr>
+              <tr>
+                <td>Delivery Charges:</td>
+                <td>{'150 PKR'}</td>
+              </tr>
+              <tr>
+                <td>VAT:</td>
+                <td>{'2.66 PKR'}</td>
+              </tr>
+              
+              
+              </tbody>
+         
+            </table>
+            {/* <div  className="container"> 
+            <div className="row">
+              <div className="col-lg-4 col-md-6 col-sm-12">
+                {this.props.itemImages[0]===null? null : <img src={require(`../../serverImages/${this.props.itemImages[0]}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />}
+              </div>
+              
+              {this.props.itemImages[1]===null? null : <div className="col-lg-4 col-md-6 col-sm-12">
+                <img src={require(`../../serverImages/${this.props.itemImages[1]}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />
+                </div>}
+            
+              
+              {this.props.itemImages[2]===null? null : <div className="col-lg-4 col-md-6 col-sm-12">
+                <img src={require(`../../serverImages/${this.props.itemImages[2]}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />
+                </div>}
+            
+            </div>
+            </div> */}
+        </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="#4A89DC" onClick={()=>this.addModalClose()}>Close</Button>
