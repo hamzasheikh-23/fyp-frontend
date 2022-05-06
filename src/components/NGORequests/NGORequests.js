@@ -185,7 +185,9 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 <a>We Work Together</a>
               </li> */}
             </ul>
-            <h2 className="filter-heading">Filter By Category:</h2>
+
+            {/* category filters */}
+            {/* <h2 className="filter-heading">Filter By Category:</h2>
             <ul className="filter-options">
               <li>
                 <a
@@ -220,110 +222,13 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                     </a>
                   </li>
                 );
-              })}
-              {/* <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCategory === "Clothes"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCategory: "Clothes" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Clothes
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCategory === "Medicines"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCategory: "Medicines" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Medicines
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCategory === "Toys"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCategory: "Toys" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Toys
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCategory === "Books"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCategory: "Books" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Books
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCategory === "Food"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCategory: "Food" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Food
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCategory === "School Fees"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCategory: "School Fees" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  School Fees
-                </a>
-              </li> */}
-            </ul>
+              })} 
+              </ul>*/}
+
+
+
+             
+            
           </div>
           <div class="request-area">
             <h3 className="request-area-heading">NGO'S REQUESTS</h3>
