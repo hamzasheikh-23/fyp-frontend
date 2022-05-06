@@ -23,45 +23,70 @@ class CardsAdminPanel extends Component{
         super();
        
         this.state = {
-          userClick: false,
            
 //****THIS arrayforcards is for testing, its contents will be replaced by actual values from DATABASE***
           arrayforcards : [
             {
+              path: "/donation-requests",
               id:'1',
-              title: 'Pending Requests from Donors',
+              title: 'Manage Requests from Donors',
               image: 'https://thumbs.dreamstime.com/b/clothes-donation-cute-hand-drawn-woman-girl-holding-boxes-vector-illustration-147311307.jpg',
-              description: 'we are new ngo and we managed to make 100 people happy with this platform thanks here is a pic'
+              // description: 'we are new ngo and we managed to make 100 people happy with this platform thanks here is a pic'
             },
             {
+              path:"/manage-ngo-requests",
               id:'2',
-              title: 'Pending Requests from NGOs',
+              title: 'Manage Cases from NGOs',
               image: 'https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/27852537/original/c25b4307292b75a5e9c2db717c866801fae4c177/help-poor-peoples-of-azad-kashmir-with-your-donations.jpg',
-              description: 'my name is abc i recovered by your ddonations keep doanting thanks'
+              // description: 'my name is abc i recovered by your ddonations keep doanting thanks'
             },
             {
               id:'3',
-              title: 'Partner NGO Records',
+              path:"/manage-partner-ngos",
+              title: 'Manage Partner NGO',
               image: 'https://thumbs.dreamstime.com/b/multiracial-group-black-african-american-caucasian-asian-hands-holding-each-other-wrist-tolerance-unity-love-anti-135505973.jpg',
-              description: 'You saved a life. What is Lorem Ipsum it is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
+              // description: 'You saved a life. What is Lorem Ipsum it is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
             },
             {
               id:'4',
-              title: 'NGO Join Requests ',
-              image: 'https://cdn.lynda.com/course/612174/612174-637286221687605579-16x9.jpg',
-              description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
+              path:"/manage-donors",
+              title: 'Manage Donors',
+              image: 'https://thumbs.dreamstime.com/b/multiracial-group-black-african-american-caucasian-asian-hands-holding-each-other-wrist-tolerance-unity-love-anti-135505973.jpg',
+              // description: 'You saved a life. What is Lorem Ipsum it is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
             },
             {
               id:'5',
-              title: 'User Feedback',
-              image: 'https://previews.123rf.com/images/makc76/makc761804/makc76180400013/98562149-rating-satisfaction-feedback-in-form-of-emotions-excellent-good-normal-bad-awful-vector-illustration.jpg',
-              description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
+              path:"",
+              title: 'Manage Admins',
+              image: 'https://thumbs.dreamstime.com/b/multiracial-group-black-african-american-caucasian-asian-hands-holding-each-other-wrist-tolerance-unity-love-anti-135505973.jpg',
+              // description: 'You saved a life. What is Lorem Ipsum it is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
             },
             {
-              id:'6',
-              title: 'Statistics',
+              id:'7',
+              path:"/manage-subscriptions",
+              title: 'Manage Subscriptions',
               image: 'https://blackpinkupdate.com/wp-content/uploads/2018/07/cover-blackpink-update-youtube-statistic-3.jpg',
-              description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
+              // description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
+            },
+            {
+              id:'8',
+              path:"",
+              title: 'Manage Orders',
+              image: 'https://blackpinkupdate.com/wp-content/uploads/2018/07/cover-blackpink-update-youtube-statistic-3.jpg',
+              // description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
+            },
+            // {
+            //   id:'',
+            //   title: 'Statistics',
+            //   image: 'https://blackpinkupdate.com/wp-content/uploads/2018/07/cover-blackpink-update-youtube-statistic-3.jpg',
+            //   // description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
+            // },
+            {
+              id:'',
+              path:"/user-feedback",
+              title: 'User Feedback',
+              image: 'https://previews.123rf.com/images/makc76/makc761804/makc76180400013/98562149-rating-satisfaction-feedback-in-form-of-emotions-excellent-good-normal-bad-awful-vector-illustration.jpg',
+              // description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
             },
           ]
 
@@ -70,41 +95,12 @@ class CardsAdminPanel extends Component{
     }
 
 
-navigateFromCard(id) {
-   console.log(id);
-  
-   let path ; 
- if(id==='1'){
-    path = `/adminPanelDonorRequests`; 
- }
- else if (id==='2'){
-   path = `/adminPanelNGORequests`; 
-  }
-  else if (id==='3'){
-    path = `/adminPanelNGORecords`; 
- }
-  else if (id==='4'){
-    path = `/adminPanelNGOJoin`; 
-}
-else if (id==='5'){
-  path = `/adminPanelUserFeedback`; 
-}
-else if (id==='6'){
-  path = `/adminPanelStatistics`; 
-}
-
-      this.setState({userClick:true, goto: path})
-}
 
 
 
 
 
     render(){
-      if (this.state.userClick === true) {
-        // return <Redirect to={this.state.goto} /> 
-        return <Redirect to={this.state.goto} push/>
-    }
         return(
 <div style={{display:'flex', flexWrap:'wrap', justifyContent:'space-evenly'}}>
                             {/* <Card className="carddeckclass"    > */}
@@ -124,7 +120,9 @@ else if (id==='6'){
                                             </Card.Text> */} 
 
                                       
-                                      <Button variant="primary" className="bold-text" onClick={() => this.navigateFromCard(data.id)}> {this.props.buttontext} </Button>
+                                      <Button variant="primary" className="bold-text" onClick={() => {
+                                        <Redirect to={data.path} push/>
+                                      }}> {this.props.buttontext} </Button>
                                             
                                       </Card.ImgOverlay>
                                   </Card>

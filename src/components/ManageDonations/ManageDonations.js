@@ -30,28 +30,33 @@ class ManageDonations extends Component {
     axios
     .get(`https://localhost:44357/case/get?ngoId=${localStorage.getItem("ngoID")}`)
     .then((res) => {
-      const stories = res.data.map(item=>({
-        caseId: item.CaseId,
-          ngoID: item.NGOId,
-          caseTitle: item.CaseTitle,
-          quantity: item.Quantity,
-          unit: item.Unit,
-          description: item.Description,
-          imageBase64: item.ImageBase64,
-          imageName: item.ImageName ? require(`../../serverImages/cases/${item.ImageName}`) : "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=",
-          category : item.CategoryId,
-          categoryName: item.Category,
-          status: item.Status,
-          isActive: JSON.parse(item.IsActive),
-          postedDate: checkProperty('PostedDate',item) ? moment(item.PostedDate).format('LL hh:mm:ss')  : "",
-      })).filter(item=>{
-        // console.log('filter',item.status!=="Deleted", item.status)
-        return item.status!=="Deleted"
-      });
-
-      console.log('manage donations', stories)
-
-      this.setState({ arrayforcards: [...stories] });
+      if(!res.data.noData){
+        const stories = res.data.map(item=>({
+          caseId: item.CaseId,
+            ngoID: item.NGOId,
+            caseTitle: item.CaseTitle,
+            quantity: item.Quantity,
+            unit: item.Unit,
+            description: item.Description,
+            imageBase64: item.ImageBase64,
+            imageName: item.ImageName ? require(`../../serverImages/cases/${item.ImageName}`) : "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=",
+            category : item.CategoryId,
+            categoryName: item.Category,
+            status: item.Status,
+            isActive: JSON.parse(item.IsActive),
+            postedDate: checkProperty('PostedDate',item) ? moment(item.PostedDate).format('LL hh:mm:ss')  : "",
+        })).filter(item=>{
+          // console.log('filter',item.status!=="Deleted", item.status)
+          return item.status!=="Deleted"
+        });
+  
+        console.log('manage donations', stories)
+  
+        this.setState({ arrayforcards: [...stories] });
+      }else{
+        this.setState({ arrayforcards: [] });
+      }
+     
     })
     .catch((err) => console.log("Requested Items", err));
   }
