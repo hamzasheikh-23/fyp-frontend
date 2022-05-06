@@ -9,7 +9,7 @@ class RequestCard extends React.Component {
     addModalShow: false,
   };
   render() {
-    // console.log('single item', this.props)
+    console.log('single item', this.props)
     let addModalClose = (showMsg) =>{
       this.setState({ addModalShow: false });
       if(showMsg){

@@ -31,7 +31,7 @@ class DonorReplies extends React.Component {
       .then((res) => {
         // console.log('res', res)
         this.setState({
-          requests: res.data
+          replies: res.data
         });
 
         // console.log(this.state)
@@ -40,13 +40,12 @@ class DonorReplies extends React.Component {
 
     //get ngos
     axios
-      .get(`https://localhost:44357/user/get/usertype/3 `)
+      .get(`https://localhost:44357/cases`)
       .then((list) => {
-        console.log("ngo list", list);
         this.setState({
-          ngoList: list.data.map((item) => ({
-            id: item.UserId,
-            name: `${item.FirstName} ${item.LastName ? item.LastName : ""}`,
+          caseTitleList: list.data.map((item) => ({
+            id: item.CaseId,
+            name: item.CaseTitle,
           })),
         });
       })
@@ -55,31 +54,21 @@ class DonorReplies extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selectedNgo !== this.state.selectedNgo){
-  this.filteredContent(this.state.selectedCategory, this.state.selectedNgo);
+if(prevState.selectedCase !== this.state.selectedCase){
+  this.filteredContent(this.state.selectedCase);
 }
   }
 
 
 
   
-  filteredContent = (selectedCategory, selectedNgo) => {
+  filteredContent = (selectedCase) => {
 
     axios
-      .get(`https://localhost:44357/case/get?${selectedNgo ? `ngoId=${selectedNgo}`:''}&&status=approve&&isActive=true${selectedCategory? `&&category=${selectedCategory}`: ''}`)
+      .get(`https://localhost:44357/case/get?${selectedCase ? `caseId=${selectedCase}`:''}&&status=approve&&isActive=true`)
       .then((res) => {
         this.setState({
-          requests: res.data.map((item) => ({
-            caseId: item.CaseId,
-            ngoID: item.NGOId,
-            caseTitle: item.CaseTitle,
-            Quantity: item.Quantity,
-            Unit: item.Unit,
-            postedDate: item.PostedDate,
-            description: item.Description,
-            imageBase64: item.ImageBase64,
-            imageName: item.ImageName,
-          })),
+          requests: res.data
         });
       })
       .catch((err) => console.log(err));
@@ -95,7 +84,7 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
   };
  
   render() {
-    console.log("ngo requests", this.state);
+    // console.log("ngo requests", this.state);
     let backdrop;
     if (this.state.siderDrawerOpen) {
       backdrop = <BackDrop click={this.backdropClickHandler} />;
@@ -114,32 +103,32 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCategory === ""
+                      this.state.selectedCase === ""
                         ? "#579df8"
                         : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedCategory: "" });
+                    this.setState({ selectedCase: "" });
                   }}
                 >
                   All
                 </a>
               </li>
-              {this.state.categoryList.map((cat) => {
+              {this.state.caseTitleList.map((list) => {
                 return (
                   <li>
                     <a
                       style={{
                         backgroundColor:
-                          this.state.selectedCategory === cat.CategoryId
+                          this.state.selectedCase === list.CaseId
                             ? "#579df8"
                             : "#4a89dc",
                       }}
                       onClick={() => {
-                        this.setState({ selectedCategory: cat.CategoryId });
+                        this.setState({ selectedCase: list.CaseId });
                       }}
                     >
-                      {cat.DonationCategory}
+                      {list.CaseTitle}
                     </a>
                   </li>
                 );
@@ -148,12 +137,12 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCategory === "Clothes"
+                      this.state.selectedCase === "Clothes"
                         ? "#579df8"
                         : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedCategory: "Clothes" }, () =>
+                    this.setState({ selectedCase: "Clothes" }, () =>
                       this.filteredContent()
                     );
                   }}
@@ -165,12 +154,12 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCategory === "Medicines"
+                      this.state.selectedCase === "Medicines"
                         ? "#579df8"
                         : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedCategory: "Medicines" }, () =>
+                    this.setState({ selectedCase: "Medicines" }, () =>
                       this.filteredContent()
                     );
                   }}
@@ -182,12 +171,12 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCategory === "Toys"
+                      this.state.selectedCase === "Toys"
                         ? "#579df8"
                         : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedCategory: "Toys" }, () =>
+                    this.setState({ selectedCase: "Toys" }, () =>
                       this.filteredContent()
                     );
                   }}
@@ -199,12 +188,12 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCategory === "Books"
+                      this.state.selectedCase === "Books"
                         ? "#579df8"
                         : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedCategory: "Books" }, () =>
+                    this.setState({ selectedCase: "Books" }, () =>
                       this.filteredContent()
                     );
                   }}
@@ -216,12 +205,12 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCategory === "Food"
+                      this.state.selectedCase === "Food"
                         ? "#579df8"
                         : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedCategory: "Food" }, () =>
+                    this.setState({ selectedCase: "Food" }, () =>
                       this.filteredContent()
                     );
                   }}
@@ -233,12 +222,12 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCategory === "School Fees"
+                      this.state.selectedCase === "School Fees"
                         ? "#579df8"
                         : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedCategory: "School Fees" }, () =>
+                    this.setState({ selectedCase: "School Fees" }, () =>
                       this.filteredContent()
                     );
                   }}
@@ -250,12 +239,12 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCategory === "Medicines"
+                      this.state.selectedCase === "Medicines"
                         ? "#579df8"
                         : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedCategory: "Medicines" }, () =>
+                    this.setState({ selectedCase: "Medicines" }, () =>
                       this.filteredContent()
                     );
                   }}
@@ -267,12 +256,12 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCategory === "Toys"
+                      this.state.selectedCase === "Toys"
                         ? "#579df8"
                         : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedCategory: "Toys" }, () =>
+                    this.setState({ selectedCase: "Toys" }, () =>
                       this.filteredContent()
                     );
                   }}
@@ -284,12 +273,12 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCategory === "Books"
+                      this.state.selectedCase === "Books"
                         ? "#579df8"
                         : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedCategory: "Books" }, () =>
+                    this.setState({ selectedCase: "Books" }, () =>
                       this.filteredContent()
                     );
                   }}
@@ -301,12 +290,12 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCategory === "Food"
+                      this.state.selectedCase === "Food"
                         ? "#579df8"
                         : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedCategory: "Food" }, () =>
+                    this.setState({ selectedCase: "Food" }, () =>
                       this.filteredContent()
                     );
                   }}
@@ -318,12 +307,12 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCategory === "School Fees"
+                      this.state.selectedCase === "School Fees"
                         ? "#579df8"
                         : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedCategory: "School Fees" }, () =>
+                    this.setState({ selectedCase: "School Fees" }, () =>
                       this.filteredContent()
                     );
                   }}
