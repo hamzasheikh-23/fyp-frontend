@@ -31,7 +31,7 @@ class ManageDonations extends Component {
     .get(`https://localhost:44357/case/get?ngoId=${localStorage.getItem("ngoID")}`)
     .then((res) => {
       if(!res.data.noData){
-        const stories = res.data.map(item=>({
+        const stories = res.data.cases.map(item=>({
           caseId: item.CaseId,
             ngoID: item.NGOId,
             caseTitle: item.CaseTitle,
