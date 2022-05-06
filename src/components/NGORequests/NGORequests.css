@@ -22,7 +22,7 @@
     letter-spacing: 0.8px;
 }
 
-.filter-options li a{
+.ngo-main-div .filter-area .filter-options li a{
     font-family: hind,sans-serif;
     display: block;
     padding: 10px 5px;
@@ -33,13 +33,13 @@
     cursor: pointer;
 }
 
-.filter-options li{
+.ngo-main-div .filter-area .filter-options li{
     margin: 0.25rem 0.25rem;
     font-family: hind,sans-serif;
     display: block;
 }
 
-.filter-options{
+.ngo-main-div .filter-area .filter-options{
     max-height: 90%;
     list-style: none;
     display: flex;
@@ -51,8 +51,8 @@
     padding: 0px 0px;
 }
 
-.filter-options a:hover,
-.filter-options a:active{
+.ngo-main-div .filter-area .filter-options a:hover,
+.ngo-main-div .filter-area .filter-options a:active{
     background-color: #579df8;
 }
 
@@ -117,7 +117,7 @@ text-align: left;
         width: 100%;
     }
 
-    .filter-options li a{
+    .ngo-main-div .filter-area .filter-options li a{
         border: 2px solid #579df8;
         width: 250px;
         padding: 10px 10px;
@@ -125,7 +125,7 @@ text-align: left;
         text-align: center;
     }
 
-    .filter-options{
+    .ngo-main-div .filter-area .filter-options{
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -136,7 +136,7 @@ text-align: left;
         margin-top: 30px;
     }
 
-    .filter-options{
+    .ngo-main-div .filter-area .filter-options{
         margin-bottom: 5px;
     }
 
@@ -146,7 +146,7 @@ text-align: left;
      }
 }
 @media (max-width:514px){
-    .filter-options li a{
+    .ngo-main-div .filter-area .filter-options li a{
         width: auto;
 
     }

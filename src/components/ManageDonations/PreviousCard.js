@@ -26,6 +26,7 @@ class PreviousCard extends React.Component {
       quantity,
       unit,
       category ,
+      categoryName,
       postedDate,
       description,
       imageBase64,
@@ -39,6 +40,7 @@ class PreviousCard extends React.Component {
         data: {
           caseId,
           category ,
+          categoryName,
           ngoID,
           caseTitle,
           quantity,
@@ -71,7 +73,7 @@ class PreviousCard extends React.Component {
         >
           {this.props.imageName ? (
             <img
-              src={require(`../../serverImages/${this.props.imageName}`)}
+              src={require(`../../serverImages/cases/${this.props.imageName}`)}
               alt=".."
               className="card-image"
             />

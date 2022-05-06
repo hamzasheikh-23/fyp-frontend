@@ -51,7 +51,11 @@ class AskDonationForm extends Component {
     axios
       .get("https://localhost:44357/donation/category/get")
       .then((res) => {
+        axios
+        .get("https://localhost:44357/unit/get")
+        .then((resUnit) => {
         const isEdit = this.props.history?.location?.state?.data ? true : false;
+        
         if (isEdit) {
           const {
             caseId,
@@ -63,6 +67,7 @@ class AskDonationForm extends Component {
             description,
             imageBase64,
             imageName,
+            categoryName,
             status,
             isActive,
           } = this.props.history.location.state.data;
@@ -70,6 +75,7 @@ class AskDonationForm extends Component {
             {
               donationTitle: caseTitle,
               donationTitleError: "",
+              caseId: caseId,
               donationDescription: description,
               donationDescriptionError: "",
               donationCategoryError: "",
@@ -91,30 +97,31 @@ class AskDonationForm extends Component {
         console.log(res);
         this.setState({
           categoryType: isEdit
-            ? this.props.history.location.state?.data?.category
+            ? this.props.history?.location?.state?.data?.categoryName
             : res.data.length > 0
             ? res.data[0].DonationCategory
             : "",
-            categoriesArr: res.data.map((item) => ({
+          categoriesArr: res.data.map((item) => ({
               id: item.CategoryId,
               name: item.DonationCategory,
             })),
-        });
-      })
-      .catch((err) => console.log("error in getting categories api", err));
-
-      axios
-      .get("https://localhost:44357/unit/get")
-      .then((res) => {
-        this.setState({
-          unit: res.data[0].Unit,
-            unitsArr: res.data.map((item) => ({
+          unit: isEdit
+          ? this.props.history?.location?.state?.data?.unit
+          : resUnit.data.length > 0
+          ? resUnit.data[0].Unit
+          : "",
+          unitsArr: resUnit.data.map((item) => ({
               id: item.UnitId,
               name: item.Unit,
             })),
         });
+        })
+        .catch((err) => console.log("error in getting units api", err));
       })
-      .catch((err) => console.log("error in getting units api", err));
+      .catch((err) => console.log("error in getting categories api", err));
+
+
+      
 
   }
 
@@ -269,7 +276,7 @@ class AskDonationForm extends Component {
       if (isEdit) {
         axios
           .put(
-            `https://localhost:44357/donation/edit/${this.state.donationId} `,
+            `https://localhost:44357/case/edit/${this.state.caseId} `,
             askDonationData
           )
           .then((res) => {
