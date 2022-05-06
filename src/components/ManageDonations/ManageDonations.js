@@ -23,7 +23,7 @@ import { checkProperty } from "../../assets/utils";
 class ManageDonations extends Component {
   componentDidMount() {
     this.getData();
-    console.log('manage donation', this.props.history)
+    // console.log('manage donation', this.props.history)
   }
 
   getData=()=>{
@@ -40,10 +40,16 @@ class ManageDonations extends Component {
           imageBase64: item.ImageBase64,
           imageName: item.ImageName,
           category : item.CategoryId,
+          categoryName: item.Category,
           status: item.Status,
-          isActive: item.IsActive,
+          isActive: JSON.parse(item.IsActive),
           postedDate: checkProperty('PostedDate',item) ? moment(item.PostedDate).format('LL hh:mm:ss')  : "",
-      }))
+      })).filter(item=>{
+        // console.log('filter',item.status!=="Deleted", item.status)
+        return item.status!=="Deleted"
+      });
+
+      console.log('manage donations', stories)
 
       this.setState({ arrayforcards: [...stories] });
     })

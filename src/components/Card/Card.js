@@ -14,9 +14,7 @@ class Card extends React.Component {
         `https://localhost:44357/donation/delete/${this.props.donationId}`
       )
       .then((res) => {
-        if (res.data.isSuccess) {
           this.props.getData();
-        }
       });
   };
   editItem = () => {

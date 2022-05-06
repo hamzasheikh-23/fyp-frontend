@@ -26,6 +26,7 @@ class PreviousCard extends React.Component {
       quantity,
       unit,
       category ,
+      categoryName,
       postedDate,
       description,
       imageBase64,
@@ -39,6 +40,7 @@ class PreviousCard extends React.Component {
         data: {
           caseId,
           category ,
+          categoryName,
           ngoID,
           caseTitle,
           quantity,
@@ -55,7 +57,7 @@ class PreviousCard extends React.Component {
     });
   };
   render() {
-    console.log("card", this.props);
+    console.log("card ngo", this.props);
     let addDetailModalClose = () =>
       this.setState({ addDetailModalShow: false });
 
@@ -64,14 +66,14 @@ class PreviousCard extends React.Component {
         <div
           style={{
             height: "calc(100% - 20px)",
-            backgroundColor: !this.props.isActive && "#F8F8F8",
+            backgroundColor: !this.props.isActive ? "#F8F8F8" : "white",
             boxShadow: "10px 10px 6px -6px rgba(0,0,0,0.07)",
           }}
           class="card"
         >
           {this.props.imageName ? (
             <img
-              src={require(`../../serverImages/${this.props.imageName}`)}
+              src={require(`../../serverImages/cases/${this.props.imageName}`)}
               alt=".."
               className="card-image"
             />
@@ -104,7 +106,7 @@ class PreviousCard extends React.Component {
                 }}
                 class="card-title"
               >
-                {this.props.cardTitle}{" "}
+                {this.props.caseTitle}{" "}
                 {!this.props.isActive && (
                   <span style={{ fontSize: "small" }}>(Not Active)</span>
                 )}{" "}

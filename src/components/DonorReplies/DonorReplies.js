@@ -1,206 +1,343 @@
-import React, { Component } from 'react';
-
-import axios from 'axios';
-import Footer from '../Footer/Footer';
-import Toolbar from '../Toolbar/Toolbar';
+import React from "react";
+import Footer from "../Footer/Footer";
+import Toolbar from "../Toolbar/Toolbar";
 import SideDrawer from "../SideDrawer/SideDrawer";
 import BackDrop from "../BackDrop/BackDrop";
-
+import dummy from "../../images/grayscale-kid.jpg";
 import "./DonorReplies.css";
+import axios from "axios";
+// import ProceedOrderModal from '../Modal/ProceedOrderModal';
+import RequestCard from "./RequestCard";
+import { filter } from "lodash";
+import moment from "moment";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-
-
-
-class DonorReplies extends Component{
-   
-
-
-
-
-
-
-
-    constructor() {
-        super();
-        
-        this.state = {
-
-          
-            //****THIS arrayforcards is for testing, its contents will be replaced by actual values from DATABASE***
-      //      arrayforcards : [],  
-       arrayforcards : [
-            {
-              id:'1',
-              title: 'Female Clothing Required',
-              image: '',
-              donor: 'Aiman Izhar',
-              description: 'I have some dresses that are in excellent condition, but sizes are very loose. If relevant contact.',
-              date:'9jan2020',
-              status: 'pending'
-            },
-            {
-              id:'2',
-              title: 'Medicines for a Cancer Patient',
-              image: '',
-              donor: 'Sana Khan',
-              description: 'I am a medical store owner and have the following required medicines available. I want to donate them to that needy person in order to save his life.',
-              date:'12april2020',
-              status: 'confirmed'
-            },
-            {
-              id:'3',
-              title: 'Primary Level Books',
-              image: '',
-              donor: 'Hafsa Choudhry',
-              description: 'I have my O-Levels and A-Levels books along with their notes. These books are expensive and are of no longer in my use. I hope someone else gets benefit from them.',
-              date:'21may2020',
-              status: 'rejected'
-            },
-            {
-              id:'4',
-              title: 'Toys needed',
-              image: '',
-              donor: 'Sana Khan',
-              description: 'My kids toys are all in good condition and are no longer in use as they have grown up. I would love to donate these preloved toys to a kid.',
-              date:'2may2020',
-              status: 'confirmed'
-            },
-            {
-                id:'5',
-                title: 'Medicines for a Cancer Patient',
-                image: '',
-                donor: 'Aiman Izhar',
-                description: 'I want to donate 35,000 for this purpose.',
-                date:'9mar2020',
-                status: 'pending'
-              },
-          ],
- 
-//****THIS arrayforcards is for testing, its contents will be replaced by actual values from DATABASE***
-
-el: "all",
-        };
-    }
-
-    state = {
-        siderDrawerOpen: false,
+class DonorReplies extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      siderDrawerOpen: false,
+      selectedCase: "",
+      caseTitleList: [],
+      replies:[],
+      // addModalShow: false,
     };
-
-    drawerToggleHandler = () => {
-        this.setState(prevState => {
-            return { siderDrawerOpen: !prevState.siderDrawerOpen };
+  }
+  componentDidMount() {
+    //get requests
+    axios
+      .get(
+        `https://localhost:44357/reply/get?status=approve&&isActive=true`
+      )
+      .then((res) => {
+        // console.log('res', res)
+        this.setState({
+          replies: res.data
         });
-    };
 
-    backdropClickHandler = () => {
-        this.setState({ siderDrawerOpen: false });
-    };
+        // console.log(this.state)
+      })
+      .catch((err) => console.log(err));
 
-    AllHandler = () => { 
-      this.setState(function(){
-            return {el: "all" }
-         });
-    };
-    PendingHandler = () => { 
-        this.setState(function(){
-            return {el: "pending"}
+    //get ngos
+    axios
+      .get(`https://localhost:44357/cases`)
+      .then((list) => {
+        this.setState({
+          caseTitleList: list.data.map((item) => ({
+            id: item.CaseId,
+            name: item.CaseTitle,
+          })),
         });
-        };
-    ConfirmedHandler = () => { 
-        this.setState(function(){
-            return {el: "confirmed"}
-        });
-        };
-    RejectedHandler = () => { 
-    this.setState(function(){
-            return {el: "rejected"}
-        });
-    };
+      })
+      .catch((error) => console.log(error));
+
+  }
+
+  componentDidUpdate(prevProps, prevState){
+if(prevState.selectedCase !== this.state.selectedCase){
+  this.filteredContent(this.state.selectedCase);
+}
+  }
 
 
 
-
-
- render() {
-        let backdrop;
-        if (this.state.siderDrawerOpen) {
-            backdrop = <BackDrop click={this.backdropClickHandler} />;
-            }   
-        
-        var donationstatus;
-            donationstatus =[this.state.el];
-         // console.log(donationstatus[0] + "hi  " + donationstatus[1] + "hi " + donationstatus[2]);
   
-        if(donationstatus == "all"){
-            donationstatus = ["rejected", "pending", "confirmed"];
-           // console.log(donationstatus[0] + "thissssssss " + donationstatus[1] + "hi " + donationstatus[2]);  
-             }
+  filteredContent = (selectedCase) => {
 
-    return (
-        <div>
-            <Toolbar drawerClickHandler={this.drawerToggleHandler} about={true} />
-            <SideDrawer about={true} show={this.state.siderDrawerOpen} />
-            {backdrop}
+    axios
+      .get(`https://localhost:44357/case/get?${selectedCase ? `caseId=${selectedCase}`:''}&&status=approve&&isActive=true`)
+      .then((res) => {
+        this.setState({
+          requests: res.data
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+  drawerToggleHandler = () => {
+    this.setState((prevState) => {
+      return { siderDrawerOpen: !prevState.siderDrawerOpen };
+    });
+  };
 
-
-<div className="replies-main-div">
-
-                    <div className="filter-area">
-                        <h2 className="filter-heading">Filter Replies:</h2>
-                        <ul className="filter-options">
-                       
-                            <li id="allfiltertag" onClick={this.AllHandler}> <a href="#">All Replies</a></li>
-                            <li id="pendingfiltertag" onClick={this.PendingHandler} ><a href="#">Pending Response </a></li>
-                            <li id="confirmedfiltertag" onClick={this.ConfirmedHandler}><a href="#">Approved</a></li>
-                            <li id="rejectedfiltertag" onClick={this.RejectedHandler}><a href="#">Rejected</a></li>
-                           
-                        </ul>
-                    </div>
- </div>
-
-
-
-    
-          
-<div className="replies-area">
-        <h3 className="replies-area-heading">DONOR REPLIES</h3>
-
-
-    <ul style={{ listStyleType: "none" }}>     
-
-{this.state.arrayforcards.filter(filteredrequest => filteredrequest.status === donationstatus[0] || filteredrequest.status === donationstatus[1] || filteredrequest.status === donationstatus[2] )
-.map(donation => (
-          <div className="listofreplies">                                           
+  backdropClickHandler = () => {
+    this.setState({ siderDrawerOpen: false });
+  };
  
-          <li >
-    <div className="card-body donor-reply-card-body">
-    <h5 className="card-title donor-reply-card-title">{donation.title}</h5>
-    <h6 className="card-subtitle mb-2 text-muted donor-reply-card-subtitle">{donation.donor}</h6>
-    <p className="card-text donor-reply-card-text">{donation.description}</p>
-    <h6 className="reply-date card-subtitle mb-2 text-muted donor-reply-card-subtitle">{donation.date}</h6>
-    <div  className="text-right" >a</div>
-    {/* <div className="text-right"><a href="/" className="btn btn-primary .donor-reply-card-btn" style={{fontWeight:"bold", padding: "10px 1.25rem"}}>View Details</a></div> */}
-</div> 
-          </li>
+  render() {
+    // console.log("ngo requests", this.state);
+    let backdrop;
+    if (this.state.siderDrawerOpen) {
+      backdrop = <BackDrop click={this.backdropClickHandler} />;
+    }
+    // let addModalClose=()=> this.setState({addModalShow:false});
+    return (
+      <div>
+        <Toolbar drawerClickHandler={this.drawerToggleHandler} about={true} />
+        <SideDrawer about={true} show={this.state.siderDrawerOpen} />
+        {backdrop}
+        <div className="replies-main-div">
+          <div className="filter-area">
+            <h2 className="filter-heading">Filter By Case Titles:</h2>
+            <ul className="filter-options">
+              <li>
+                <a
+                  style={{
+                    backgroundColor:
+                      this.state.selectedCase === ""
+                        ? "#579df8"
+                        : "#4a89dc",
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedCase: "" });
+                  }}
+                >
+                  All
+                </a>
+              </li>
+              {this.state.caseTitleList.map((list) => {
+                return (
+                  <li>
+                    <a
+                      style={{
+                        backgroundColor:
+                          this.state.selectedCase === list.CaseId
+                            ? "#579df8"
+                            : "#4a89dc",
+                      }}
+                      onClick={() => {
+                        this.setState({ selectedCase: list.CaseId });
+                      }}
+                    >
+                      {list.CaseTitle}
+                    </a>
+                  </li>
+                );
+              })}
+              {/* <li>
+                <a
+                  style={{
+                    backgroundColor:
+                      this.state.selectedCase === "Clothes"
+                        ? "#579df8"
+                        : "#4a89dc",
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedCase: "Clothes" }, () =>
+                      this.filteredContent()
+                    );
+                  }}
+                >
+                  Clothes
+                </a>
+              </li>
+              <li>
+                <a
+                  style={{
+                    backgroundColor:
+                      this.state.selectedCase === "Medicines"
+                        ? "#579df8"
+                        : "#4a89dc",
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedCase: "Medicines" }, () =>
+                      this.filteredContent()
+                    );
+                  }}
+                >
+                  Medicines
+                </a>
+              </li>
+              <li>
+                <a
+                  style={{
+                    backgroundColor:
+                      this.state.selectedCase === "Toys"
+                        ? "#579df8"
+                        : "#4a89dc",
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedCase: "Toys" }, () =>
+                      this.filteredContent()
+                    );
+                  }}
+                >
+                  Toys
+                </a>
+              </li>
+              <li>
+                <a
+                  style={{
+                    backgroundColor:
+                      this.state.selectedCase === "Books"
+                        ? "#579df8"
+                        : "#4a89dc",
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedCase: "Books" }, () =>
+                      this.filteredContent()
+                    );
+                  }}
+                >
+                  Books
+                </a>
+              </li>
+              <li>
+                <a
+                  style={{
+                    backgroundColor:
+                      this.state.selectedCase === "Food"
+                        ? "#579df8"
+                        : "#4a89dc",
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedCase: "Food" }, () =>
+                      this.filteredContent()
+                    );
+                  }}
+                >
+                  Food
+                </a>
+              </li>
+              <li>
+                <a
+                  style={{
+                    backgroundColor:
+                      this.state.selectedCase === "School Fees"
+                        ? "#579df8"
+                        : "#4a89dc",
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedCase: "School Fees" }, () =>
+                      this.filteredContent()
+                    );
+                  }}
+                >
+                  School Fees
+                </a>
+              </li>
+              <li>
+                <a
+                  style={{
+                    backgroundColor:
+                      this.state.selectedCase === "Medicines"
+                        ? "#579df8"
+                        : "#4a89dc",
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedCase: "Medicines" }, () =>
+                      this.filteredContent()
+                    );
+                  }}
+                >
+                  Medicines
+                </a>
+              </li>
+              <li>
+                <a
+                  style={{
+                    backgroundColor:
+                      this.state.selectedCase === "Toys"
+                        ? "#579df8"
+                        : "#4a89dc",
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedCase: "Toys" }, () =>
+                      this.filteredContent()
+                    );
+                  }}
+                >
+                  Toys
+                </a>
+              </li>
+              <li>
+                <a
+                  style={{
+                    backgroundColor:
+                      this.state.selectedCase === "Books"
+                        ? "#579df8"
+                        : "#4a89dc",
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedCase: "Books" }, () =>
+                      this.filteredContent()
+                    );
+                  }}
+                >
+                  Books
+                </a>
+              </li>
+              <li>
+                <a
+                  style={{
+                    backgroundColor:
+                      this.state.selectedCase === "Food"
+                        ? "#579df8"
+                        : "#4a89dc",
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedCase: "Food" }, () =>
+                      this.filteredContent()
+                    );
+                  }}
+                >
+                  Food
+                </a>
+              </li>
+              <li>
+                <a
+                  style={{
+                    backgroundColor:
+                      this.state.selectedCase === "School Fees"
+                        ? "#579df8"
+                        : "#4a89dc",
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedCase: "School Fees" }, () =>
+                      this.filteredContent()
+                    );
+                  }}
+                >
+                  last
+                </a>
+              </li> */}
+            </ul>
+          </div>
+          <div class="request-area">
+            <h3 className="request-area-heading">DONOR'S RESPONSE</h3>
+            {this.state.replies.map((reply) => {
+              return (
+                <RequestCard
+                    {...reply}
+                  fetchData={this.filteredContent}
+                />
+              );
+            })}
 
           </div>
-                        ) )}
-</ul>
-
-</div>
-
-         <Footer/>
-        
-         
-</div>
-            );
-        }
-       
- }
-    
-    
-    
-    
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+}
 export default DonorReplies;
-    
