@@ -29,7 +29,7 @@ class NGORequests extends React.Component {
     //get requests
     axios
       .get(
-        `https://localhost:44357/case/get?status=approve&&isActive=true`
+        `https://localhost:44357/case/get?status=approved&&isActive=true`
       )
       .then((res) => {
         // console.log('res', res)
@@ -88,7 +88,7 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
   filteredContent = (selectedCategory, selectedNgo) => {
 
     axios
-      .get(`https://localhost:44357/case/get?${selectedNgo ? `ngoId=${selectedNgo}`:''}&&status=approve&&isActive=true${selectedCategory? `&&category=${selectedCategory}`: ''}`)
+      .get(`https://localhost:44357/case/get?${selectedNgo ? `ngoId=${selectedNgo}`:''}&&status=approved&&isActive=true${selectedCategory? `&&category=${selectedCategory}`: ''}`)
       .then((res) => {
         this.setState({
           requests: res.data.map((item) => ({
