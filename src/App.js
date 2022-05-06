@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import history from "./history";
-import history from "./assets/history";
 import MainPage from "./components/MainPage/MainPage";
 import AboutUs from "./components/AboutUs/AboutUs";
 import LoginForm from "./components/Login/LoginForm";
@@ -17,15 +16,22 @@ import ManageStories from "./components/ManageStories/ManageStories";
 import DonorReplies from "./components/DonorReplies/DonorReplies";
 import NGORequests from "./components/NGORequests/NGORequests";
 import GoogleMap from "./components/GoogleMap/GoogleMap";
+
 import AdminPanel from "./components/AdminPanel/AdminPanel";
 import AdminPanelNGORecords from "./components/AdminPanelNGORecords/AdminPanelNGORecords";
 import AdminPanelNGOJoin from "./components/AdminPanelNGOJoin/AdminPanelNGOJoin";
 import AdminPanelDonorRequests from "./components/AdminPanelDonorRequests/AdminPanelDonorRequests";
 import AdminPanelNGORequests from "./components/AdminPanelNGORequests/AdminPanelNGORequests";
 import AdminPanelUserFeedback from "./components/AdminPanelUserFeedback/AdminPanelUserFeedback";
+import AdminPanelStatistics from "./components/AdminPanelStatistics/AdminPanelStatistics";
+import AdminPanelDonationRequests from "./components/AdminPanelDonationRequests/AdminPanelDonationRequests";
+import AdminPanelManageRequestsFromNGO from "./components/AdminPanelManageRequestsFromNGO/AdminPanelManageRequestsFromNGO";
+import AdminPanelManageSubscriptions from "./components/AdminPanelManageSubscriptions/AdminPanelManageSubscriptions";
+import AdminPanelManageDonors from "./components/AdminPanelManageDonors/AdminPanelManageDonors";
+import AdminPanelManagePartnerNGO from "./components/AdminPanelManagePartnerNGO/AdminPanelManagePartnerNGO";
+
 import NGOStatusPending from "./components/NGOStatusPending/NGOStatusPending";
 import NGOStatusRejected from "./components/NGOStatusRejected/NGOStatusRejected";
-import AdminPanelStatistics from "./components/AdminPanelStatistics/AdminPanelStatistics";
 import SubscriptionPage from "./components/SubscriptionPage/SubscriptionPage";
 import DoubleLoginProtection from "./components/RouteProtection/DoubleLoginProtection";
 import AlreadyLoggedIn from "./components/AlreadyLoggedIn/AlreadyLoggedIn";
@@ -36,7 +42,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   useEffect(() => {
-    console.log("run");
   }, []);
 
   
@@ -76,15 +81,26 @@ const App = () => {
           validUser="donor"
           // redirectTo="/"
         />
-        {/* <Route path="/adminPanelStatistics" component={AdminPanelStatistics} /> */}
-        <RoleRouteProtection
-          exact
-          path="/adminPanelStatistics"
-          component={AdminPanelStatistics}
-          validUser="admin"
-          // redirectTo="/"
-        />
-        {/* <Route path="/profile" component={Profile} /> */}
+
+        {/** ADMIN ROUTE STARTS HERE */}
+
+          <RoleRouteProtection
+            exact
+            path="/adminPanelStatistics"
+            component={AdminPanelStatistics}
+            validUser="admin"
+            // redirectTo="/"
+          />
+
+          <RoleRouteProtection exact path='/donation-requests' component={AdminPanelDonationRequests} validUser='admin' />
+          <RoleRouteProtection exact path='/manage-ngo-requests' component={AdminPanelManageRequestsFromNGO} validUser='admin' />
+          <RoleRouteProtection exact path='/user-feedback' component={AdminPanelUserFeedback} validUser='admin' />
+          <RoleRouteProtection exact path='/manage-subscriptions' component={AdminPanelManageSubscriptions} validUser='admin' />
+          <RoleRouteProtection exact path='/manage-donors' component={AdminPanelManageDonors} validUser='admin' />
+          <RoleRouteProtection exact path='/manage-partner-ngos' component={AdminPanelManagePartnerNGO} validUser='admin' />
+
+        {/** ADMIN ROUTE ENDS HERE */}
+
         <RoleRouteProtection
           exact
           path="/profile"
@@ -171,13 +187,7 @@ const App = () => {
           path="/adminPanelUserFeedback"
           component={AdminPanelUserFeedback}
         /> */}
-         <RoleRouteProtection
-          exact
-          path="/adminPanelUserFeedback"
-          component={AdminPanelUserFeedback}
-          validUser="admin"
-          // redirectTo="/"
-        />
+         
         {/* <Route path="/ngostatuspending" component={NGOStatusPending} /> */}
         <RoleRouteProtection
           exact
@@ -287,12 +297,12 @@ const App = () => {
         />
       </Switch>
       <ToastContainer
-          position="top-center"
+          // position="top-center"
           // autoClose={false}
           // hideProgressBar
           // newestOnTop={false}
           // closeOnClick
-          rtl={false}
+          // rtl={false}
           // pauseOnFocusLoss={false}
           draggable
           pauseOnHover

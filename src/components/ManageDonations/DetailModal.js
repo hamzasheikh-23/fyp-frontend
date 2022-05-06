@@ -39,16 +39,18 @@ class DetailModal extends Component {
         </Modal.Header>
         <Modal.Body>
           <div className="container">
-            {this.props.image ? (
-              <div className="col-lg-4 col-md-6 col-sm-12">
-                <img
-                    src={require(`../../serverImages/${this.props.image}`)}
-                    height="200px"
-                    width="100%"
-                    style={{ objectFit: "contain", marginBottom: "5px" }}
-                  />
-              </div>
+            
+          {data.imageName ? (
+              <div className="col-lg-12">
+              <img
+                  src={data.imageName}
+                  height="200px"
+                  width="100%"
+                  style={{ objectFit: "contain", marginBottom: "5px" }}
+                />
+            </div>
             ) : null}
+
 
             <table className="table">
               <tbody>
@@ -79,6 +81,7 @@ class DetailModal extends Component {
                 </tr>
               </tbody>
             </table>
+            
           </div>
         </Modal.Body>
         <Modal.Footer>

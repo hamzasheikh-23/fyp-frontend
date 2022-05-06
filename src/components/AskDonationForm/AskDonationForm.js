@@ -83,8 +83,7 @@ class AskDonationForm extends Component {
               unit: unit,
               itemQuantity: quantity,
               base64Images: [
-                imageName &&
-                  imageBase64 && {
+                imageName && {
                     name: imageName,
                     base64: imageBase64,
                     edit: true,
@@ -94,7 +93,7 @@ class AskDonationForm extends Component {
             () => console.log("check state", this.state)
           );
         }
-        console.log(res);
+        // console.log(res);
         this.setState({
           categoryType: isEdit
             ? this.props.history?.location?.state?.data?.categoryName
@@ -372,7 +371,7 @@ class AskDonationForm extends Component {
 
   displayImg = () => {
     // const isEdit = this.props.history.location.state?.data ? true : false;
-    console.log("display image", this.state.itemPic, this.state.base64Images);
+    console.log("display image", this.state.base64Images);
     const images = this.state.base64Images.map((img, i) => {
       console.log("latest", img);
       if (img.edit) {
@@ -382,7 +381,7 @@ class AskDonationForm extends Component {
               <FaTimesCircle size="1.15rem" />
             </i>
             <div className="upload-pic-container">
-              <img src={require(`../../serverImages/${img.name}`)} alt="..." />
+              <img src={img.name} alt="..." />
             </div>
           </div>
         );
