@@ -71,7 +71,7 @@ class PreviousCard extends React.Component {
           }}
           class="card"
         >
-          {this.props.imageName ? (
+          {/* {this.props.imageName ? (
             <img
               src={require(`../../serverImages/cases/${this.props.imageName}`)}
               alt=".."
@@ -85,7 +85,13 @@ class PreviousCard extends React.Component {
               alt=".."
               className="card-image"
             />
-          )}
+          )} */}
+
+            <img
+              src={this.props.imageName}
+              alt=".."
+              className="card-image"
+            />
 
           <div
             style={{ display: "flex", flexDirection: "column" }}
