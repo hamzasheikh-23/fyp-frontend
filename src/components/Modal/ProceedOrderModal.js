@@ -3,6 +3,8 @@ import { Label } from "react-bootstrap";
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import axios from "axios";
 import "./ProceedOrderModal.css";
+import { FaTimesCircle } from "react-icons/fa";
+
 
 class ProceedOrderModal extends Component {
   constructor(props) {
@@ -10,15 +12,28 @@ class ProceedOrderModal extends Component {
     this.state = {
       msg: "",
       msgErr: "",
-      remainingRequiredQuantity:50,
+      remainingRequiredQuantity:0,
       remainingRequiredQuantityErr:"",
-      remainingRequiredQuantityOriginal: 50,
-      donationQuantity:0,
+      remainingRequiredQuantityOriginal: 0,
+      donationQuantity:"",
       donationQuantityErr: "",
       address:"",
       addressErr:"",
+      base64Images: [],
+      imageErr: null
 
     };
+  }
+
+  componentDidMount(){
+    // console.log('props', this.props)
+     axios
+        .get(`https://localhost:44357/reply/remainingQuantity/${this.props.reqId}`)
+        .then((res) => {
+          // console.log('res', res)
+          this.setState({remainingRequiredQuantity: res.data.RemainingQuantity , remainingRequiredQuantityOriginal: res.data.RemainingQuantity})
+        })
+        .catch((err) => console.log("error", err));
   }
 
   validation=()=>{
@@ -26,6 +41,8 @@ class ProceedOrderModal extends Component {
     let msgErr = "";
     let addressErr = "";
     let remainingRequiredQuantityErr="";
+
+    console.log('validation', this.state)
 
     const validText = /^[^\s]+(?: [^\s]+)*$/; //no concurrent spaces and no boundary spaces
    
@@ -36,32 +53,38 @@ class ProceedOrderModal extends Component {
         "remove extra and unnecessary spaces";
     }
 
-    if(!validText.test(this.state.msg)){
-      msgErr="required"
-    }
+    // if(!validText.test(this.state.msg)){
+    //   msgErr="required"
+    // }
 
     if (!this.state.donationQuantity) {
       donationQuantityErr = "required";
-    } else if (this.state.donationQuantity < 1 || this.state.donationQuantity > 1000) {
+    } else if (parseFloat(this.state.donationQuantity) < 1 || parseFloat(this.state.donationQuantity) > 1000) {
       donationQuantityErr = "Quantity must be in range 1 to the required quantity";
     }
 
-    let validQuantity= parseFloat(this.state.remainingRequiredQuantity)-parseFloat(this.state.donationQuantity)
-
+    let validQuantity= parseFloat(this.state.remainingRequiredQuantityOriginal)-parseFloat(this.state.donationQuantity)
+    console.log('validQuantity',parseFloat(this.state.remainingRequiredQuantityOriginal),parseFloat(this.state.donationQuantity),validQuantity, remainingRequiredQuantityErr)
     if (validQuantity<0) {
       remainingRequiredQuantityErr = "Your donation is exceeding the requested quantity";
-    } 
+    } else{
+      remainingRequiredQuantityErr = "";
+
+    }
+    console.log('after',remainingRequiredQuantityErr)
+
 
     if (
       remainingRequiredQuantityErr ||
       donationQuantityErr ||
-      msgErr ||
-      addressErr
+      // msgErr ||
+      addressErr ||
+      this.state.imageErr
     ) {
       this.setState({
         remainingRequiredQuantityErr,
         donationQuantityErr,
-        msgErr,
+        // msgErr,
         addressErr,
       });
       return false;
@@ -75,22 +98,80 @@ class ProceedOrderModal extends Component {
     const isValid = this.validation();
     console.log("isValid: ", isValid, this.state);
     if (isValid) {
+      const isEdit = this.props.history?.location?.state?.data ? true : false;
+
       const response = {
-        Message: this.state.msg,
+        Message : this.state.msg,
         CaseId: this.props.reqId,
         DonorId: localStorage.getItem("donorID"),
-        Quantity: this.state.donationQuantity,
-        RemainingQuantity: this.state.remainingRequiredQuantity
+        Quantity : parseFloat(this.state.donationQuantity),
+        RemainingQuantity : this.state.remainingRequiredQuantity,
+        Address : this.state.address,
+        Image1base64:
+          this.state.base64Images[0] === undefined
+            ? null
+            : !isEdit
+            ? this.state.base64Images[0].base64
+            : this.state.base64Images[0].base64 ===
+              this.props.history?.location?.state?.data?.itemImg1
+            ? null
+            : this.state.base64Images[0].base64,
+        Image2base64:
+          this.state.base64Images[1] === undefined
+            ? null
+            : !isEdit
+            ? this.state.base64Images[1].base64
+            : this.state.base64Images[1].base64 ===
+              this.props.history?.location?.state?.data?.itemImg2
+            ? null
+            : this.state.base64Images[1].base64,
+        Image3base64:
+          this.state.base64Images[2] === undefined
+            ? null
+            : !isEdit
+            ? this.state.base64Images[2].base64
+            : this.state.base64Images[2].base64 ===
+              this.props.history?.location?.state?.data?.itemImg3
+            ? null
+            : this.state.base64Images[2].base64,
+        Image1Name:
+          this.state.base64Images[0] === undefined
+            ? null
+            : !isEdit
+            ? this.state.base64Images[0].name
+            : this.state.base64Images[0].name ===
+              this.props.history?.location?.state?.data?.image1Name
+            ? null
+            : this.state.base64Images[0].name,
+        Image2Name:
+          this.state.base64Images[1] === undefined
+            ? null
+            : !isEdit
+            ? this.state.base64Images[1].name
+            : this.state.base64Images[1].name ===
+              this.props.history?.location?.state?.data?.image2Name
+            ? null
+            : this.state.base64Images[1].name,
+        Image3Name:
+          this.state.base64Images[2] === undefined
+            ? null
+            : !isEdit
+            ? this.state.base64Images[2].name
+            : this.state.base64Images[2].name ===
+              this.props.history?.location?.state?.data?.image3Name
+            ? null
+            : this.state.base64Images[2].name,
+
       };
       console.log("data of response", response);
-      // axios
-      //   .post("/api/storeResponse", response)
-      //   .then((res) => {
-      //     console.log("success", res);
-      //     this.props.fetchData();
-      //     this.props.onHide();
-      //   })
-      //   .catch((err) => console.log("error", err));
+      axios
+        .post(`https://localhost:44357/reply/post `, response)
+        .then((res) => {
+          console.log("success", res);
+          this.props.fetchData();
+          this.props.onHide(true);
+        })
+        .catch((err) => console.log("error", err));
     }
 
   };
@@ -112,6 +193,81 @@ class ProceedOrderModal extends Component {
   changeHandler = (event, fieldName) => {
     this.setState({ [fieldName]: event.target.value });
     // console.log(event.target.value);
+  };
+
+  getBase64(file, cb) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      cb(reader.result);
+    };
+    reader.onerror = function (error) {
+      console.log("Error: ", error);
+    };
+  }
+
+  ImagefileSelectedHandler = (e) => {
+    const isEdit = this.props.history?.location?.state?.data ? true : false;
+    var pattern = /[\/](jpg|png|jpeg)$/i;
+    e.persist();
+    if (e.target.files[0].type.match(pattern)) {
+      this.getBase64(e.target.files[0], (result) => {
+        this.setState({
+          base64Images: [
+            ...this.state.base64Images,
+            { name: e.target.files[0].name, base64: result, edit: false },
+          ],
+          imageErr: null,
+        });
+      });
+    } else {
+      this.setState({ imageErr: "Invalid file format" });
+    }
+  };
+
+  RemoveImg = (event, img) => {
+    // console.log(img.name);
+
+    // this.setState((prev) => ({
+    //   itemPic: prev.itemPic.filter((el) => el.name !== img.name),
+    // }));
+    this.setState((prev) => ({
+      base64Images: prev.base64Images.filter((el) => el.name !== img.name),
+    }));
+    // console.log(this.state.itemPic);
+  };
+
+  displayImg = () => {
+    // const isEdit = this.props.history.location.state?.data ? true : false;
+    console.log("display image", this.state.itemPic, this.state.base64Images);
+    const images = this.state.base64Images.map((img, i) => {
+      console.log("latest", img);
+      if (img.edit) {
+        return (
+          <div key={i}>
+            <i onClick={(event) => this.RemoveImg(event, img)}>
+              <FaTimesCircle size="1.15rem" />
+            </i>
+            <div className="upload-pic-container">
+              <img src={require(`../../serverImages/${img.name}`)} alt="..." />
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div key={i}>
+            <i onClick={(event) => this.RemoveImg(event, img)}>
+              <FaTimesCircle size="1.15rem" />
+            </i>
+            <div className="upload-pic-container">
+              <img src={img?.base64} alt="..." />
+            </div>
+          </div>
+        );
+      }
+    });
+
+    return <div className="item-pic ">{images}</div>;
   };
 
   render() {
@@ -209,6 +365,34 @@ class ProceedOrderModal extends Component {
                   }}
                 >
                   {this.state.addressErr}
+                </div>
+              </div>
+              <div className="form-group mb-2">
+                <label>Upload Image(s)</label>
+                <div className="item-pic-container ">
+                  {/* <FileBase64 disabled={this.state.itemPic.length > 2 ? true : false} multiple={true} onDone={this.getFiles.bind(this)} /> */}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={this.ImagefileSelectedHandler}
+                    disabled={this.state.base64Images.length > 2 ? true : false}
+                  />
+
+                  <div>
+                    {this.state.base64Images.length > 0
+                      ? this.displayImg()
+                      : null}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: "12.8px",
+                    color: "#DC3545",
+                    marginLeft: "10px",
+                  }}
+                >
+                  {this.state.imageErr}
                 </div>
               </div>
               <div className="form-group">

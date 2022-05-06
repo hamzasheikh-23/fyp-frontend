@@ -12,6 +12,7 @@ import item5 from "../../images/hope.png";
 import axios from "axios";
 import data from "./temp";
 import moment from "moment";
+import {checkProperty} from '../../assets/utils';
 
 class Profile extends React.Component {
   componentDidMount() {
@@ -42,6 +43,7 @@ class Profile extends React.Component {
   }
 
   getData = () => {
+    console.log('get data called');
     axios
       .get(
         `https://localhost:44357/donation/get?donorId=${localStorage.getItem(
@@ -56,7 +58,7 @@ class Profile extends React.Component {
             address: item.Address,
             quantity: item.Quantity,
             quantityPerUnit: item.QuantityPerUnit,
-            date: item.ExpiryDate,
+            date: checkProperty('ExpiryDate',item) ? moment(item.ExpiryDate).format('LL hh:mm:ss'): null ,
             weight: item.Weight,
             description: item.Description,
             category: item.Category,
@@ -69,10 +71,10 @@ class Profile extends React.Component {
             image1Name: item.Image1Name,
             image2Name: item.Image2Name,
             image3Name: item.Image3Name,
-            postedDate: item.PostedDate,
+            postedDate: checkProperty('PostedDate',item) ? moment(item.PostedDate).format('LL hh:mm:ss'): null ,
             status: item.Status,
-            isActive: item.IsActive,
-          })),
+            isActive: JSON.parse(item.IsActive),
+          })).filter(item=>item.status!=="Deleted"),
         });
       })
       .catch((err) => console.log(err));

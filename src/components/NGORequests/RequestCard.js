@@ -1,13 +1,29 @@
 import React from "react";
 import ProceedOrderModal from "../Modal/ProceedOrderModal";
-import {checkProperty}  from '../../assets/utils'
+import {checkProperty}  from '../../assets/utils';
+import { toast } from "react-toastify";
+
 
 class RequestCard extends React.Component {
   state = {
     addModalShow: false,
   };
   render() {
-    let addModalClose = () => this.setState({ addModalShow: false });
+    // console.log('single item', this.props)
+    let addModalClose = (showMsg) =>{
+      this.setState({ addModalShow: false });
+      if(showMsg){
+        toast.success("Thank you for your donation wait till it gets accepted by NGO", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    } 
     return (
       <div>
         <div class="card-body ngo-request-card-body">
@@ -49,13 +65,13 @@ class RequestCard extends React.Component {
             </button>
           </div>
         </div>
-
+        {this.state.addModalShow &&
         <ProceedOrderModal
         fetchData={this.props.fetchData}
           show={this.state.addModalShow}
           reqId={this.props.reqId}
           onHide={addModalClose}
-        />
+        />}
       </div>
     );
   }

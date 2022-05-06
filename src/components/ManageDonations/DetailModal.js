@@ -21,7 +21,7 @@ class DetailModal extends Component {
   // }
 
   render() {
-    // console.log('detail',this.props)
+    console.log('detail',this.props)
     const { data } = this.props;
     return (
       <Modal
@@ -34,7 +34,7 @@ class DetailModal extends Component {
             id="contained-modal-title-vcenter"
             style={{ color: "rgb(74, 137, 220)" }}
           >
-            Title: {data.title}
+            Title: {data.caseTitle}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -54,11 +54,11 @@ class DetailModal extends Component {
               <tbody>
                 <tr>
                   <td>Date & Time of Donation:</td>
-                  <td>{moment(data.posted).format("LL hh:mm:ss")}</td>
+                  <td>{moment(data.postedDate).format("LL hh:mm:ss")}</td>
                 </tr>
                 <tr>
                   <td>Category:</td>
-                  <td>{checkProperty("category", data)}</td>
+                  <td>{checkProperty("categoryName", data)}</td>
                 </tr>
                 <tr>
                   <td>Quantity Required:</td>

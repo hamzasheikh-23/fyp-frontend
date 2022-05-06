@@ -223,13 +223,6 @@ class Signup extends Component {
     } = formValues;
 
     if (this.props.type === "ngo") {
-    //   signupData = {
-    //     ...formValues,
-    //     type: this.props.type,
-    //     status: "Pending",
-    //     CNIC_Number: 0,
-        
-    //   };
     const [first,...last] = name.split(' ');
     signupData = {
         FirstName: first, 
@@ -239,11 +232,11 @@ class Signup extends Component {
         Password: password,
         Contact: phoneNumber,
         UserTypeId: 3,
+        Address: address,
+
       };
 
-    } else {
-      //signupData={...formValues,type:this.props.type}
-
+    } else { //donor
       signupData = {
         FirstName: fname,
         LastName: lname,
@@ -252,10 +245,13 @@ class Signup extends Component {
         Password: password,
         Contact: phoneNumber,
         UserTypeId: 2,
+        Gender: gender,
+        Address: address,
+        CNIC: CNIC_Number,
       };
     }
 
-    // console.log("Sign up data:", signupData);
+    console.log("Sign up data:", signupData);
     this.setState({
       alertMsg: true,
       msg: "We are processing. Please wait",
@@ -272,7 +268,7 @@ class Signup extends Component {
         }else{
           this.setState({
             alertMsg: true,
-            msg: res.data.msg,
+            msg: res.data.errMessage,
             bg: "danger",
           });
         }
@@ -455,7 +451,7 @@ class Signup extends Component {
               </div>
             </div>
 
-            {/* <div className="row">
+            <div className="row">
               <div className="col-lg-8">
                 <Field
                   type="text"
@@ -470,7 +466,7 @@ class Signup extends Component {
                   <Field name="gender" component={this.renderSelectInput} />
                 </div>
               ) : null}
-            </div> */}
+            </div>
 
             <div className="row field-spacer">
               <div className="col-lg-6">
@@ -492,7 +488,7 @@ class Signup extends Component {
                 />
               </div>
             </div>
-            {/* {this.props.type === "donor" ? (
+            {this.props.type === "donor" ? (
               <Field
                 name="CNIC_Number"
                 component={this.renderInput}
@@ -500,7 +496,7 @@ class Signup extends Component {
                 id="CNIC_Number"
                 placeholder="CNIC (eg format: 12345-1234567-1)"
               />
-            ) : null} */}
+            ) : null}
 
             {/* {this.isNgo()} */}
             <button

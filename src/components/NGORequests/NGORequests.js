@@ -12,20 +12,34 @@ import { filter } from "lodash";
 import moment from "moment";
 
 class NGORequests extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      siderDrawerOpen: false,
+      donor: true,
+      selectedNgo: "",
+      selectedCategory: "",
+      requests: [],
+      ngoList: [],
+      categoryList:[]
+      // addModalShow: false,
+    };
+  }
   componentDidMount() {
     //get requests
     axios
       .get(
-        `https://localhost:44357/case/get?status=approve&isActive=true&category=all`
+        `https://localhost:44357/case/get?status=approve&&isActive=true`
       )
       .then((res) => {
+        // console.log('res', res)
         this.setState({
           requests: res.data.map((item) => ({
             caseId: item.CaseId,
             ngoID: item.NGOId,
             caseTitle: item.CaseTitle,
-            Quantity: item.Quantity,
-            Unit: item.Unit,
+            quantity: item.Quantity,
+            unit: item.Unit,
             postedDate: item.PostedDate,
             description: item.Description,
             imageBase64: item.ImageBase64,
@@ -62,35 +76,19 @@ class NGORequests extends React.Component {
     .catch((error) => console.log(error));
   }
 
+  componentDidUpdate(prevProps, prevState){
+if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selectedNgo !== this.state.selectedNgo){
+  this.filteredContent(this.state.selectedCategory, this.state.selectedNgo);
+}
+  }
 
 
-  state = {
-    siderDrawerOpen: false,
-    donor: true,
-    selectedNgo: "",
-    selectedCategory: "",
-    requests: [],
-    ngoList: [],
-    categoryList:[,]
-    // addModalShow: false,
-  };
-  filteredContent = () => {
-    let url = "";
-    console.log('filteredContect')
 
-    if (this.state.selectedNgo & this.state.selectedCategory) {
-      url = `https://localhost:44357/case/get?ngoId=${this.state.selectedNgo}&status=approve&isActive=true&category=${this.state.selectedCategory}`;
-    } else if (this.state.selectedNgo & !this.state.selectedCategory) {
-      url = `https://localhost:44357/case/get?ngoId=${this.state.selectedNgo}&status=approve&isActive=true`;
-    } else if (!this.state.selectedNgo & this.state.selectedCategory) {
-      url = `https://localhost:44357/case/get?status=approve&isActive=true&category=${this.state.selectedCategory}`;
-    } else if (!this.state.selectedNgo & !this.state.selectedCategory) {
-      url = `https://localhost:44357/case/get?status=approve&isActive=true`;
-    }
-    console.log('filteredContect',url)
+  
+  filteredContent = (selectedCategory, selectedNgo) => {
 
     axios
-      .get(url)
+      .get(`https://localhost:44357/case/get?${selectedNgo ? `ngoId=${selectedNgo}`:''}&&status=approve&&isActive=true${selectedCategory? `&&category=${selectedCategory}`: ''}`)
       .then((res) => {
         this.setState({
           requests: res.data.map((item) => ({
@@ -107,54 +105,6 @@ class NGORequests extends React.Component {
         });
       })
       .catch((err) => console.log(err));
-
-    // console.log(
-    //   "ngo: ",
-    //   this.state.selectedNgo,
-    //   "category: ",
-    //   this.state.selectedCategory
-    // );
-    // if (this.state.selectedCategory && this.state.selectedNgo) {
-    //   axios
-    //     .get(`/api/getRequestedItemsByNgoId/${this.state.selectedNgo}`)
-    //     .then((res) => {
-    //       const newList = res.data.filter(
-    //         (item) => item.category === this.state.selectedCategory
-    //       );
-    //       this.setState({ requests: [...newList] });
-    //       // console.log('filtered req with ngo n category', newList)
-    //     })
-    //     .catch((error) => console.log(error));
-    // } else if (this.state.selectedNgo && !this.state.selectedCategory) {
-    //   axios
-    //     .get(`/api/getRequestedItemsByNgoId/${this.state.selectedNgo}`)
-    //     .then((res) => {
-    //       // const newList= res.data.filter(item=>item.category===this.state.selectedCategory)
-    //       this.setState({ requests: [...res.data] });
-    //       // console.log('filtered req with ngo', res.data)
-    //     })
-    //     .catch((error) => console.log(error));
-    // } else if (!this.state.selectedNgo && this.state.selectedCategory) {
-    //   axios
-    //     .get("/api/getRequestedItemsByStatus/approved")
-    //     .then((res) => {
-    //       const newList = res.data.filter(
-    //         (item) => item.category === this.state.selectedCategory
-    //       );
-    //       this.setState({ requests: [...newList] });
-    //       // console.log('filtered req with category', newList)
-    //     })
-    //     .catch((err) => console.log(err));
-    // } else {
-    //   axios
-    //     .get("/api/getRequestedItemsByStatus/approved")
-    //     .then((res) => {
-    //       // const newList= res.data.filter(item=>item.category===this.state.selectedCategory)
-    //       this.setState({ requests: [...res.data] });
-    //       // console.log('filtered req with nothing', res.data)
-    //     })
-    //     .catch((err) => console.log(err));
-    // }
   };
   drawerToggleHandler = () => {
     this.setState((prevState) => {
@@ -165,24 +115,7 @@ class NGORequests extends React.Component {
   backdropClickHandler = () => {
     this.setState({ siderDrawerOpen: false });
   };
-  // filterByName=()=>{
-  //     axios.get(`/api/getRequestedItemsByNgoId/${this.state.selectedNgo}`)
-  //         .then(res=>{
-  //             const newList= res.data.filter(item=>item.category===this.state.selectedCategory)
-  //             // this.setState({requests:[...res.data]})
-  //             console.log('filtered req', newList)
-  //     })
-  //         .catch(error=>console.log(error));
-  // }
-  // filterByAll=()=>{
-  //     axios.get('/api/getRequestedItemsByStatus/approved')
-  //     .then(res=>{ this.setState({requests:[...res.data]}) })
-  //     .catch(err=>console.log(err))
-  // }
-  // filterCategory=(category)=>{
-  //     const newList= this.state.requests.filter((item)=>item.category === category)
-  //   this.setState({requests:[...newList]})
-  // }
+ 
   render() {
     console.log("ngo requests", this.state);
     let backdrop;
@@ -206,9 +139,7 @@ class NGORequests extends React.Component {
                       this.state.selectedNgo === "" ? "#579df8" : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedNgo: "" }, () =>
-                      this.filteredContent()
-                    );
+                    this.setState({ selectedNgo: "" });
                   }}
                 >
                   All
@@ -226,9 +157,7 @@ class NGORequests extends React.Component {
                       }}
                       onClick={() => {
                         console.log('onClick', ngo.id)
-                        this.setState({ selectedNgo: ngo.id }, () =>
-                          this.filteredContent()
-                        );
+                        this.setState({ selectedNgo: ngo.id });
                       }}
                     >
                       {ngo.name}
@@ -267,9 +196,7 @@ class NGORequests extends React.Component {
                         : "#4a89dc",
                   }}
                   onClick={() => {
-                    this.setState({ selectedCategory: "" }, () =>
-                      this.filteredContent()
-                    );
+                    this.setState({ selectedCategory: "" });
                   }}
                 >
                   All
@@ -286,9 +213,7 @@ class NGORequests extends React.Component {
                             : "#4a89dc",
                       }}
                       onClick={() => {
-                        this.setState({ selectedCategory: cat.CategoryId }, () =>
-                          this.filteredContent()
-                        );
+                        this.setState({ selectedCategory: cat.CategoryId });
                       }}
                     >
                       {cat.DonationCategory}
@@ -406,7 +331,8 @@ class NGORequests extends React.Component {
               return (
                 <RequestCard
                   image={
-                    request.imageBase64 ||
+                    request.imageName ? 
+                    require(`../../serverImages/${request.imageName}`) :
                     "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
                   }
                   title={request.caseTitle}

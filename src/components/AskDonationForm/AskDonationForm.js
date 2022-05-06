@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { getCurrentDate } from "../../utils";
+import { toast } from "react-toastify";
+
 
 // import { FormInput } from "shards-react";
 // import { FormTextarea } from "shards-react";
@@ -33,8 +35,8 @@ const initialDonationFormState = {
   askDonationDate: getCurrentDate(),
   categoryType: "",
   categoriesArr: [],
-  unitsArr: ["Kg", "Pounds", "Liter", "Pieces"],
-  unit: "Kg",
+  unitsArr: [],
+  unit: "",
   unitErr: "",
   base64Images: [],
 };
@@ -91,8 +93,8 @@ class AskDonationForm extends Component {
           categoryType: isEdit
             ? this.props.history.location.state?.data?.category
             : res.data.length > 0
-            ? res.data[0].CategoryId
-            : 0,
+            ? res.data[0].DonationCategory
+            : "",
             categoriesArr: res.data.map((item) => ({
               id: item.CategoryId,
               name: item.DonationCategory,
@@ -100,6 +102,20 @@ class AskDonationForm extends Component {
         });
       })
       .catch((err) => console.log("error in getting categories api", err));
+
+      axios
+      .get("https://localhost:44357/unit/get")
+      .then((res) => {
+        this.setState({
+          unit: res.data[0].Unit,
+            unitsArr: res.data.map((item) => ({
+              id: item.UnitId,
+              name: item.Unit,
+            })),
+        });
+      })
+      .catch((err) => console.log("error in getting units api", err));
+
   }
 
   state = {
@@ -204,6 +220,8 @@ class AskDonationForm extends Component {
     const isValid = this.donationValidation();
     console.log("isValid", isValid, this.state);
     if (isValid) {
+      const isEdit = this.props.history.location.state?.data ? true : false;
+
       const askDonationData = {
         NGOId: parseFloat(localStorage.getItem("ngoID")),
         CaseTitle: this.state.donationTitle,
@@ -211,8 +229,26 @@ class AskDonationForm extends Component {
         Unit: this.state.unit,
         Description: this.state.donationDescription,
         // ImageBase64,
+        ImageBase64:
+        this.state.base64Images[0] === undefined
+          ? null
+          : !isEdit
+          ? this.state.base64Images[0].base64
+          : this.state.base64Images[0].base64 ===
+            this.props.history.location.state?.data?.itemImg1
+          ? null
+          : this.state.base64Images[0].base64,
         // ImageName,
-        CategoryId: parseFloat(this.state.categoryType),
+        ImageName:
+          this.state.base64Images[0] === undefined
+            ? null
+            : !isEdit
+            ? this.state.base64Images[0].name
+            : this.state.base64Images[0].name ===
+              this.props.history.location.state?.data?.image1Name
+            ? null
+            : this.state.base64Images[0].name,
+        Category: this.state.categoryType,
       };
 
       console.log(askDonationData);
@@ -230,14 +266,50 @@ class AskDonationForm extends Component {
       //   // headers: { "Content-Type": "multipart/form-data" }, //to submit documents
       // });
 
-      axios
+      if (isEdit) {
+        axios
+          .put(
+            `https://localhost:44357/donation/edit/${this.state.donationId} `,
+            askDonationData
+          )
+          .then((res) => {
+            this.props.history.push("/manage-donations");
+          })
+          .catch((err) => {
+            console.log("Put Error", err);
+            toast.error(`Some error Occured: ${err}`, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          });
+      } else {
+        axios
         .post("https://localhost:44357/case/post ", askDonationData)
         .then((res) => {
           console.log(res.data);
           this.setState(initialDonationFormState);
-          this.props.history.push("/");
+          this.props.history.push("/manage-donations");
         })
-        .catch(console.log);
+          .catch((err) => {
+            console.log("Post Error", err);
+            toast.error(`Some error Occured: ${err}`, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          });
+      }
+
+     
     }
   };
 
@@ -410,7 +482,7 @@ class AskDonationForm extends Component {
                   className="form-control"
                 >
                   {this.state.categoriesArr.map((option) => (
-                    <option key={option.id} value={option.id}>
+                    <option key={option.name} value={option.name}>
                       {option.name}
                     </option>
                   ))}
@@ -466,8 +538,8 @@ class AskDonationForm extends Component {
                   className="form-control"
                 >
                   {this.state.unitsArr.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
+                    <option key={option.name} value={option.name}>
+                      {option.name}
                     </option>
                   ))}
                 </select>
