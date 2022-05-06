@@ -35,7 +35,7 @@ class NGORequests extends React.Component {
         // console.log('res', res)
         if(!res.data.noData){
           this.setState({
-            requests: res.data.map((item) => ({
+            requests: res.data.cases.map((item) => ({
               caseId: item.CaseId,
               ngoID: item.NGOId,
               caseTitle: item.CaseTitle,
@@ -97,7 +97,7 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
       .then((res) => {
         if(!res.data.noData){
           this.setState({
-            requests: res.data.map((item) => ({
+            requests: res.data.cases.map((item) => ({
               caseId: item.CaseId,
               ngoID: item.NGOId,
               caseTitle: item.CaseTitle,
