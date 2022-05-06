@@ -16,12 +16,9 @@ class DonorReplies extends React.Component {
     super(props);
     this.state = {
       siderDrawerOpen: false,
-      donor: true,
-      selectedNgo: "",
-      selectedCategory: "",
-      requests: [],
-      ngoList: [],
-      categoryList:[]
+      selectedCase: "",
+      caseTitleList: [],
+      replies:[],
       // addModalShow: false,
     };
   }
@@ -29,22 +26,12 @@ class DonorReplies extends React.Component {
     //get requests
     axios
       .get(
-        `https://localhost:44357/case/get?status=approve&&isActive=true`
+        `https://localhost:44357/reply/get?status=approve&&isActive=true`
       )
       .then((res) => {
         // console.log('res', res)
         this.setState({
-          requests: res.data.map((item) => ({
-            caseId: item.CaseId,
-            ngoID: item.NGOId,
-            caseTitle: item.CaseTitle,
-            quantity: item.Quantity,
-            unit: item.Unit,
-            postedDate: item.PostedDate,
-            description: item.Description,
-            // imageBase64: item.ImageBase64,
-            // imageName: item.ImageName,
-          })),
+          requests: res.data
         });
 
         // console.log(this.state)
@@ -65,15 +52,6 @@ class DonorReplies extends React.Component {
       })
       .catch((error) => console.log(error));
 
-      //get categories
-    axios
-    .get(`https://localhost:44357/donation/category/get`)
-    .then((list) => {
-      this.setState({
-        categoryList: [...list.data]
-      });
-    })
-    .catch((error) => console.log(error));
   }
 
   componentDidUpdate(prevProps, prevState){

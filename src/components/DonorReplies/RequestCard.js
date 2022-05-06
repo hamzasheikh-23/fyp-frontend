@@ -27,13 +27,13 @@ class RequestCard extends React.Component {
     return (
       <div>
         <div class="card-body ngo-request-card-body">
-          <img
+          {/* <img
             width="200px"
             height="200px"
             style={{ marginBottom: "10px", objectFit: "cover" }}
             src={this.props.image}
             alt="..."
-          />
+          /> */}
           <h5 class="card-title ngo-request-card-title">{this.props.title}</h5>
           <h6 class="card-subtitle mb-4 text-muted ngo-request-card-subtitle">
             {this.props.ngoname}
