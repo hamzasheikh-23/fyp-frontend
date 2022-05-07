@@ -88,15 +88,27 @@ const InfoModal = (props) => {
                     </table>
                     <div style={{display:'flex', flexDirection:'row', flexWrap:'wrap'}}>
                         {props.data.Image1Name &&
-                        <div>
+                        <div style={{
+                            border: '1px solid #4A89DC',
+                            margin: 5,
+                            padding: 5
+                            }}>
                             <img alt={'...'} onClick={()=> window.open(require(`../../serverImages/${props.data.Image1Name}`), "_blank")} src={require(`../../serverImages/${props.data.Image1Name}`)} height="80px" width="80px" style={{objectFit:'contain', marginBottom:'5px'}} />
                         </div>}
                         {props.data.Image2Name &&
-                        <div>
+                        <div style={{
+                            border: '1px solid #4A89DC',
+                            margin: 5,
+                            padding: 5
+                            }}>
                             <img alt={'...'} onClick={()=> window.open(require(`../../serverImages/${props.data.Image2Name}`), "_blank")} src={require(`../../serverImages/${props.data.Image2Name}`)} height="80px" width="80px" style={{objectFit:'contain', marginBottom:'5px'}} />
                         </div>}
                         {props.data.Image3Name &&
-                        <div>
+                        <div style={{
+                            border: '1px solid #4A89DC',
+                            margin: 5,
+                            padding: 5
+                            }}>
                             <img alt={'...'} onClick={()=> window.open(require(`../../serverImages/${props.data.Image3Name}`), "_blank")} src={require(`../../serverImages/${props.data.Image3Name}`)} height="80px" width="80px" style={{objectFit:'contain', marginBottom:'5px'}} />
                         </div>}
                     </div>

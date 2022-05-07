@@ -725,7 +725,7 @@ const AdminPanelDonationRequests = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <TableRow rows={donationRequests} />
+                        <TableRow update={fetchData} rows={donationRequests} />
                     </tbody>
                 </Table>
             </div>

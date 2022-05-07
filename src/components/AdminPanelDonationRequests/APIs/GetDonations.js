@@ -5,7 +5,7 @@ const GetDonations = async (status) => {
 
     try {
 
-        const apiUrl = `https://localhost:44357/donation/get?status=${status}`
+        const apiUrl = `https://localhost:44357/donation/get`
         const response = await axios.get(apiUrl)
         return response.data
 

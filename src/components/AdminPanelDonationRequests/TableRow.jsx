@@ -44,6 +44,7 @@ const TableRow = (props) => {
     const updateDonationStatus = async (donationId, status) => {
         PutUpdateDonationStatus(donationId, status).then(res => {
             toast.success("Status updated succesfully!")
+            props.update()
         }).catch(err => console.log("Something went wrong, please try again later."))
     }
 
@@ -60,8 +61,11 @@ const TableRow = (props) => {
                         <td>{row.Status}</td>
                         <td>
                             <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleInfo} onClick={() => handleDetails(row)} />
+                            {row.Status !=="Deleted" &&
+                            <>
                             <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleCheck} onClick={() => updateDonationStatus(row.DonationId, 'approved')} />
                             <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleXmark} onClick={() => updateDonationStatus(row.DonationId, 'rejected')} />
+                            </>}                       
                         </td>
                     </tr>
                 )
