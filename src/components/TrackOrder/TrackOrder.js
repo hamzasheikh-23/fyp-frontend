@@ -162,7 +162,7 @@ export default class TrackOrder extends React.Component {
               </p>
               <p class="card-text" style={{ marginBottom: 0 }}>
                 <span style={{ fontWeight: "bold" }}>Order Amount:</span> &nbsp;
-                {item.Amount}
+                {item.Amount || 0} PKR
               </p>
               <p class="card-text" style={{ marginBottom: 0 }}>
                 <span style={{ fontWeight: "bold" }}>Delivery Address:</span> &nbsp;
