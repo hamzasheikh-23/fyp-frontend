@@ -324,7 +324,7 @@ if(prevState.selectedCase !== this.state.selectedCase){
           </div>
           <div class="request-area">
             <h3 className="request-area-heading">DONOR'S RESPONSE</h3>
-            {this.state.replies.map((reply) => {
+            {[...Array(6)].map((reply) => {
               return (
                 <RequestCard
                     {...reply}
