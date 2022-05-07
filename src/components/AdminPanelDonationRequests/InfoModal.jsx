@@ -33,7 +33,60 @@ const InfoModal = (props) => {
                         <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleXmark} onClick={props.closeModal} />
                     </div>
                     <div className='content-donation-requests-modal'>
-                        <div className='divideContent-donation-requests-modal'>
+                    <table className="table">
+                        <tbody>
+                            <tr>
+                                <td>Date:</td>
+                                <td>{moment(props.data.PostedDate).format("DD-MM-YYYY")}</td>
+                            </tr>
+                            <tr>
+                                <td>Time: </td>
+                                <td>{moment(props.data.PostedDate).format("HH:MM A")}</td>
+                            </tr>
+                            <tr>
+                                <td>Condition: </td>
+                                <td>{props.data.Condition}</td>
+                            </tr>
+                            <tr>
+                                <td>Category: </td>
+                                <td>{props.data.Category}</td>
+                            </tr>
+                            <tr>
+                                <td>Quantity:</td>
+                                <td>{props.data.Quantity}</td>
+                            </tr>
+                            <tr>
+                                <td>Quantity Per Unit:</td>
+                                <td>{props.data.QuantityPerUnit}</td>
+                            </tr>
+                            <tr>
+                                <td>Weight: </td>
+                                <td>{props.data.Weight}</td>
+                            </tr>
+                            <tr>
+                                <td>Description: </td>
+                                <td>{props.data.Description}</td>
+                            </tr>
+                            <tr>
+                                <td>Rating: </td>
+                                <td>{props.data.Rating}</td>
+                            </tr>
+                            <tr>
+                                <td>Status: </td>
+                                <td>{props.data.Status}</td>
+                            </tr>
+                            <tr>
+                                <td>Expiry Date:</td>
+                                <td>{moment(props.data.ExpiryDate).format("DD-MM-YYYY")}</td>
+                            </tr>
+                            <tr>
+                                <td>Pickup Address:</td>
+                                <td>{props.data.Address}</td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                        {/* <div className='divideContent-donation-requests-modal'>
                             <div className='budgetPostDetails-donation-requests-modal'>
                                 <div className='contentTile-donation-requests-modal'>
                                     <label className='infoLabels-donation-requests-modal'>Date: </label>
@@ -88,7 +141,7 @@ const InfoModal = (props) => {
                                     <p className='infoData-donation-requests-modal'>{props.data.Address}</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     {/* <div className='imagesContainer-donation-requests-modal'>
                         {props.data.images.map((image, index) => {

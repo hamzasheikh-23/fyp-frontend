@@ -670,7 +670,7 @@ const AdminPanelDonationRequests = () => {
             "Condition": "Used",
             "CategoryId": 3,
             "Category": "Medicine",
-            "Address": null,
+            "Address": 'abc',
             "Image1base64": null,
             "Image2base64": null,
             "Image3base64": null,

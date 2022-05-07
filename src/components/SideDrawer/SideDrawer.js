@@ -99,7 +99,9 @@ class SideDrawer extends React.Component {
 
         <div>
           <ul>
-            <li>
+          {localStorage.getItem("loginType") !== "admin" && (
+            <>
+           <li>
               <Link to="/">
                 <i>
                   <FaAddressCard />
@@ -115,6 +117,9 @@ class SideDrawer extends React.Component {
                 About
               </Link>
             </li>
+            </>
+          )}
+            
 
             {localStorage.getItem("loginType") === "ngo" ? (
               <>

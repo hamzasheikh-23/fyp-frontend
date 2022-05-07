@@ -59,13 +59,25 @@
 
 .content-donation-requests-modal {
     margin: 15px;
-    height: 50%;
+    height: 300px;
+    overflow: auto;
     box-sizing: border-box;
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     justify-content: left;
-    align-items: center;
+    align-items: center; */
 }
+
+.content-donation-requests-modal::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Handle */
+  .content-donation-requests-modal::-webkit-scrollbar-thumb {
+    background: rgb(87, 157, 248);
+    border-radius: 10px;
+  }
 
 .contentTile-donation-requests-modal {
     display: flex;
