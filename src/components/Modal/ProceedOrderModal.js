@@ -414,7 +414,7 @@ class ProceedOrderModal extends Component {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.props.onHide}>Close</Button>
+          <Button onClick={()=>this.props.onHide(false)}>Close</Button>
           <Button variant="success" onClick={this.ResponseFormSubmitHandler}>
             Submit
           </Button>

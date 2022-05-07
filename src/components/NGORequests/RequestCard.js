@@ -11,6 +11,7 @@ class RequestCard extends React.Component {
   render() {
     // console.log('single item', this.props)
     let addModalClose = (showMsg) =>{
+      console.log('showMsg', showMsg)
       this.setState({ addModalShow: false });
       if(showMsg){
         toast.success("Thank you for your donation wait till it gets accepted by NGO", {
