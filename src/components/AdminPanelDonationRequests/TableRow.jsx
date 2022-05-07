@@ -43,7 +43,7 @@ const TableRow = (props) => {
 
     const updateDonationStatus = async (donationId, status) => {
         PutUpdateDonationStatus(donationId, status).then(res => {
-            toast.success("Updated status succesfully!")
+            toast.success("Status updated succesfully!")
         }).catch(err => console.log("Something went wrong, please try again later."))
     }
 

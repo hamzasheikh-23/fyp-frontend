@@ -157,7 +157,7 @@ export default class PaymentInfoPage extends React.Component {
 
       axios.post(`https://localhost:44357/paymentInfo/post`, paymentPayload)
       .then(res1=>{
-        axios.post(`https://localhost:44357/order/post`, Object.assign({PaymentId: res1.lastId}, orderPayload))
+        axios.post(`https://localhost:44357/order/post`, Object.assign({PaymentId: res1.data.lastId}, orderPayload))
         .then(res2=>{
       toast.success("Thank you for your order wait till it gets approve by admin", {
         position: "top-center",

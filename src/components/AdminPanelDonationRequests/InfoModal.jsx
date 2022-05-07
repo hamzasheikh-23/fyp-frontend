@@ -86,6 +86,20 @@ const InfoModal = (props) => {
                            
                         </tbody>
                     </table>
+                    <div style={{display:'flex', flexDirection:'row', flexWrap:'wrap'}}>
+                        {props.data.Image1Name &&
+                        <div>
+                            <img alt={'...'} onClick={()=> window.open(require(`../../serverImages/${props.data.Image1Name}`), "_blank")} src={require(`../../serverImages/${props.data.Image1Name}`)} height="80px" width="80px" style={{objectFit:'contain', marginBottom:'5px'}} />
+                        </div>}
+                        {props.data.Image2Name &&
+                        <div>
+                            <img alt={'...'} onClick={()=> window.open(require(`../../serverImages/${props.data.Image2Name}`), "_blank")} src={require(`../../serverImages/${props.data.Image2Name}`)} height="80px" width="80px" style={{objectFit:'contain', marginBottom:'5px'}} />
+                        </div>}
+                        {props.data.Image3Name &&
+                        <div>
+                            <img alt={'...'} onClick={()=> window.open(require(`../../serverImages/${props.data.Image3Name}`), "_blank")} src={require(`../../serverImages/${props.data.Image3Name}`)} height="80px" width="80px" style={{objectFit:'contain', marginBottom:'5px'}} />
+                        </div>}
+                    </div>
                         {/* <div className='divideContent-donation-requests-modal'>
                             <div className='budgetPostDetails-donation-requests-modal'>
                                 <div className='contentTile-donation-requests-modal'>
@@ -148,6 +162,7 @@ const InfoModal = (props) => {
                             return <img className='images-donation-requests-modal' key={index} src={image.src} alt={`sample-${index}`}/>
                         })}
                     </div> */}
+                   
                 </div> 
             </div>
         </>

@@ -14,6 +14,10 @@
     white-space: nowrap;
 }
 
+/* .table-donation-requests td {
+    white-space: nowrap;
+} */
+
 .action-icons-donation-requests {
     font-size: 1.5em;
     margin-right: 5px;
