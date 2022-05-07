@@ -14,17 +14,17 @@ class RequestCard extends React.Component {
   }
   addModalClose = (showMsg) =>{
     this.setState({ addModalShow: false });
-    if(showMsg){
-      toast.success("Thank you for your order wait till it gets approve by admin", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    }
+    // if(showMsg){
+    //   toast.success("Thank you for your order wait till it gets approve by admin", {
+    //     position: "top-center",
+    //     autoClose: 5000,
+    //     hideProgressBar: true,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //   });
+    // }
   } 
   render() {
     console.log('single item', this.props)
@@ -56,7 +56,7 @@ class RequestCard extends React.Component {
           <div style={{display:'flex',}}>
             <button
               onClick={() => this.setState({ addModalShow: true })}
-              class="btn btn-primary .ngo-request-card-btn"
+              // class="btn .ngo-request-card-btn"
               style={{
                 backgroundColor: "#6fbf73",
                 border: "none",
@@ -76,7 +76,7 @@ class RequestCard extends React.Component {
             </button>
             <button
               onClick={() => this.rejectReply()}
-              class="btn btn-primary .ngo-request-card-btn"
+              // class="btn .ngo-request-card-btn"
               style={{
                 backgroundColor: "#ff1744",
                 border: "none",
@@ -159,6 +159,10 @@ class RequestCard extends React.Component {
                 <td>VAT:</td>
                 <td>{'2.66 PKR'}</td>
               </tr>
+              <tr>
+                <td>Total:</td>
+                <td>{300+150+2.66} PKR</td>
+              </tr>
               
               
               </tbody>
@@ -185,7 +189,10 @@ class RequestCard extends React.Component {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="#4A89DC" onClick={()=>this.addModalClose()}>Close</Button>
-          <Button variant="success" onClick={()=>this.addModalClose(true)}>
+          <Button variant="success" onClick={()=>{
+            this.addModalClose(true)
+            this.props.history.push('/paymentInfo',{data:{caseId: this.props.CaseId, replyId: this.props.ReplyId, address: this.props.Address}})
+            }}>
             Proceed To Pay
           </Button>
         </Modal.Footer>

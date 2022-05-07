@@ -345,6 +345,7 @@ if(prevState.selectedCase !== this.state.selectedCase){
                 <RequestCard
                     {...reply}
                   fetchData={this.filteredContent}
+                  history={this.props.history}
                 />
               );
             })}

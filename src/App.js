@@ -16,6 +16,7 @@ import ManageStories from "./components/ManageStories/ManageStories";
 import DonorReplies from "./components/DonorReplies/DonorReplies";
 import NGORequests from "./components/NGORequests/NGORequests";
 import GoogleMap from "./components/GoogleMap/GoogleMap";
+import PaymentInfoPage from "./components/PaymentInfoPage/PaymentInfoPage";
 
 import AdminPanel from "./components/AdminPanel/AdminPanel";
 import AdminPanelNGORecords from "./components/AdminPanelNGORecords/AdminPanelNGORecords";
@@ -39,6 +40,7 @@ import RoleRouteProtection from "./components/RouteProtection/RoleRouteProtectio
 import UnauthorizePage from "./components/UnauthorizePage/UnauthorizePage";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import TrackOrder from "./components/TrackOrder/TrackOrder";
 
 const App = () => {
   useEffect(() => {
@@ -137,6 +139,18 @@ const App = () => {
           exact
           path="/subscription"
           component={SubscriptionPage}
+          validUser="ngo"
+        />
+        <RoleRouteProtection
+          exact
+          path="/trackOrder"
+          component={TrackOrder}
+          validUser="ngo"
+        />
+        <RoleRouteProtection
+          exact
+          path="/paymentInfo"
+          component={PaymentInfoPage}
           validUser="ngo"
         />
         <Route path="/alreadyLoggedin" component={AlreadyLoggedIn} />
