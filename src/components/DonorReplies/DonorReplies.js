@@ -26,7 +26,7 @@ class DonorReplies extends React.Component {
     //get requests
     axios
       .get(
-        `https://localhost:44357/reply/get?ngoId=${localStorage.getItem('ngoID')}&status=Approved`
+        `https://localhost:44357/reply/get?ngoId=${localStorage.getItem('ngoID')}&status=Pending`
       )
       .then((res) => {
         // console.log('res', res)
@@ -73,7 +73,7 @@ if(prevState.selectedCase !== this.state.selectedCase){
   filteredContent = (selectedCase) => {
 
     axios
-    .get(`https://localhost:44357/reply/get?ngoId=${localStorage.getItem('ngoID')}${selectedCase ? `&caseId=${selectedCase}`:''}&status=Approved `)
+    .get(`https://localhost:44357/reply/get?ngoId=${localStorage.getItem('ngoID')}${selectedCase ? `&caseId=${selectedCase}`:''}&status=Pending `)
       .then((res) => {
          // console.log('res', res)
          if(!res.data.noData){

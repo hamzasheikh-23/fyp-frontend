@@ -184,7 +184,7 @@ class RequestCard extends React.Component {
             <div  className="container"> 
             <div className="row">
               <div className="col-lg-4 col-md-6 col-sm-12">
-                {!this.props.Image1Name? null : <img src={require(`../../serverImages/donorReplies/${this.props.Image1Name}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />}
+                {!this.props.Image1Name? null : <img onClick={()=> window.open(require(`../../serverImages/donorReplies/${this.props.Image1Name}`), "_blank")} src={require(`../../serverImages/donorReplies/${this.props.Image1Name}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />}
               </div>
               
               <div className="col-lg-4 col-md-6 col-sm-12">
