@@ -11,7 +11,7 @@ export default class Invoice extends Component {
     componentDidMount(){
         const {orderId} = this.props.history?.location?.state
         axios.get(`https://localhost:44357/invoice/get?orderId=${orderId}`)
-        .then(res=>{this.setState({data: res.data})})
+        .then(res=>{this.setState({data: res.data.invoices})})
         .catch(console.log)
     }
   render() {
