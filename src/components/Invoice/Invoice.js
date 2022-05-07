@@ -2,9 +2,20 @@ import React, { Component } from 'react';
 // import "./TrackOrder.scss";
 import axios from "axios";
 import moment from "moment";
+import {checkProperty} from '../../assets/utils';
 
 export default class Invoice extends Component {
+    state={
+        data:{}
+    }
+    componentDidMount(){
+        const {orderId} = this.props.history?.location?.state
+        axios.get(`https://localhost:44357/invoice/get?orderId=${orderId}`)
+        .then(res=>{this.setState({data: res.data})})
+        .catch(console.log)
+    }
   render() {
+      const {data}=this.state
     return (
       <div className='container'>
           <div style={{ margin: "50px 10px" }}>
@@ -12,7 +23,7 @@ export default class Invoice extends Component {
           style={{
             height: "calc(100% - 20px)",
             width:'100%',
-            // backgroundColor: !this.props.isActive && "#F8F8F8",
+            backgroundColor: "#F8F8F8",
             boxShadow: "10px 10px 6px -6px rgba(0,0,0,0.07)",
           }}
           class="card"
@@ -25,7 +36,7 @@ export default class Invoice extends Component {
               <h5
                 style={{
                 //   display: "inline",
-                  marginBottom: "16px",
+                  margin: "10px 0",
                   color: "rgb(74, 137, 220)",
                 //   textAlign:'center',
                 //   display:'block'
@@ -34,27 +45,27 @@ export default class Invoice extends Component {
               >
                 ORDER INVOICE
               </h5>
+              <hr></hr>
               
             <div style={{ flex: 1 }}>
               <p class="card-text" style={{ marginBottom: 0 }}>
-                <span style={{ fontWeight: "bold" }}>Status:</span> &nbsp;
-                {'Satdfef'}
+                <span style={{ fontWeight: "bold" }}>Invoice Id:</span> &nbsp;
+                {checkProperty('InvoiceId', data)}
               </p>
+
               <p class="card-text" style={{ marginBottom: 0 }}>
-                <span style={{ fontWeight: "bold" }}>Case Id:</span> &nbsp;
-                {'wdadasd'}
+                <span style={{ fontWeight: "bold" }}>Order Id:</span> &nbsp;
+                {checkProperty('OrderId', data)}
               </p>
+
               <p class="card-text" style={{ marginBottom: 0 }}>
-                <span style={{ fontWeight: "bold" }}>Reply Id:</span> &nbsp;
-                {"dadad"}
+                <span style={{ fontWeight: "bold" }}>Amount:</span> &nbsp;
+                {checkProperty('Amount', data,'0')} PKR
               </p>
+              
               <p class="card-text" style={{ marginBottom: 0 }}>
-                <span style={{ fontWeight: "bold" }}>Delivery Address:</span> &nbsp;
-                {"dasda"}
-              </p>
-              <p class="card-text">
-                <span style={{ fontWeight: "bold" }}>Posted Date</span> &nbsp;{" "}
-                {moment(new Date()).format('LL hh:mm:ss')}
+                <span style={{ fontWeight: "bold" }}>Date:</span> &nbsp;
+                {data.Date ? moment(data.Date).format('LL hh:mm:ss') : ""}
               </p>
             </div>
 

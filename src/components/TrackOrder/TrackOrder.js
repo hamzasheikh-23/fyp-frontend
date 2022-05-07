@@ -191,7 +191,7 @@ export default class TrackOrder extends React.Component {
                 borderRadius: "65px",
               }}
               href="#"
-              onClick={() => this.props.history.push('/invoice')}
+              onClick={() => this.props.history.push('/invoice', {orderId: item.OrderId})}
               class="btn btn-primary view-detail"
             >
               View Invoice
