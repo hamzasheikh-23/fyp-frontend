@@ -4,6 +4,7 @@ import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import {checkProperty}  from '../../assets/utils';
 import { toast } from "react-toastify";
 import moment from "moment";
+import axios from "axios";
 
 function randomIntFromInterval(min, max) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min)
@@ -20,7 +21,9 @@ class RequestCard extends React.Component {
     this.setState({deliveryAmount: randomIntFromInterval(300,500)})
   }
   rejectReply=()=>{
-    console.log('id of remove', this.props.ReplyId)
+    axios.put(`https://localhost:44357/reply/edit?id=${this.props.ReplyId}&status=Rejected`)
+    .then(res=>{this.props.fetchData()})
+    .catch(console.log)
   }
   addModalClose = (showMsg) =>{
     this.setState({ addModalShow: false });
