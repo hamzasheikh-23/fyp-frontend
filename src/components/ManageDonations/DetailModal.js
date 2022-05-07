@@ -43,6 +43,7 @@ class DetailModal extends Component {
           {data.imageName ? (
               <div className="col-lg-12">
               <img
+                onClick={()=>{ window.open(data.imageName, "_blank")}}
                   src={data.imageName}
                   height="200px"
                   width="100%"
