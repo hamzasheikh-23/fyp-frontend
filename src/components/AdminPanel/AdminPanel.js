@@ -75,7 +75,7 @@ class AdminPanel extends React.Component {
 
 
 
-                  <CardsAdminPanel buttontext="View" />
+                  <CardsAdminPanel history={this.props.history} buttontext="View" />
 
 
                   <hr></hr>

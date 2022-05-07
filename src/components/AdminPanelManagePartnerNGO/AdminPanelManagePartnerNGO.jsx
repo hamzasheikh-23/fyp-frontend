@@ -75,7 +75,7 @@ const AdminPanelManagePartnerNGO = () => {
             <h1 className="page-heading-donation-requests">Partner NGO Records</h1>
         
             <div className='table-donation-requests'>
-                <Table responsive="md" bordered>
+                <Table style={{overflowX: "auto !important"}} responsive bordered>
                     <thead>
                         <tr>
                             <th>#</th>

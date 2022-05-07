@@ -121,7 +121,7 @@ class CardsAdminPanel extends Component{
 
                                       
                                       <Button variant="primary" className="bold-text" onClick={() => {
-                                        <Redirect to={data.path} push/>
+                                        this.props.history.push(data.path)
                                       }}> {this.props.buttontext} </Button>
                                             
                                       </Card.ImgOverlay>

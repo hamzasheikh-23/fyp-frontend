@@ -6,7 +6,11 @@
 }
 
 .table-donation-requests {
-    margin: 0 20px;
+    width: calc(100vw - 80px);
+    margin: 0 40px;
+}
+.table-donation-requests thead {
+    white-space: nowrap;
 }
 
 .action-icons-donation-requests {
