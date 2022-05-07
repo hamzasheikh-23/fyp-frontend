@@ -40,7 +40,7 @@ const Toolbar = (props) => {
                   <Link to="/manage-stories">Manage Stories</Link>
                 </li> */}
                 <li>
-                  <Link to="/track-order">Track Orders</Link>
+                  <Link to="/trackOrder">Track Orders</Link>
                 </li>
                 {/* <li>
                     <div className="dropdown">

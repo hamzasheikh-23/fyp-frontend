@@ -41,6 +41,7 @@ import UnauthorizePage from "./components/UnauthorizePage/UnauthorizePage";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TrackOrder from "./components/TrackOrder/TrackOrder";
+import Invoice from "./components/Invoice/Invoice";
 
 const App = () => {
   useEffect(() => {
@@ -139,6 +140,12 @@ const App = () => {
           exact
           path="/subscription"
           component={SubscriptionPage}
+          validUser="ngo"
+        />
+        <RoleRouteProtection
+          exact
+          path="/invoice"
+          component={Invoice}
           validUser="ngo"
         />
         <RoleRouteProtection

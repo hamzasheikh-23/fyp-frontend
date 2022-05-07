@@ -140,7 +140,8 @@ export default class PaymentInfoPage extends React.Component {
       const {
         caseId,
         replyId,
-        address
+        address,
+        amount,
       } = this.props.history?.location?.state?.data;
 
       const orderPayload ={
@@ -148,6 +149,7 @@ export default class PaymentInfoPage extends React.Component {
         CaseId: caseId,
         ReplyId: replyId,
         DeliveryAddress: address, 
+        Amount: amount
       }
 
       console.log('call api', paymentPayload, orderPayload)

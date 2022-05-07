@@ -5,10 +5,20 @@ import {checkProperty}  from '../../assets/utils';
 import { toast } from "react-toastify";
 import moment from "moment";
 
+function randomIntFromInterval(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 class RequestCard extends React.Component {
   state = {
     addModalShow: false,
+    serviceAmount: 300,
+    deliveryAmount: 300,
+    vat: 2.66,
   };
+  componentDidMount(){
+    this.setState({deliveryAmount: randomIntFromInterval(300,500)})
+  }
   rejectReply=()=>{
     console.log('id of remove', this.props.ReplyId)
   }
@@ -48,7 +58,7 @@ class RequestCard extends React.Component {
             Donor Name: {this.props.DonorName}
           </h6>
           <p class="card-text ngo-request-card-text ">{this.props.Message}</p>
-          <p class="card-text ngo-request-card-text mb-5"><span style={{fontWeight:'bold'}}>Donation Quantity:</span> &nbsp; {`${checkProperty('Quantity',this.props, 1)} ${checkProperty('unit',this.props,'unit')}`}</p>
+          <p class="card-text ngo-request-card-text mb-5"><span style={{fontWeight:'bold'}}>Donation Quantity:</span> &nbsp; {`${checkProperty('Quantity',this.props, 1)} ${checkProperty('Unit',this.props,'unit')}`}</p>
           <div style={{display:'flex', justifyContent:'space-between', flexWrap:'wrap', alignItems:'center'}} >
           <h6 className="text-muted ">
             {moment(this.props.PostedDateTime).format('LL hh:mm:ss')}
@@ -149,19 +159,19 @@ class RequestCard extends React.Component {
               </tr> */}
               <tr>
                 <td>Service Charges:</td>
-                <td>{'300 PKR'}</td>
+                <td>{this.state.serviceAmount} PKR</td>
               </tr>
               <tr>
                 <td>Delivery Charges:</td>
-                <td>{'150 PKR'}</td>
+                <td>{this.state.deliveryAmount} PKR</td>
               </tr>
               <tr>
                 <td>VAT:</td>
-                <td>{'2.66 PKR'}</td>
+                <td>{this.state.vat} PKR</td>
               </tr>
               <tr>
                 <td>Total:</td>
-                <td>{300+150+2.66} PKR</td>
+                <td>{parseFloat(this.state.serviceAmount + this.state.deliveryAmount + this.state.vat)} PKR</td>
               </tr>
               
               
@@ -191,7 +201,7 @@ class RequestCard extends React.Component {
           <Button variant="#4A89DC" onClick={()=>this.addModalClose()}>Close</Button>
           <Button variant="success" onClick={()=>{
             this.addModalClose(true)
-            this.props.history.push('/paymentInfo',{data:{caseId: this.props.CaseId, replyId: this.props.ReplyId, address: this.props.Address}})
+            this.props.history.push('/paymentInfo',{data:{caseId: this.props.CaseId, replyId: this.props.ReplyId, address: this.props.Address, amount: parseFloat(this.state.serviceAmount + this.state.deliveryAmount + this.state.vat)}})
             }}>
             Proceed To Pay
           </Button>
