@@ -26,24 +26,32 @@ class DonorReplies extends React.Component {
     //get requests
     axios
       .get(
-        `https://localhost:44357/reply/get?status=approve&&isActive=true`
+        `https://localhost:44357/reply/get?ngoId=${localStorage.getItem('ngoID')}`
       )
       .then((res) => {
         // console.log('res', res)
-        this.setState({
-          replies: res.data
-        });
+        if(!res.data.noData){
+          this.setState({
+            replies: res.data.reply
+          });
+        }
+        else{
+          this.setState({
+            replies: []
+          });
+        }
 
         // console.log(this.state)
       })
       .catch((err) => console.log(err));
 
-    //get ngos
+    //get cases
     axios
-      .get(`https://localhost:44357/cases`)
+      .get(`https://localhost:44357/case/get?ngoId=${localStorage.getItem('ngoID')}&status=approved&isActive=true `)
       .then((list) => {
+        console.log('list', list)
         this.setState({
-          caseTitleList: list.data.map((item) => ({
+          caseTitleList: list.data.cases.map((item) => ({
             id: item.CaseId,
             name: item.CaseTitle,
           })),
@@ -65,11 +73,19 @@ if(prevState.selectedCase !== this.state.selectedCase){
   filteredContent = (selectedCase) => {
 
     axios
-      .get(`https://localhost:44357/case/get?${selectedCase ? `caseId=${selectedCase}`:''}&&status=approve&&isActive=true`)
+    .get(`https://localhost:44357/reply/get?ngoId=${localStorage.getItem('ngoID')}${selectedCase ? `&caseId=${selectedCase}`:''} `)
       .then((res) => {
-        this.setState({
-          requests: res.data
-        });
+         // console.log('res', res)
+         if(!res.data.noData){
+          this.setState({
+            replies: res.data.reply
+          });
+        }
+        else{
+          this.setState({
+            replies: []
+          });
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -84,7 +100,7 @@ if(prevState.selectedCase !== this.state.selectedCase){
   };
  
   render() {
-    // console.log("ngo requests", this.state);
+    console.log("donor reply", this.state);
     let backdrop;
     if (this.state.siderDrawerOpen) {
       backdrop = <BackDrop click={this.backdropClickHandler} />;
@@ -120,15 +136,15 @@ if(prevState.selectedCase !== this.state.selectedCase){
                     <a
                       style={{
                         backgroundColor:
-                          this.state.selectedCase === list.CaseId
+                          this.state.selectedCase === list.id
                             ? "#579df8"
                             : "#4a89dc",
                       }}
                       onClick={() => {
-                        this.setState({ selectedCase: list.CaseId });
+                        this.setState({ selectedCase: list.id });
                       }}
                     >
-                      {list.CaseTitle}
+                      {list.name}
                     </a>
                   </li>
                 );
@@ -324,7 +340,7 @@ if(prevState.selectedCase !== this.state.selectedCase){
           </div>
           <div class="request-area">
             <h3 className="request-area-heading">DONOR'S RESPONSE</h3>
-            {[...Array(6)].map((reply) => {
+            {this.state.replies.map((reply) => {
               return (
                 <RequestCard
                     {...reply}
