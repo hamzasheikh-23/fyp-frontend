@@ -164,23 +164,23 @@ class RequestCard extends React.Component {
               </tbody>
          
             </table>
-            {/* <div  className="container"> 
+            <div  className="container"> 
             <div className="row">
               <div className="col-lg-4 col-md-6 col-sm-12">
-                {!this.props.Image1Name? null : <img src={require(`../../serverImages/${this.props.Image1Name}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />}
+                {!this.props.Image1Name? null : <img src={require(`../../serverImages/donorReplies/${this.props.Image1Name}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />}
               </div>
               
               <div className="col-lg-4 col-md-6 col-sm-12">
-                {!this.props.Image2Name? null : <img src={require(`../../serverImages/${this.props.Image2Name}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />}
+                {!this.props.Image2Name? null : <img src={require(`../../serverImages/donorReplies/${this.props.Image2Name}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />}
               </div>
             
               
               <div className="col-lg-4 col-md-6 col-sm-12">
-                {!this.props.Image3Name? null : <img src={require(`../../serverImages/${this.props.Image3Name}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />}
+                {!this.props.Image3Name? null : <img src={require(`../../serverImages/donorReplies/${this.props.Image3Name}`)} height="200px" width="100%" style={{objectFit:'contain', marginBottom:'5px'}} />}
               </div>
             
             </div>
-            </div> */}
+            </div>
         </div>
         </Modal.Body>
         <Modal.Footer>
