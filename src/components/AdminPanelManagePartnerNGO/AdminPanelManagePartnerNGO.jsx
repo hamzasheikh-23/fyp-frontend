@@ -60,7 +60,12 @@ const AdminPanelManagePartnerNGO = () => {
     const fetchData = async () => {
         await GetDonations(3).then(res =>  {
             console.log('res', res)
-            setPartnerNgos(res)
+            if(!res.noData){
+                setPartnerNgos(res.ngoList)
+            }
+            else{
+                setPartnerNgos([])
+            }
         }).catch(err => console.log(err))
     } 
 
@@ -90,7 +95,7 @@ const AdminPanelManagePartnerNGO = () => {
                             <th>Username</th>
                             <th>Email</th>
                             {/* <th>Password</th> */}
-                            <th>Subscription End Date</th>
+                            {/* <th>Subscription End Date</th> */}
                             <th>Active</th>
                             <th>Action</th>
                         </tr>

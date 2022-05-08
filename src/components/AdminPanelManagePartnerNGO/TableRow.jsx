@@ -26,14 +26,14 @@ const TableRow = (props) => {
                         <td>{row.UserId}</td>
                         <td>{`${row.FirstName} ${row.LastName}`}</td>
                         <td>{row.Contact}</td>
-                        <td>{row.SubscriptionPlan}</td>
+                        <td>{row.PlanName}</td>
                         {/* <td>{row.PaymentInfo}</td> */}
                         <td>{row. RegistrationDate ? moment(row.RegistrationDate).format("DD-MM-YYYY HH:MM A"): ""}</td>
                         <td>{row.Username}</td>
                         <td>{row.Email}</td>
                         {/* <td>{row.Password}</td> */}
-                        <td>{row.SubscriptionEnd ? moment(row.SubscriptionEnd).format("DD-MM-YYYY"):""}</td>
-                        <td>{row.IsActive ? 'Yes' : 'No'}</td>
+                        {/* <td>{row.SubscriptionEnd ? moment(row.SubscriptionEnd).format("DD-MM-YYYY"):""}</td> */}
+                        <td>{row.IsActive && JSON.parse(row.IsActive) ? 'Yes' : 'No'}</td>
                         <td>
                             <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleCheck} onClick={() => updateDonationStatus(row.NgoId, 'true')} />
                             <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleXmark} onClick={() => updateDonationStatus(row.NgoId, 'false')} />

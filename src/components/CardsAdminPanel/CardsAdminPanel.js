@@ -75,12 +75,13 @@ class CardsAdminPanel extends Component{
               image: 'https://blackpinkupdate.com/wp-content/uploads/2018/07/cover-blackpink-update-youtube-statistic-3.jpg',
               // description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
             },
-            // {
-            //   id:'',
-            //   title: 'Statistics',
-            //   image: 'https://blackpinkupdate.com/wp-content/uploads/2018/07/cover-blackpink-update-youtube-statistic-3.jpg',
-            //   // description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
-            // },
+            {
+              id:'',
+              title: 'Statistics',
+              image: 'https://blackpinkupdate.com/wp-content/uploads/2018/07/cover-blackpink-update-youtube-statistic-3.jpg',
+              path: "/adminPanelStatistics"
+              // description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
+            },
             {
               id:'',
               path:"/user-feedback",
