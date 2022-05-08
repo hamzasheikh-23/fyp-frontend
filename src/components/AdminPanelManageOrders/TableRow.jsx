@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import PutUpdateDonationStatus from './APIs/PutUpdateDonationStatus'
 import './AdminPanelManageOrders.css';
 import moment from 'moment';
+import axios from 'axios'
 
 
 const TableRow = (props) => {
@@ -64,7 +65,14 @@ const TableRow = (props) => {
                         <td>{moment(row.OrderDateTime).format("DD-MM-YYYY")}</td>
                         <td>
                         {row.Status ==="Approved" &&
-                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faFileInvoiceDollar} onClick={() => updateDonationStatus(row.OrderId, 'Delivered')} />
+                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faFileInvoiceDollar} onClick={() =>{
+                                axios.post(`https://localhost:44357/invoice/post`,{OrderId: row.OrderId})
+                                .then(res=>{
+                                    updateDonationStatus(row.OrderId, 'Delivered')
+                                })
+                                .catch(console.log)
+
+                            } } />
 
                         }
                             {row.Status !=="Delivered" && row.Status !=="Approved" &&

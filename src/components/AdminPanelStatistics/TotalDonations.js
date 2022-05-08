@@ -48,39 +48,34 @@ class TotalDonations extends React.Component{
         let books=[];
         let medicines=[];
         let toys=[];
-        axios.get('/api/getAllDonatedItems')
+        let temp={};
+        // axios.get('https://localhost:44357/donation/category/get')
+        // .then(res1=>{
+        //     res1.forEach(ele => {
+        //         temp[ele.DonationCategory]=0;
+        //     });
+        //     console.log('res1', res1), temp
+        // })
+        // .catch(err=>console.log(err))
+        axios.get('https://localhost:44357/donation/get')
         .then(res=>{
-        res.data.map((item)=>{
-           if(item.category==='Clothes'){
-               clothes.push(item)
-           }
-           if(item.category==='Medicines'){
-            medicines.push(item)
-            }
-            if(item.category==='Toys'){
-                toys.push(item)
-            }
-            if(item.category==='Books'){
-                books.push(item)
-            }
-        })
-        this.setState({series:[clothes.length, books.length, toys.length, medicines.length]})
-        // console.log('series', clothes.length, books.length, toys.length, medicines.length)
-         
-
-        //   let newSeries=[res.data.ngos.length]
-        
-        //   axios.get('/api/getUsers/donor')
-        //   .then(response=>{
-        //       console.log('donor',response.data.users.length)
-        //       newSeries=[...newSeries,response.data.users.length]
-        //       console.log('series',newSeries)
-        //       this.setState({series:[...newSeries]})
-        //   })
-
-        //   this.setState({series:[]})
-        //   this.setState({array:[...res.data.ngos]})
-          // console.log(this.state)
+            console.log('res',res)
+        // res.data.map((item)=>{
+        //    if(item.category==='Clothes'){
+        //        clothes.push(item)
+        //    }
+        //    if(item.category==='Medicines'){
+        //     medicines.push(item)
+        //     }
+        //     if(item.category==='Toys'){
+        //         toys.push(item)
+        //     }
+        //     if(item.category==='Books'){
+        //         books.push(item)
+        //     }
+        // })
+        // this.setState({series:[clothes.length, books.length, toys.length, medicines.length]})
+       
       })
         .catch(err=>console.log('NGOs',err))
       }
