@@ -44,15 +44,15 @@ class TotalUsers extends React.Component{
     }
     componentDidMount(){
  
-        axios.get('/api/getNGOs/Approved')
+        axios.get('https://localhost:44357/user/get/userType/3')
         .then(res=>{
-        //   console.log('ngos', res.data.ngos.length)
-          let newSeries=[res.data.ngos.length]
+        //   console.log('ngos', res.data.ngoList.length)
+          let newSeries=[res.data.ngoList.length]
         
-          axios.get('/api/getUsers/donor')
+          axios.get('https://localhost:44357/user/get/userType/2')
           .then(response=>{
             //   console.log('donor',response.data.users.length)
-              newSeries=[...newSeries,response.data.users.length]
+              newSeries=[...newSeries,response.data.donorList.length]
             //   console.log('series',newSeries)
               this.setState({series:[...newSeries]})
           })
@@ -73,7 +73,7 @@ class TotalUsers extends React.Component{
                             this.state.series.length? this.state.series : [1, 1]
                         }
                         type="pie"
-                        height="450"
+                        height="350"
                         width="100%"
                     />
                 </div>

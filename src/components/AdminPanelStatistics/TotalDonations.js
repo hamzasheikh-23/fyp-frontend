@@ -5,7 +5,7 @@ import axios from 'axios';
 class TotalDonations extends React.Component{
     constructor(props){
         super(props);
-        this.state={
+        this.state={  
             options:{
                 chart:{
                     background:'#f4f4f4',
@@ -33,6 +33,7 @@ class TotalDonations extends React.Component{
                     align:'center',
                     margin:20,
                     offsetY:20,
+                    offsetX:-20,
                     style:{
                         fontSize:'20px'
                     }
@@ -49,35 +50,32 @@ class TotalDonations extends React.Component{
         let medicines=[];
         let toys=[];
         let temp={};
-        // axios.get('https://localhost:44357/donation/category/get')
-        // .then(res1=>{
-        //     res1.forEach(ele => {
-        //         temp[ele.DonationCategory]=0;
-        //     });
-        //     console.log('res1', res1), temp
-        // })
-        // .catch(err=>console.log(err))
-        axios.get('https://localhost:44357/donation/get')
+        axios.get('https://localhost:44357/donation/category/get')
+        .then(res1=>{
+            res1.data.forEach(ele => {
+                console.log('foreach',ele.DonationCategory)
+                temp[ele.DonationCategory]=0;
+            });
+            axios.get('https://localhost:44357/donation/get')
         .then(res=>{
-            console.log('res',res)
-        // res.data.map((item)=>{
-        //    if(item.category==='Clothes'){
-        //        clothes.push(item)
-        //    }
-        //    if(item.category==='Medicines'){
-        //     medicines.push(item)
-        //     }
-        //     if(item.category==='Toys'){
-        //         toys.push(item)
-        //     }
-        //     if(item.category==='Books'){
-        //         books.push(item)
-        //     }
-        // })
-        // this.setState({series:[clothes.length, books.length, toys.length, medicines.length]})
+            console.log('res',res, res.data)
+        res.data.forEach((item)=>{
+            if(item.Category){
+                temp[item.Category] = temp[item.Category]+1
+            }
+        
+        })
+        console.log('end', temp)
+        this.setState({
+            series: Object.values(temp),
+            options: {...this.state.options, labels: Object.keys(temp)}
+        })
        
       })
         .catch(err=>console.log('NGOs',err))
+        })
+        .catch(err=>console.log(err))
+        
       }
     render(){
         return(
