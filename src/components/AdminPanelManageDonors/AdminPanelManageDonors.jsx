@@ -12,46 +12,51 @@ const AdminPanelManageDonors = () => {
     const [sideOpen, setSideOpen] = useState(false)
     const [donors, setDonors] = useState([])
 
-    const rows = [
-        {
-            "DonorId": 7,
-            "UserId": 4,
-            "DonorName": 'Hamza Sheikh',
-            "Contact": "+923001234567",
-            "Address": 'Model Colony',
-            "City": 'Karachi',
-            "State": 'Sindh',
-            "Cnic": '42201-867-9908-0',
-            "IsActive": true,
-        },
-        {
-            "DonorId": 7,
-            "UserId": 4,
-            "DonorName": 'Hamza Sheikh',
-            "Contact": "+923001234567",
-            "Address": 'Model Colony',
-            "City": 'Karachi',
-            "State": 'Sindh',
-            "Cnic": '42201-867-9908-0',
-            "IsActive": true,
-        },
-        {
-            "DonorId": 7,
-            "UserId": 4,
-            "DonorName": 'Hamza Sheikh',
-            "Contact": "+923001234567",
-            "Address": 'Model Colony',
-            "City": 'Karachi',
-            "State": 'Sindh',
-            "Cnic": '42201-867-9908-0',
-            "IsActive": true,
-        }
-    ]
+    // const rows = [
+    //     {
+    //         "DonorId": 7,
+    //         "UserId": 4,
+    //         "DonorName": 'Hamza Sheikh',
+    //         "Contact": "+923001234567",
+    //         "Address": 'Model Colony',
+    //         "City": 'Karachi',
+    //         "State": 'Sindh',
+    //         "Cnic": '42201-867-9908-0',
+    //         "IsActive": true,
+    //     },
+    //     {
+    //         "DonorId": 7,
+    //         "UserId": 4,
+    //         "DonorName": 'Hamza Sheikh',
+    //         "Contact": "+923001234567",
+    //         "Address": 'Model Colony',
+    //         "City": 'Karachi',
+    //         "State": 'Sindh',
+    //         "Cnic": '42201-867-9908-0',
+    //         "IsActive": true,
+    //     },
+    //     {
+    //         "DonorId": 7,
+    //         "UserId": 4,
+    //         "DonorName": 'Hamza Sheikh',
+    //         "Contact": "+923001234567",
+    //         "Address": 'Model Colony',
+    //         "City": 'Karachi',
+    //         "State": 'Sindh',
+    //         "Cnic": '42201-867-9908-0',
+    //         "IsActive": true,
+    //     }
+    // ]
 
     const fetchData = async () => {
-        await GetDonations('pending').then(res =>  {
-            setDonors(rows)
-        }).catch(err => toast.error(err.response.data.message))
+        await GetDonations(2).then(res =>  {
+            if(!res.noData){
+                setDonors(res.donorList)
+            }
+            else{
+                setDonors([])
+            }
+        }).catch(err => console.log(err))
     } 
 
     useEffect(() => {
@@ -75,15 +80,15 @@ const AdminPanelManageDonors = () => {
                             <th>Donor Name</th>
                             <th>Contact</th>
                             <th>Address</th>
-                            <th>City</th>
-                            <th>State</th>
+                            {/* <th>City</th>
+                            <th>State</th> */}
                             <th>CNIC</th>
                             <th>Active</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <TableRow rows={donors} />
+                        <TableRow update={fetchData} rows={donors} />
                     </tbody>
                 </Table>
             </div>

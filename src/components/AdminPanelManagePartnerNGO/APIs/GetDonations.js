@@ -1,11 +1,11 @@
 import axios from 'axios'
 
 
-const GetDonations = async (status) => {
+const GetDonations = async (type) => {
 
     try {
 
-        const apiUrl = `${process.env.REACT_APP_API_URL}/donation/get?status=${status}`
+        const apiUrl = `https://localhost:44357/user/get/userType/${type}`
         const response = await axios.get(apiUrl)
         return response.data
 

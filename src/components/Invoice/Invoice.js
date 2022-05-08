@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import axios from "axios";
 import moment from "moment";
 import {checkProperty} from '../../assets/utils';
+import { toast } from 'react-toastify';
 
 export default class Invoice extends Component {
     state={
@@ -12,6 +13,15 @@ export default class Invoice extends Component {
         const {orderId} = this.props.history?.location?.state
         axios.get(`https://localhost:44357/invoice/get?orderId=${orderId}`)
         .then(res=>{this.setState({data: res.data.invoices})})
+        .catch(console.log)
+    }
+    payNow=()=>{
+      const {orderId} = this.props.history?.location?.state
+      axios.put(`https://localhost:44357/order/edit?id=${orderId}&status=Completed`)
+        .then(res=>{
+          toast.success("Payment has been made succesfully!")
+          this.props.history.push('/')
+        })
         .catch(console.log)
     }
   render() {
@@ -59,6 +69,16 @@ export default class Invoice extends Component {
               </p>
 
               <p class="card-text" style={{ marginBottom: 0 }}>
+                <span style={{ fontWeight: "bold" }}>Card Number:</span> &nbsp;
+                {checkProperty('CardNumber', data)}
+              </p>
+
+              <p class="card-text" style={{ marginBottom: 0 }}>
+                <span style={{ fontWeight: "bold" }}>Card Holder Name:</span> &nbsp;
+                {checkProperty('CardholderName', data)}
+              </p>
+
+              <p class="card-text" style={{ marginBottom: 0 }}>
                 <span style={{ fontWeight: "bold" }}>Amount:</span> &nbsp;
                 {checkProperty('Amount', data,'0')} PKR
               </p>
@@ -85,7 +105,7 @@ export default class Invoice extends Component {
             //     borderRadius: "65px",
             //   }}
               href="#"
-            //   onClick={() => this.props.history.push('/invoice')}
+              onClick={() => this.payNow()}
             className="my-btn signup-btn"
             >
               Pay Now

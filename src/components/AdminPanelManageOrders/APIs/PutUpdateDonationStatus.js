@@ -1,11 +1,11 @@
 import axios from 'axios'
 
 
-const PutUpdateDonationStatus = async (id, active) => {
+const PutUpdateDonationStatus = async (id, status) => {
 
     try {
 
-        const apiUrl = `https://localhost:44357/user/edit/donor?id=${id}&isActive=${active}`
+        const apiUrl = `https://localhost:44357/order/edit?id=${id}&status=${status}`
         const response = await axios.put(apiUrl)
         return response.data
 

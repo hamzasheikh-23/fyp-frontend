@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleInfo, faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons'
+import { faCircleInfo, faCircleCheck, faCircleXmark, faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify'
-import CaseDetailModal from './CaseDetailModal'
 import PutUpdateDonationStatus from './APIs/PutUpdateDonationStatus'
-import './AdminPanelManageRequestsFromNGO.css'
+import './AdminPanelManageOrders.css';
+import moment from 'moment';
 
 
 const TableRow = (props) => {
@@ -41,8 +41,8 @@ const TableRow = (props) => {
         setInfoModal(true)
     }
 
-    const updateDonationStatus = async (CaseId, status) => {
-        PutUpdateDonationStatus(CaseId, status).then(res => {
+    const updateDonationStatus = async (OrderId, status) => {
+        PutUpdateDonationStatus(OrderId, status).then(res => {
             toast.success("Updated status succesfully!")
             props.update()
         }).catch(err => console.log("Something went wrong, please try again later."))
@@ -54,23 +54,29 @@ const TableRow = (props) => {
                 return (
                     <tr key={index}>
                         <td>{index + 1}</td>
+                        <td>{row.OrderId}</td>
                         <td>{row.CaseId}</td>
+                        <td>{row.NGOId}</td>
                         <td>{row.NGOName}</td>
-                        <td>{row.CaseTitle}</td>
-                        <td>{row.Category}</td>
+                        <td>{row.PickupAddress}</td>
+                        <td>{row.DeliveryAddress}</td>
                         <td>{row.Status}</td>
+                        <td>{moment(row.OrderDateTime).format("DD-MM-YYYY")}</td>
                         <td>
-                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleInfo} onClick={() => handleDetails(row)} />
-                            {row.Status !=="Deleted" &&
+                        {row.Status ==="Approved" &&
+                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faFileInvoiceDollar} onClick={() => updateDonationStatus(row.OrderId, 'Delivered')} />
+
+                        }
+                            {row.Status !=="Delivered" && row.Status !=="Approved" &&
                             <>
-                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleCheck} onClick={() => updateDonationStatus(row.CaseId, 'approved')} />
-                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleXmark} onClick={() => updateDonationStatus(row.CaseId, 'rejected')} />
+                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleCheck} onClick={() => updateDonationStatus(row.OrderId, 'Approved')} />
+                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleXmark} onClick={() => updateDonationStatus(row.OrderId, 'Rejected')} />
                             </>} 
                         </td>
                     </tr>
                 )
             })}
-            {infoModal && <tr style={{ border: 'none' }}><td style={{ border: 'none' }}><CaseDetailModal infoModal={infoModal} data={infoModalData} closeModal={() => setInfoModal(false)} /></td></tr>}
+            {/* {infoModal && <tr style={{ border: 'none' }}><td style={{ border: 'none' }}><CaseDetailModal infoModal={infoModal} data={infoModalData} closeModal={() => setInfoModal(false)} /></td></tr>} */}
         </>
     )
 

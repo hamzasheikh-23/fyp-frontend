@@ -12,6 +12,9 @@
 .table-donation-requests thead {
     white-space: nowrap;
 }
+.manage-partner-ngo.table-donation-requests td{
+    white-space: nowrap;
+}
 
 .action-icons-donation-requests {
     font-size: 1.5em;
@@ -93,7 +96,7 @@
     font-weight: 600;
     font-size: 1rem;
     margin-right: 5px;
-    width: 25%;
+    /* width: 25%; */
 }
 
 .infoData-donation-requests-modal {

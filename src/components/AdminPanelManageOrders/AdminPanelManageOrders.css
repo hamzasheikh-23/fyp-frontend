@@ -9,18 +9,13 @@
     width: calc(100vw - 80px);
     margin: 0 40px;
 }
-
 .table-donation-requests thead {
     white-space: nowrap;
 }
 
-/* .manage-donation-request-donor.table-donation-requests.outer td{
+.table-donation-requests.manage-order td {
     white-space: nowrap;
-} */
-
-/* .table-donation-requests td {
-    white-space: nowrap;
-} */
+}
 
 .action-icons-donation-requests {
     font-size: 1.5em;

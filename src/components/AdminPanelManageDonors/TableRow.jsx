@@ -8,9 +8,11 @@ import './AdminPanelManageDonors.css'
 
 const TableRow = (props) => {
 
-    const updateDonationStatus = async (donationId, status) => {
-        PutUpdateDonationStatus(donationId, status).then(res => {
+    const updateDonationStatus = async (donorId, active) => {
+        PutUpdateDonationStatus(donorId, active).then(res => {
+            console.log('res',res)
             toast.success("Updated status succesfully!")
+            props.update()
         }).catch(err => console.log("Something went wrong, please try again later."))
     }
 
@@ -22,16 +24,16 @@ const TableRow = (props) => {
                         <td>{index + 1}</td>
                         <td>{row.DonorId}</td>
                         <td>{row.UserId}</td>
-                        <td>{row.DonorName}</td>
+                        <td>{`${row.FirstName} ${row.LastName}`}</td>
                         <td>{row.Contact}</td>
                         <td>{row.Address}</td>
-                        <td>{row.City}</td>
-                        <td>{row.State}</td>
-                        <td>{row.Cnic}</td>
-                        <td>{row.IsActive ? 'Yes' : 'No'}</td>
+                        {/* <td>{row.City}</td>
+                        <td>{row.State}</td> */}
+                        <td>{row.CNIC}</td>
+                        <td>{row.IsActive && JSON.parse(row.IsActive) ? 'Yes' : 'No'}</td>
                         <td>
-                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleCheck} onClick={() => updateDonationStatus(row.DonationId, 'approved')} />
-                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleXmark} onClick={() => updateDonationStatus(row.DonationId, 'rejected')} />
+                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleCheck} onClick={() => updateDonationStatus(row.DonorId, 'true')} />
+                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleXmark} onClick={() => updateDonationStatus(row.DonorId, 'false')} />
                         </td>
                     </tr>
                 )

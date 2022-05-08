@@ -5,9 +5,9 @@ import Toolbar from '../Toolbar/Toolbar'
 import SideDrawer from '../SideDrawer/SideDrawer'
 import TableRow from './TableRow'
 import GetDonations from './APIs/GetDonations'
-import './AdminPanelManageRequestsFromNGO.css'
+import './AdminPanelManageOrders.css'
 
-const AdminPanelManageRequestsFromNGO = () => {
+const AdminPanelManageOrders = () => {
 
     const [sideOpen, setSideOpen] = useState(false)
     const [ngoRequests, setNgoRequests] = useState([])
@@ -107,7 +107,7 @@ const AdminPanelManageRequestsFromNGO = () => {
         await GetDonations('').then(res =>  {
             console.log('res',res)
             if(!res.noData){
-                setNgoRequests(res.cases)
+                setNgoRequests(res.order)
             }
             else{
                 setNgoRequests([])
@@ -124,28 +124,21 @@ const AdminPanelManageRequestsFromNGO = () => {
         <>
             <Toolbar drawerClickHandler={() => setSideOpen(!sideOpen)} about={true}/>
             <SideDrawer about={true} show={sideOpen} />
-            <h1 className="page-heading-donation-requests">Pending Requests From NGOs</h1>
+            <h1 className="page-heading-donation-requests">Manage NGO Orders</h1>
         
-            <div className='table-donation-requests'>
+            <div className='table-donation-requests manage-order'>
                 <Table responsive="md" bordered>
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Order ID</th>
                             <th>Case ID</th>
+                            <th>NGO ID</th>
                             <th>NGO Name</th>
-                            <th>Case Title</th>
-                            <th>Category</th>
-                            <th>
-                                <div className="dropdown">
-                                    <span type="button" data-toggle="dropdown">Status
-                                    <span className="caret"></span></span>
-                                    <ul className="dropdown-menu">
-                                    <li><a href="#">Pending</a></li>
-                                    <li><a href="#">Rejected</a></li>
-                                    <li><a href="#">Approved</a></li>
-                                    </ul>
-                                </div>
-                            </th>
+                            <th>Pickup Address</th>
+                            <th>Delivery Address</th>
+                            <th>Status</th>
+                            <th>Date and Time</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -160,4 +153,4 @@ const AdminPanelManageRequestsFromNGO = () => {
 }
 
 
-export default AdminPanelManageRequestsFromNGO
+export default AdminPanelManageOrders

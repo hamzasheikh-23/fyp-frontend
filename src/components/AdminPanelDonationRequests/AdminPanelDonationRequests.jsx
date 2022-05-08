@@ -701,7 +701,7 @@ const AdminPanelDonationRequests = () => {
             <SideDrawer about={true} show={sideOpen} />
             <h1 className="page-heading-donation-requests">Donation Requests</h1>
         
-            <div className='table-donation-requests'>
+            <div className='table-donation-requests outer manage-donation-request-donor'>
                 <Table responsive="md" bordered>
                     <thead>
                         <tr>

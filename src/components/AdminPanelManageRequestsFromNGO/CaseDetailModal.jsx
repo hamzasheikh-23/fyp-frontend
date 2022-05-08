@@ -33,7 +33,58 @@ const CaseDetailModal = (props) => {
                         <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleXmark} onClick={props.closeModal} />
                     </div>
                     <div className='content-donation-requests-modal'>
-                        <div className='divideContent-donation-requests-modal'>
+                    <table className="table">
+                        <tbody>
+                            <tr>
+                                <td>Date and Time: </td>
+                                <td>{moment(props.data.PostedDate).format("DD-MM-YYYY HH:MM A")}</td>
+                            </tr>
+                            <tr>
+                                <td>NGO Name: </td>
+                                <td>{props.data.NGOName}</td>
+                            </tr>
+                            <tr>
+                                <td>Description: </td>
+                                <td>{props.data.Description}</td>
+                            </tr>
+                            <tr>
+                                <td>Category: </td>
+                                <td>{props.data.Category}</td>
+                            </tr>
+                            <tr>
+                                <td>Quantity:</td>
+                                <td>{props.data.Quantity}</td>
+                            </tr>
+                            <tr>
+                                <td>Unit:</td>
+                                <td>{props.data.Unit}</td>
+                            </tr>
+                            <tr>
+                                <td>Status: </td>
+                                <td>{props.data.Status}</td>
+                            </tr>
+                            <tr>
+                                <td>Active:</td>
+                                <td>{props.data.IsActive}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div style={{display:'flex', flexDirection:'row', flexWrap:'wrap'}}>
+                        {props.data.ImageName &&
+                        <div style={{
+                            border: '1px solid #4A89DC',
+                            margin: 5,
+                            padding: 5
+                            }}>
+                            <img alt={'...'} onClick={()=> window.open(require(`../../serverImages/cases/${props.data.ImageName}`), "_blank")} src={require(`../../serverImages/cases/${props.data.ImageName}`)} height="80px" width="80px" style={{objectFit:'contain', marginBottom:'5px'}} />
+                        </div>}
+                        
+                    </div>
+
+
+                        {/* <div className='divideContent-donation-requests-modal'>
                             <div className='budgetPostDetails-donation-requests-modal'>
                                 <div className='contentTile-donation-requests-modal'>
                                     <label className='infoLabels-donation-requests-modal'>Date and Time: </label>
@@ -72,10 +123,7 @@ const CaseDetailModal = (props) => {
                                     <p className='infoData-donation-requests-modal'>{props.data.isActive}</p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className='imagesContainer-donation-requests-modal'>
-                        <img className='images-donation-requests-modal' src={props.data.image} alt='ngo'/>
+                        </div> */}
                     </div>
                 </div> 
             </div>

@@ -42,6 +42,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TrackOrder from "./components/TrackOrder/TrackOrder";
 import Invoice from "./components/Invoice/Invoice";
+import AdminPanelManageOrders from "./components/AdminPanelManageOrders/AdminPanelManageOrders";
 
 const App = () => {
   useEffect(() => {
@@ -94,7 +95,7 @@ const App = () => {
             validUser="admin"
             // redirectTo="/"
           />
-
+          <RoleRouteProtection exact path='/manage-order-ngo' component={AdminPanelManageOrders} validUser='admin' />
           <RoleRouteProtection exact path='/donation-requests' component={AdminPanelDonationRequests} validUser='admin' />
           <RoleRouteProtection exact path='/manage-ngo-requests' component={AdminPanelManageRequestsFromNGO} validUser='admin' />
           <RoleRouteProtection exact path='/user-feedback' component={AdminPanelUserFeedback} validUser='admin' />
