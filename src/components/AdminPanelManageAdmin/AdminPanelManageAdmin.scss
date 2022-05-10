@@ -1,0 +1,190 @@
+.account-pic-container{
+    width: 70%;
+    margin: 0 auto;
+}
+
+.blue-heading{
+    text-align: center;
+    color: #4A89DC!important;
+    letter-spacing: -.9px;
+    font-family: hind,sans-serif;
+    font-weight: 700;
+}
+.my-manage-admin-page .sigup-page-heading{
+    font-size: 30px;
+    line-height: 30px;
+    margin-top: 30px;
+    margin-bottom: 25px;
+}
+
+.account-pic-container .row  .main-pic-container{
+    padding: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.instructions{
+    margin-top: 45px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.instructions p{
+    margin: 0;
+    line-height: 26px;
+    color: #6c6c6c; 
+}
+
+.main-donor-signup-form{
+    width: 80%;
+    margin: auto; 
+    line-height: 0.5em;  
+}
+
+.main-donor-signup-form .address-field{
+    margin-bottom: 10px;
+}
+
+.main-donor-signup-form .field-spacer{
+    margin-bottom: 10px;
+}
+
+.main-donor-signup-form #phoneNumber[type='number']{
+        -moz-appearance:textfield;
+    }
+    
+.main-donor-signup-form #phoneNumber::-webkit-outer-spin-button,
+.main-donor-signup-form #phoneNumber::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+
+.main-donor-signup-form .form-group{
+    margin: 0;
+    /* font-size: 0.85em; */
+}
+.main-donor-signup-form .gender-field{
+    margin-top: 10px;
+    
+}
+#gender{
+    margin-top: 6px;
+}
+
+.main-donor-signup-form .form-control{
+    border: 1px solid rgb(162, 201, 243);
+    color: #6c6c6c;
+    font-size: 0.85em;
+}
+
+.main-donor-signup-form input,
+.main-donor-signup-form textarea{
+    height: 36px;
+    border-radius: 5px;
+    border: 0;
+    /* font-size: 18px;
+    letter-spacing: 2px; */
+    padding-left: 38px;
+}
+
+.main-donor-signup-form .form-group i{
+    color: #4A89DC;
+    opacity: 0.9;
+    position: relative;
+    top: 30px;
+    font-size: 22px;
+    padding-left: 10px;
+}
+
+.form-input button
+{
+ 
+    width: 40%;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+}
+
+
+.signup-btn
+{
+    background-color:  #4A89DC;
+    font-family: roboto,sans-serif;
+    border: none;
+    width: 170px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 13px;
+    border-radius: 65px;
+    margin: 20px 0px;
+    font-size: 14px;
+    padding: 11px 14px !important;
+    margin-left: auto;
+}
+
+.my-manage-admin-page{
+    .admin-tag{
+        font-weight: bold;
+        background-color: #4A89DC;
+        color: white;
+        padding: 10px;
+    border-radius: 5px;
+    }
+}
+
+@media (max-width:991px){
+    .main-donor-signup-form .address-field{
+        /* margin-bottom: 0px; */
+    }
+    .main-donor-signup-form .gender-field{
+        margin-top: 20px;
+    }
+   
+
+}
+
+@media(max-width: 768px) {
+    .account-pic-container{
+        width: 80%;
+     }
+
+     .main-donor-signup-form{
+        width: 90%;
+     }
+    
+}
+
+
+
+@media (max-width: 418px){
+    .account-pic-container{
+        width: 95%;
+    }
+    .main-donor-signup-form{
+        width: 95%;
+     }
+     .my-manage-admin-page .sigup-page-heading{
+        font-size: 25px;
+    }
+   
+   
+}
+
+
+@media (max-width: 320px){
+    .account-pic-container{
+        width: 100%;
+    }
+    .main-donor-signup-form{
+        width: 100%;
+     }
+     .my-manage-admin-page .sigup-page-heading{
+        font-size: 24px;
+    }
+    
+  
+}

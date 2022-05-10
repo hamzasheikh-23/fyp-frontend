@@ -181,6 +181,11 @@ class ManageDonations extends Component {
                     <li>View replies from Donors</li>
                   </Button>
                 </Link>
+                <Link to="/donor-donations" >
+                  <Button variant="outline-info" className="buttonlist">
+                    <li>View Donor Donations</li>
+                  </Button>
+                </Link>
               </div>
               <hr></hr>
               <h3>Previously Asked Donations:</h3>

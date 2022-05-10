@@ -99,27 +99,36 @@ class SideDrawer extends React.Component {
 
         <div>
           <ul>
-          {localStorage.getItem("loginType") !== "admin" && (
-            <>
-           <li>
-              <Link to="/">
+            {localStorage.getItem("loginType") === "admin" && (
+              <li>
+              <Link to="/adminPanelMain">
                 <i>
                   <FaAddressCard />
                 </i>
-                Home
+                Options
               </Link>
             </li>
-            <li>
-              <Link to="/aboutUs">
-                <i>
-                  <FaAddressCard />
-                </i>
-                About
-              </Link>
-            </li>
-            </>
-          )}
-            
+            )}
+            {localStorage.getItem("loginType") !== "admin" && (
+              <>
+                <li>
+                  <Link to="/">
+                    <i>
+                      <FaAddressCard />
+                    </i>
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/aboutUs">
+                    <i>
+                      <FaAddressCard />
+                    </i>
+                    About
+                  </Link>
+                </li>
+              </>
+            )}
 
             {localStorage.getItem("loginType") === "ngo" ? (
               <>
@@ -154,13 +163,21 @@ class SideDrawer extends React.Component {
                   </Link>
                 </li>
                 <li>
+                  <Link to="/ngo-replies">
+                    <i>
+                      <FaAddressCard />
+                    </i>
+                    NGO's response
+                  </Link>
+                </li>
+                {/* <li>
                   <Link to="/viewStory">
                     <i>
                       <FaAddressCard />
                     </i>
                     NGOs stories
                   </Link>
-                </li>
+                </li> */}
               </>
             ) : null}
 

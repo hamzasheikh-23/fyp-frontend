@@ -1,0 +1,148 @@
+.page-heading-donation-requests {
+    color: #4A89DC;
+    font-weight: 700;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.table-donation-requests {
+    width: calc(100vw - 80px);
+    margin: 0 40px;
+}
+.table-donation-requests thead {
+    white-space: nowrap;
+}
+
+.table-donation-requests.admin-manage{
+    margin-top: 40px;
+    overflow: auto;
+}
+
+.table-donation-requests.admin-manage td{
+    white-space: nowrap;
+
+}
+
+.action-icons-donation-requests {
+    font-size: 1.5em;
+    margin-right: 5px;
+    cursor: pointer;
+    color: #4A89DC;
+}
+
+.modalContainer-donation-requests-modal {
+    width: 40%;
+    position: fixed;
+    top: 15%;
+    left: 30%;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.campaignInfoPopup-donation-requests-modal {
+    background: rgba(255, 255, 255);
+    border: 1px solid #4A89DC;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 100%
+}
+
+.header-donation-requests-modal {
+    margin: 15px;
+    border-bottom: 2px solid #4A89DC;
+    height: 25%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    flex-direction: row;
+    display: flex
+}
+
+.headerTextLeft-donation-requests-modal {
+    margin-bottom: 10px
+}
+
+.crossIcon-donation-requests-modal {
+    cursor: pointer;
+    color: #FFF;
+}
+
+.content-donation-requests-modal {
+    margin: 15px;
+    height: 300px;
+    overflow: auto;
+    box-sizing: border-box;
+    /* display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center; */
+}
+
+.content-donation-requests-modal::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Handle */
+  .content-donation-requests-modal::-webkit-scrollbar-thumb {
+    background: rgb(87, 157, 248);
+    border-radius: 10px;
+  }
+
+.contentTile-donation-requests-modal {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    align-items: baseline;
+}
+
+.infoLabels-donation-requests-modal {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-right: 5px;
+    /* width: 25%; */
+}
+
+.infoData-donation-requests-modal {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1rem;
+    margin: 0;
+    width: 100%;
+    padding: 5px;
+    outline: none;
+}
+
+.divideContent-donation-requests-modal {
+    width: 100%
+}
+
+.imagesContainer-donation-requests-modal {
+    display: flex;
+    justify-content: space-between;
+}
+
+.images-donation-requests-modal {
+    object-fit: cover;
+    width: 30%;
+    height: 179px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.btn-manage-subscriptions-modal {
+    margin-right: 0;
+    background: #4A89DC;
+    color: #FFF;
+    outline: none;
+    border: none;
+    font-weight: 600;
+    font-style: normal;
+    height: 35px;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 20%;
+}

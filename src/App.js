@@ -30,6 +30,7 @@ import AdminPanelManageRequestsFromNGO from "./components/AdminPanelManageReques
 import AdminPanelManageSubscriptions from "./components/AdminPanelManageSubscriptions/AdminPanelManageSubscriptions";
 import AdminPanelManageDonors from "./components/AdminPanelManageDonors/AdminPanelManageDonors";
 import AdminPanelManagePartnerNGO from "./components/AdminPanelManagePartnerNGO/AdminPanelManagePartnerNGO";
+import AdminPanelManageAdmin from "./components/AdminPanelManageAdmin/AdminPanelManageAdmin";
 
 import NGOStatusPending from "./components/NGOStatusPending/NGOStatusPending";
 import NGOStatusRejected from "./components/NGOStatusRejected/NGOStatusRejected";
@@ -43,6 +44,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import TrackOrder from "./components/TrackOrder/TrackOrder";
 import Invoice from "./components/Invoice/Invoice";
 import AdminPanelManageOrders from "./components/AdminPanelManageOrders/AdminPanelManageOrders";
+import NgoReplies from "./components/NgoReplies/NgoReplies";
+import DonorDonations from "./components/DonorDonations/DonorDonations";
 
 const App = () => {
   useEffect(() => {
@@ -58,6 +61,13 @@ const App = () => {
           exact
           path="/viewStory"
           component={ViewStory}
+          validUser="donor"
+          // redirectTo="/"
+        />
+         <RoleRouteProtection
+          exact
+          path="/ngo-replies"
+          component={NgoReplies}
           validUser="donor"
           // redirectTo="/"
         />
@@ -102,6 +112,7 @@ const App = () => {
           <RoleRouteProtection exact path='/manage-subscriptions' component={AdminPanelManageSubscriptions} validUser='admin' />
           <RoleRouteProtection exact path='/manage-donors' component={AdminPanelManageDonors} validUser='admin' />
           <RoleRouteProtection exact path='/manage-partner-ngos' component={AdminPanelManagePartnerNGO} validUser='admin' />
+          <RoleRouteProtection exact path='/manage-admin' component={AdminPanelManageAdmin} validUser='admin' />
 
         {/** ADMIN ROUTE ENDS HERE */}
 
@@ -141,6 +152,12 @@ const App = () => {
           exact
           path="/subscription"
           component={SubscriptionPage}
+          validUser="ngo"
+        />
+        <RoleRouteProtection
+          exact
+          path="/donor-donations"
+          component={DonorDonations}
           validUser="ngo"
         />
         <RoleRouteProtection

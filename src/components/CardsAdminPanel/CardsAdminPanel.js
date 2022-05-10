@@ -56,7 +56,7 @@ class CardsAdminPanel extends Component{
             },
             {
               id:'5',
-              path:"",
+              path:"/manage-admin",
               title: 'Manage Admins',
               image: 'https://thumbs.dreamstime.com/b/multiracial-group-black-african-american-caucasian-asian-hands-holding-each-other-wrist-tolerance-unity-love-anti-135505973.jpg',
               // description: 'You saved a life. What is Lorem Ipsum it is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'

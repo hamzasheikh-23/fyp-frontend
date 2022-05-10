@@ -22,6 +22,11 @@ const Toolbar = (props) => {
         <div className="spacer"></div>
         <div className="toolbar-nav-items">
           <ul>
+          {localStorage.getItem("loginType") === "admin" && (
+            <li>
+              <Link to="/adminPanelMain">Options</Link>
+            </li>
+          )}
           {localStorage.getItem("loginType") !== "admin" && (
             <>
             <li>
@@ -97,8 +102,11 @@ const Toolbar = (props) => {
                 <li>
                   <Link to="/profile">Profile</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/viewStory">NGOs Stories</Link>
+                </li> */}
+                <li>
+                  <Link to="/ngo-replies">NGO's Response</Link>
                 </li>
               </>
             ) : null}
