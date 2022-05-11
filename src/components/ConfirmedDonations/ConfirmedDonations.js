@@ -3,7 +3,7 @@ import Toolbar from "../Toolbar/Toolbar";
 import SideDrawer from "../SideDrawer/SideDrawer";
 import BackDrop from "../BackDrop/BackDrop";
 import Footer from "../Footer/Footer";
-import "./DonorDonations.scss";
+import "./ConfirmedDonations.scss";
 import Card from "./Card";
 import item1 from "../../images/book.png";
 import item2 from "../../images/speak-for-change.jpg";
@@ -14,7 +14,7 @@ import data from "./temp";
 import moment from "moment";
 import {checkProperty} from '../../assets/utils';
 
-class DonorDonations extends React.Component {
+class ConfirmedDonations extends React.Component {
   componentDidMount() {
     this.setState({
       items: data.map((item) => ({
@@ -107,7 +107,7 @@ class DonorDonations extends React.Component {
         <SideDrawer about={true} show={this.state.siderDrawerOpen} />
         {backdrop}
         <h1 className="blue-heading success-main-heading">
-            Donor Donations
+            Confirmed Donor Donations
             </h1>
         <div className="container item-card-container-donor-reply">
           {this.state.items.map((item) => {
@@ -127,4 +127,4 @@ class DonorDonations extends React.Component {
   }
 }
 
-export default DonorDonations;
+export default ConfirmedDonations;

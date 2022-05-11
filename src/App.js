@@ -46,6 +46,7 @@ import Invoice from "./components/Invoice/Invoice";
 import AdminPanelManageOrders from "./components/AdminPanelManageOrders/AdminPanelManageOrders";
 import NgoReplies from "./components/NgoReplies/NgoReplies";
 import DonorDonations from "./components/DonorDonations/DonorDonations";
+import ConfirmedDonations from "./components/ConfirmedDonations/ConfirmedDonations";
 
 const App = () => {
   useEffect(() => {
@@ -152,6 +153,12 @@ const App = () => {
           exact
           path="/subscription"
           component={SubscriptionPage}
+          validUser="ngo"
+        />
+         <RoleRouteProtection
+          exact
+          path="/confirmed-donations"
+          component={ConfirmedDonations}
           validUser="ngo"
         />
         <RoleRouteProtection

@@ -1,14 +1,58 @@
 import React from "react";
 import DonationDetailsModal from "./DonationDetailsModal";
-import { Badge } from "react-bootstrap";
+// import { Badge } from "react-bootstrap";
+import { Modal, Button, Row, Col, Form } from "react-bootstrap";
+
 import axios from "axios";
 import { FaTrash, FaCheck } from "react-icons/fa";
 
 class Card extends React.Component {
   state = {
     addDetailModalShow: false,
+    acceptModal: false,
+    address:"",
+    addressErr:"",
+    msg:""
+
   };
+  acceptModalClose=()=>{
+    this.setState({acceptModal: false})
+  }
+  changeHandler = (event, fieldName) => {
+    this.setState({ [fieldName]: event.target.value });
+    // console.log(event.target.value);
+  };
+  validation=()=>{
+    let msgErr = "";
+    let addressErr = "";
+
+    console.log('validation', this.state)
+
+    const validText = /^[^\s]+(?: [^\s]+)*$/; //no concurrent spaces and no boundary spaces
+   
+   if (!this.state.address) {
+      addressErr = "required";
+    } else if (!validText.test(this.state.address)) {
+      addressErr =
+        "remove extra and unnecessary spaces";
+    }
+
+
+    if (
+      // msgErr ||
+      addressErr
+    ) {
+      this.setState({
+        // msgErr,
+        addressErr,
+      });
+      return false;
+    }
+
+    return true;
+  }
   acceptItem = () => {
+    this.setState({acceptModal:true})
     // axios
     //   .put(
     //     `https://localhost:44357/donation/delete/${this.props.donationId}`
@@ -21,13 +65,13 @@ class Card extends React.Component {
     // console.log("card", this.props);
     let addDetailModalClose = () =>
       this.setState({ addDetailModalShow: false });
-    
+
     let images = [
       this.props.image1Name,
       this.props.image2Name,
       this.props.image3Name,
     ];
-    
+
     return (
       <div style={{ margin: "0 10px" }}>
         <div
@@ -38,21 +82,24 @@ class Card extends React.Component {
           }}
           class="card"
         >
-          {this.props.image1Name ? 
-           <img
-           src={"https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="}
-
-        //    src={require(`../../serverImages/${this.props.image1Name}`)}
-           alt=".."
-           className="card-image"
-         />
-         :
-         <img
-           src={"https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="}
-           alt=".."
-           className="card-image"
-         />
-          }
+          {this.props.image1Name ? (
+            <img
+              src={
+                "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
+              }
+              //    src={require(`../../serverImages/${this.props.image1Name}`)}
+              alt=".."
+              className="card-image"
+            />
+          ) : (
+            <img
+              src={
+                "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
+              }
+              alt=".."
+              className="card-image"
+            />
+          )}
           <div
             style={{ display: "flex", flexDirection: "column" }}
             class="card-body"
@@ -73,7 +120,6 @@ class Card extends React.Component {
                 class="card-title"
               >
                 {this.props.title}
-                
               </h5>
               <div style={{ whiteSpace: "nowrap" }}>
                 <FaCheck
@@ -117,7 +163,6 @@ class Card extends React.Component {
             >
               View Details
             </button>
-            
           </div>
         </div>
         <DonationDetailsModal
@@ -126,6 +171,81 @@ class Card extends React.Component {
           show={this.state.addDetailModalShow}
           onHide={addDetailModalClose}
         />
+        {this.state.acceptModal && (
+          <Modal
+            show={this.state.acceptModal}
+            onHide={this.acceptModalClose}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                {this.props.title}
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="container">
+                <form action="/" noValidate>
+                <div className="form-group">
+                <label htmlFor="address" className="my-donation-label mb-2">
+                  Pickup/Dropoff Address
+                </label>
+                <input
+                  name="address"
+                  value={this.state.address}
+                  onChange={(event) =>
+                    this.changeHandler(event, "address")
+                  }
+                  type="text"
+                  id="address"
+                  placeholder="Address here..."
+                  className="form-control"
+                />
+                <div
+                  style={{
+                    fontSize: "12.8px",
+                    color: "#DC3545",
+                    marginLeft: "10px",
+                  }}
+                >
+                  {this.state.addressErr}
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="mb-2" htmlFor="requestResponse">
+                  Response Message (optional)
+                </label>
+                <textarea
+                  name="requestResponse"
+                  rows="8"
+                  // cols="50"
+                  value={this.state.msg}
+                  onChange={(event) => this.changeHandler(event, "msg")}
+                  id="requestResponse"
+                  placeholder="Send a message to NGO"
+                  className="form-control"
+                ></textarea>
+              </div>
+                </form>
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="#4A89DC" onClick={() => this.acceptModalClose()}>
+                Close
+              </Button>
+              <Button
+                variant="success"
+                onClick={() => {
+                  // this.addModalClose(true)
+                  // this.props.history.push('/paymentInfo',{data:{caseId: this.props.CaseId, replyId: this.props.ReplyId, address: this.props.Address, amount: parseFloat(this.state.serviceAmount + this.state.deliveryAmount + this.state.vat)}})
+                }}
+              >
+                Proceed To Pay
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        )}
       </div>
     );
   }

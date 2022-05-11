@@ -51,6 +51,9 @@ const Toolbar = (props) => {
                 <li>
                   <Link to="/trackOrder">Track Orders</Link>
                 </li>
+                <li>
+                  <Link to="/confirmed-donations">Donor's donations</Link>
+                </li>
                 {/* <li>
                     <div className="dropdown">
                         <button className="btn dropdown-toggle my-dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

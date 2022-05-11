@@ -48,7 +48,8 @@ class SideDrawer extends React.Component {
     }
   };
 
-  Manage = () => {
+  Manage = (e) => {
+    e.preventDefault()
     this.setState((prevState) => {
       return { manage: !prevState.manage };
     });
@@ -133,7 +134,13 @@ class SideDrawer extends React.Component {
             {localStorage.getItem("loginType") === "ngo" ? (
               <>
                 <li>
-                  <Link to="/#" onClick={this.Manage}>
+                  {/* <Link to="/#" onClick={this.Manage}>
+                    <i>
+                      <FaGreaterThan />
+                    </i>
+                    <button>Manage</button>
+                  </Link> */}
+                  <Link to="/manage-donations" >
                     <i>
                       <FaGreaterThan />
                     </i>
@@ -141,6 +148,14 @@ class SideDrawer extends React.Component {
                   </Link>
                 </li>
                 {this.showManageOptions()}
+                <li>
+                  <Link to="/confirmed-donations">
+                    <i>
+                      <FaAddressCard />
+                    </i>
+                    Donor's Donations
+                  </Link>
+                </li>
               </>
             ) : null}
             {localStorage.getItem("loginType") === "donor" ? (
