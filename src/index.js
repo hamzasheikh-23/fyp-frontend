@@ -5,6 +5,7 @@ import {createStore, applyMiddleware, compose} from 'redux';
 import reducers from './reducers';
 import "./index.css";
 import App from "./App";
+import * as serviceWorker from './serviceWorkerRegistration';
 //import '../node_modules/font-awesome/css/font-awesome.min.css';
 
 
@@ -19,3 +20,4 @@ ReactDOM.render(
         <App/>
     </Provider>
     , document.getElementById('root'));
+    serviceWorker.register();

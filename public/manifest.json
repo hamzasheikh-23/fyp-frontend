@@ -1,6 +1,12 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "name": "Charitable - Online Donation Hub",
+  "short_name": "Charitable",
+  "id" : "/",
+  "theme_color": "#5992dc",
+  "background_color": "#5992dc",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,18 +14,14 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "images/icon/icon-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "images/icon/icon-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  ]
 }
