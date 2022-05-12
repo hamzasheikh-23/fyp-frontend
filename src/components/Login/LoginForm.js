@@ -76,7 +76,7 @@ class LoginForm extends Component {
         password: this.state.loginPassword,
       };
       axios
-        .post("https://localhost:44357/user/login", loginData)
+        .post("https://charitableapis.azurewebsites.net/user/login", loginData)
         .then((res) => {
           console.log("response", res, this.props.history, this.props);
           // console.log(res);
