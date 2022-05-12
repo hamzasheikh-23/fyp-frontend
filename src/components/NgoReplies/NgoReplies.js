@@ -4,6 +4,7 @@ import Toolbar from "../Toolbar/Toolbar";
 import SideDrawer from "../SideDrawer/SideDrawer";
 import BackDrop from "../BackDrop/BackDrop";
 import dummy from "../../images/grayscale-kid.jpg";
+import { baseURL } from "../../baseURL";
 import "./NgoReplies.css";
 import axios from "axios";
 // import ProceedOrderModal from '../Modal/ProceedOrderModal';
@@ -11,64 +12,68 @@ import RequestCard from "./RequestCard";
 import { filter } from "lodash";
 import moment from "moment";
 
-const dummyData =[
-{
-  DonationTitle: "three set of gloves",
-  ReplyId:1,
-  NGOName: "Saylani Welfare",
-  Message: "this is the dummy msg",
-  PostedDate: "March 33, 2022",
-  Status: "Pending",
-},{
-  DonationTitle: "three set of gloves",
-  ReplyId:1,
-  NGOName: "Saylani Welfare",
-  Message: "this is the dummy msg",
-  PostedDate: "March 33, 2022",
-  Status: "Pending",
-},{
-  DonationTitle: "three set of gloves",
-  ReplyId:1,
-  NGOName: "Saylani Welfare",
-  Message: "this is the dummy msg",
-  PostedDate: "March 33, 2022",
-  Status: "Pending",
-},{
-  DonationTitle: "three set of gloves",
-  ReplyId:1,
-  NGOName: "Saylani Welfare",
-  Message: "this is the dummy msg",
-  PostedDate: "March 33, 2022",
-  Status: "Pending",
-},{
-  DonationTitle: "three set of gloves",
-  ReplyId:1,
-  NGOName: "Saylani Welfare",
-  Message: "this is the dummy msg",
-  PostedDate: "March 33, 2022",
-  Status: "Pending",
-}
-]
+const dummyData = [
+  {
+    DonationTitle: "three set of gloves",
+    ReplyId: 1,
+    NGOName: "Saylani Welfare",
+    Message: "this is the dummy msg",
+    PostedDate: "March 33, 2022",
+    Status: "Pending",
+  },
+  {
+    DonationTitle: "three set of gloves",
+    ReplyId: 1,
+    NGOName: "Saylani Welfare",
+    Message: "this is the dummy msg",
+    PostedDate: "March 33, 2022",
+    Status: "Pending",
+  },
+  {
+    DonationTitle: "three set of gloves",
+    ReplyId: 1,
+    NGOName: "Saylani Welfare",
+    Message: "this is the dummy msg",
+    PostedDate: "March 33, 2022",
+    Status: "Pending",
+  },
+  {
+    DonationTitle: "three set of gloves",
+    ReplyId: 1,
+    NGOName: "Saylani Welfare",
+    Message: "this is the dummy msg",
+    PostedDate: "March 33, 2022",
+    Status: "Pending",
+  },
+  {
+    DonationTitle: "three set of gloves",
+    ReplyId: 1,
+    NGOName: "Saylani Welfare",
+    Message: "this is the dummy msg",
+    PostedDate: "March 33, 2022",
+    Status: "Pending",
+  },
+];
 
 class NgoReplies extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       siderDrawerOpen: false,
       selectedCase: "",
       caseTitleList: [],
-      replies:[],
+      replies: [],
       // addModalShow: false,
     };
   }
   componentDidMount() {
     this.setState({
-      replies: dummyData
+      replies: dummyData,
     });
     //get requests
     // axios
     //   .get(
-    //     `https://localhost:44357/reply/get?ngoId=${localStorage.getItem('ngoID')}&status=Pending`
+    //     `${baseURL}/reply/get?ngoId=${localStorage.getItem('ngoID')}&status=Pending`
     //   )
     //   .then((res) => {
     //     // console.log('res', res)
@@ -89,9 +94,13 @@ class NgoReplies extends React.Component {
 
     //get cases
     axios
-      .get(`https://localhost:44357/case/get?ngoId=${localStorage.getItem('ngoID')}&status=approved&isActive=true `)
+      .get(
+        `${baseURL}/case/get?ngoId=${localStorage.getItem(
+          "ngoID"
+        )}&status=approved&isActive=true `
+      )
       .then((list) => {
-        console.log('list', list)
+        console.log("list", list);
         this.setState({
           caseTitleList: list.data.cases.map((item) => ({
             id: item.CaseId,
@@ -100,31 +109,29 @@ class NgoReplies extends React.Component {
         });
       })
       .catch((error) => console.log(error));
-
   }
 
-  componentDidUpdate(prevProps, prevState){
-if(prevState.selectedCase !== this.state.selectedCase){
-  this.filteredContent(this.state.selectedCase);
-}
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.selectedCase !== this.state.selectedCase) {
+      this.filteredContent(this.state.selectedCase);
+    }
   }
 
-
-
-  
   filteredContent = (selectedCase) => {
-
     axios
-    .get(`https://localhost:44357/reply/get?ngoId=${localStorage.getItem('ngoID')}${selectedCase ? `&caseId=${selectedCase}`:''}&status=Pending `)
+      .get(
+        `${baseURL}/reply/get?ngoId=${localStorage.getItem(
+          "ngoID"
+        )}${selectedCase ? `&caseId=${selectedCase}` : ""}&status=Pending `
+      )
       .then((res) => {
-         if(!res.data.noData){
+        if (!res.data.noData) {
           this.setState({
-            replies: dummyData
+            replies: dummyData,
           });
-         }
-        else{
+        } else {
           this.setState({
-            replies: []
+            replies: [],
           });
         }
       })
@@ -139,7 +146,7 @@ if(prevState.selectedCase !== this.state.selectedCase){
   backdropClickHandler = () => {
     this.setState({ siderDrawerOpen: false });
   };
- 
+
   render() {
     console.log("donor reply", this.state);
     let backdrop;
@@ -160,9 +167,7 @@ if(prevState.selectedCase !== this.state.selectedCase){
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCase === ""
-                        ? "#579df8"
-                        : "#4a89dc",
+                      this.state.selectedCase === "" ? "#579df8" : "#4a89dc",
                   }}
                   onClick={() => {
                     this.setState({ selectedCase: "" });
@@ -384,13 +389,12 @@ if(prevState.selectedCase !== this.state.selectedCase){
             {this.state.replies.map((reply) => {
               return (
                 <RequestCard
-                    {...reply}
+                  {...reply}
                   fetchData={this.filteredContent}
                   history={this.props.history}
                 />
               );
             })}
-
           </div>
         </div>
         <Footer />

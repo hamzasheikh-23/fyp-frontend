@@ -3,6 +3,7 @@ import DonationDetailsModal from "../Modal/DonationDetailsModal";
 import { Badge } from "react-bootstrap";
 import axios from "axios";
 import { FaTrash, FaPen } from "react-icons/fa";
+import { baseURL } from "../../baseURL";
 
 class Card extends React.Component {
   state = {
@@ -11,10 +12,10 @@ class Card extends React.Component {
   deleteItem = () => {
     axios
       .put(
-        `https://localhost:44357/donation/delete/${this.props.donationId}`
+        `${baseURL}/donation/delete/${this.props.donationId}`
       )
       .then((res) => {
-          this.props.getData();
+        this.props.getData();
       });
   };
   editItem = () => {
@@ -88,7 +89,7 @@ class Card extends React.Component {
       this.props.image2Name,
       this.props.image3Name,
     ];
-    
+
     return (
       <div style={{ margin: "0 10px" }}>
         <div
@@ -99,19 +100,21 @@ class Card extends React.Component {
           }}
           class="card"
         >
-          {this.props.image1Name ? 
-           <img
-           src={require(`../../serverImages/${this.props.image1Name}`)}
-           alt=".."
-           className="card-image"
-         />
-         :
-         <img
-           src={"https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="}
-           alt=".."
-           className="card-image"
-         />
-          }
+          {this.props.image1Name ? (
+            <img
+              src={require(`../../serverImages/${this.props.image1Name}`)}
+              alt=".."
+              className="card-image"
+            />
+          ) : (
+            <img
+              src={
+                `https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=`
+              }
+              alt=".."
+              className="card-image"
+            />
+          )}
           <div
             style={{ display: "flex", flexDirection: "column" }}
             class="card-body"
@@ -187,7 +190,6 @@ class Card extends React.Component {
             >
               View Details
             </button>
-            
           </div>
         </div>
         <DonationDetailsModal

@@ -4,7 +4,7 @@ import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import axios from "axios";
 import "./ProceedOrderModal.css";
 import { FaTimesCircle } from "react-icons/fa";
-
+import { baseURL } from "../../baseURL";
 
 class ProceedOrderModal extends Component {
   constructor(props) {
@@ -12,45 +12,48 @@ class ProceedOrderModal extends Component {
     this.state = {
       msg: "",
       msgErr: "",
-      remainingRequiredQuantity:0,
-      remainingRequiredQuantityErr:"",
+      remainingRequiredQuantity: 0,
+      remainingRequiredQuantityErr: "",
       remainingRequiredQuantityOriginal: 0,
-      donationQuantity:"",
+      donationQuantity: "",
       donationQuantityErr: "",
-      address:"",
-      addressErr:"",
+      address: "",
+      addressErr: "",
       base64Images: [],
-      imageErr: null
-
+      imageErr: null,
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     // console.log('props', this.props)
-     axios
-        .get(`https://localhost:44357/reply/remainingQuantity/${this.props.reqId}`)
-        .then((res) => {
-          // console.log('res', res)
-          this.setState({remainingRequiredQuantity: res.data.RemainingQuantity , remainingRequiredQuantityOriginal: res.data.RemainingQuantity})
-        })
-        .catch((err) => console.log("error", err));
+    axios
+      .get(
+        `${baseURL}/reply/remainingQuantity/${this.props.reqId}`
+      )
+      .then((res) => {
+        // console.log('res', res)
+        this.setState({
+          remainingRequiredQuantity: res.data.RemainingQuantity,
+          remainingRequiredQuantityOriginal: res.data.RemainingQuantity,
+        });
+      })
+      .catch((err) => console.log("error", err));
   }
 
-  validation=()=>{
+  validation = () => {
     let donationQuantityErr = "";
     let msgErr = "";
     let addressErr = "";
-    let remainingRequiredQuantityErr="";
+    let remainingRequiredQuantityErr = "";
 
-    console.log('validation', this.state)
+    console.log("validation", this.state);
 
     const validText = /^[^\s]+(?: [^\s]+)*$/; //no concurrent spaces and no boundary spaces
-   
-   if (!this.state.address) {
+
+    if (!this.state.address) {
       addressErr = "required";
     } else if (!validText.test(this.state.address)) {
-      addressErr =
-        "remove extra and unnecessary spaces";
+      addressErr = "remove extra and unnecessary spaces";
     }
 
     // if(!validText.test(this.state.msg)){
@@ -59,20 +62,31 @@ class ProceedOrderModal extends Component {
 
     if (!this.state.donationQuantity) {
       donationQuantityErr = "required";
-    } else if (parseFloat(this.state.donationQuantity) < 1 || parseFloat(this.state.donationQuantity) > 1000) {
-      donationQuantityErr = "Quantity must be in range 1 to the required quantity";
+    } else if (
+      parseFloat(this.state.donationQuantity) < 1 ||
+      parseFloat(this.state.donationQuantity) > 1000
+    ) {
+      donationQuantityErr =
+        "Quantity must be in range 1 to the required quantity";
     }
 
-    let validQuantity= parseFloat(this.state.remainingRequiredQuantityOriginal)-parseFloat(this.state.donationQuantity)
-    console.log('validQuantity',parseFloat(this.state.remainingRequiredQuantityOriginal),parseFloat(this.state.donationQuantity),validQuantity, remainingRequiredQuantityErr)
-    if (validQuantity<0) {
-      remainingRequiredQuantityErr = "Your donation is exceeding the requested quantity";
-    } else{
+    let validQuantity =
+      parseFloat(this.state.remainingRequiredQuantityOriginal) -
+      parseFloat(this.state.donationQuantity);
+    console.log(
+      "validQuantity",
+      parseFloat(this.state.remainingRequiredQuantityOriginal),
+      parseFloat(this.state.donationQuantity),
+      validQuantity,
+      remainingRequiredQuantityErr
+    );
+    if (validQuantity < 0) {
+      remainingRequiredQuantityErr =
+        "Your donation is exceeding the requested quantity";
+    } else {
       remainingRequiredQuantityErr = "";
-
     }
-    console.log('after',remainingRequiredQuantityErr)
-
+    console.log("after", remainingRequiredQuantityErr);
 
     if (
       remainingRequiredQuantityErr ||
@@ -91,7 +105,7 @@ class ProceedOrderModal extends Component {
     }
 
     return true;
-  }
+  };
 
   ResponseFormSubmitHandler = (e) => {
     e.preventDefault();
@@ -101,12 +115,12 @@ class ProceedOrderModal extends Component {
       const isEdit = this.props.history?.location?.state?.data ? true : false;
 
       const response = {
-        Message : this.state.msg,
+        Message: this.state.msg,
         CaseId: this.props.reqId,
         DonorId: localStorage.getItem("donorID"),
-        Quantity : parseFloat(this.state.donationQuantity),
-        RemainingQuantity : this.state.remainingRequiredQuantity,
-        Address : this.state.address,
+        Quantity: parseFloat(this.state.donationQuantity),
+        RemainingQuantity: this.state.remainingRequiredQuantity,
+        Address: this.state.address,
         Image1base64:
           this.state.base64Images[0] === undefined
             ? null
@@ -161,11 +175,10 @@ class ProceedOrderModal extends Component {
               this.props.history?.location?.state?.data?.image3Name
             ? null
             : this.state.base64Images[2].name,
-
       };
       console.log("data of response", response);
       axios
-        .post(`https://localhost:44357/reply/post `, response)
+        .post(`${baseURL}/reply/post `, response)
         .then((res) => {
           console.log("success", res);
           this.props.fetchData();
@@ -173,22 +186,28 @@ class ProceedOrderModal extends Component {
         })
         .catch((err) => console.log("error", err));
     }
-
   };
 
-  amountGenerator=(e)=>{
-    let amount= e.target.value;
-    let remaining=this.state.remainingRequiredQuantityOriginal
-    if(isNaN(parseFloat(e.target.value))){
-      amount=0;
+  amountGenerator = (e) => {
+    let amount = e.target.value;
+    let remaining = this.state.remainingRequiredQuantityOriginal;
+    if (isNaN(parseFloat(e.target.value))) {
+      amount = 0;
     }
     // if(parseFloat(remaining)<0){
     //   remaining=0;
     // }
 
-    console.log('amountGenerator', parseFloat(remaining),amount,parseFloat(remaining)-amount )
-    this.setState({remainingRequiredQuantity: parseFloat(remaining)-amount})
-  }
+    console.log(
+      "amountGenerator",
+      parseFloat(remaining),
+      amount,
+      parseFloat(remaining) - amount
+    );
+    this.setState({
+      remainingRequiredQuantity: parseFloat(remaining) - amount,
+    });
+  };
 
   changeHandler = (event, fieldName) => {
     this.setState({ [fieldName]: event.target.value });
@@ -287,60 +306,70 @@ class ProceedOrderModal extends Component {
           <div className="container">
             <form action="/" noValidate>
               <div className="row mb-2">
-              <div className="col-lg-6 col-md-12">
-                <label htmlFor="item-quantity" className="my-donation-label mb-2">
-                  Add quantity you want to donate
-                </label>
-                <input
-                  name="item-quantity"
-                  value={this.state.donationQuantity}
-                  onChange={(event) =>{
-                    this.changeHandler(event, "donationQuantity");
-                    
-                  }}
-                  onBlur={(event)=>this.amountGenerator(event)}
-                  type="number"
-                  id="item-quantity"
-                  placeholder="Quantity"
-                  className="form-control"
-                />
-                <div
-                  style={{
-                    fontSize: "12.8px",
-                    color: "#DC3545",
-                    marginLeft: "10px",
-                  }}
-                >
-                  {this.state.donationQuantityErr}
+                <div className="col-lg-6 col-md-12">
+                  <label
+                    htmlFor="item-quantity"
+                    className="my-donation-label mb-2"
+                  >
+                    Add quantity you want to donate
+                  </label>
+                  <input
+                    name="item-quantity"
+                    value={this.state.donationQuantity}
+                    onChange={(event) => {
+                      this.changeHandler(event, "donationQuantity");
+                    }}
+                    onBlur={(event) => this.amountGenerator(event)}
+                    type="number"
+                    id="item-quantity"
+                    placeholder="Quantity"
+                    className="form-control"
+                  />
+                  <div
+                    style={{
+                      fontSize: "12.8px",
+                      color: "#DC3545",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {this.state.donationQuantityErr}
+                  </div>
                 </div>
-              </div>
-              <div className="col-lg-6 col-md-12">
-                <label htmlFor="remaining-quantity" className="my-donation-label mb-2">
-                  Remaining quantity required for the case
-                </label>
-                <input
-                  name="remaining-quantity"
-                  value={this.state.remainingRequiredQuantity}
-                  onChange={(event) =>
-                    this.changeHandler(event, "remainingRequiredQuantity")
-                  }
-                  style={{color: this.state.remainingRequiredQuantity<0 ? 'red' : '#212529'}}
-                  type="number"
-                  id="remaining-quantity"
-                  placeholder="Remaining quantity"
-                  className="form-control"
-                  disabled={true}
-                />
-                <div
-                  style={{
-                    fontSize: "12.8px",
-                    color: "#DC3545",
-                    marginLeft: "10px",
-                  }}
-                >
-                  {this.state.remainingRequiredQuantityErr}
+                <div className="col-lg-6 col-md-12">
+                  <label
+                    htmlFor="remaining-quantity"
+                    className="my-donation-label mb-2"
+                  >
+                    Remaining quantity required for the case
+                  </label>
+                  <input
+                    name="remaining-quantity"
+                    value={this.state.remainingRequiredQuantity}
+                    onChange={(event) =>
+                      this.changeHandler(event, "remainingRequiredQuantity")
+                    }
+                    style={{
+                      color:
+                        this.state.remainingRequiredQuantity < 0
+                          ? "red"
+                          : "#212529",
+                    }}
+                    type="number"
+                    id="remaining-quantity"
+                    placeholder="Remaining quantity"
+                    className="form-control"
+                    disabled={true}
+                  />
+                  <div
+                    style={{
+                      fontSize: "12.8px",
+                      color: "#DC3545",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {this.state.remainingRequiredQuantityErr}
+                  </div>
                 </div>
-              </div>
               </div>
               <div className="form-group">
                 <label htmlFor="address" className="my-donation-label mb-2">
@@ -349,9 +378,7 @@ class ProceedOrderModal extends Component {
                 <input
                   name="address"
                   value={this.state.address}
-                  onChange={(event) =>
-                    this.changeHandler(event, "address")
-                  }
+                  onChange={(event) => this.changeHandler(event, "address")}
                   type="text"
                   id="address"
                   placeholder="Address here..."
@@ -414,7 +441,7 @@ class ProceedOrderModal extends Component {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={()=>this.props.onHide(false)}>Close</Button>
+          <Button onClick={() => this.props.onHide(false)}>Close</Button>
           <Button variant="success" onClick={this.ResponseFormSubmitHandler}>
             Submit
           </Button>

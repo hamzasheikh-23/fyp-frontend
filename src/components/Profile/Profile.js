@@ -12,7 +12,8 @@ import item5 from "../../images/hope.png";
 import axios from "axios";
 import data from "./temp";
 import moment from "moment";
-import {checkProperty} from '../../assets/utils';
+import { checkProperty } from "../../assets/utils";
+import { baseURL } from "../../baseURL";
 
 class Profile extends React.Component {
   componentDidMount() {
@@ -39,42 +40,48 @@ class Profile extends React.Component {
     //     isActive: item.IsActive,
     //   })),
     // });
-    this.getData()
+    this.getData();
   }
 
   getData = () => {
-    console.log('get data called');
+    console.log("get data called");
     axios
       .get(
-        `https://localhost:44357/donation/get?donorId=${localStorage.getItem(
+        `${baseURL}/donation/get?donorId=${localStorage.getItem(
           "donorID"
         )}`
       )
       .then((res) => {
         console.log(res);
         this.setState({
-          items: res.data.map((item) => ({
-            title: item.Title,
-            address: item.Address,
-            quantity: item.Quantity,
-            quantityPerUnit: item.QuantityPerUnit,
-            date: checkProperty('ExpiryDate',item) ? moment(item.ExpiryDate).format('LL hh:mm:ss'): null ,
-            weight: item.Weight,
-            description: item.Description,
-            category: item.Category,
-            donationId: item.DonationId,
-            rating: item.Rating,
-            condition: item.Condition,
-            itemImg1: item.Image1,
-            itemImg2: item.Image2,
-            itemImg3: item.Image3,
-            image1Name: item.Image1Name,
-            image2Name: item.Image2Name,
-            image3Name: item.Image3Name,
-            postedDate: checkProperty('PostedDate',item) ? moment(item.PostedDate).format('LL hh:mm:ss'): null ,
-            status: item.Status,
-            isActive: JSON.parse(item.IsActive),
-          })).filter(item=>item.status!=="Deleted"),
+          items: res.data
+            .map((item) => ({
+              title: item.Title,
+              address: item.Address,
+              quantity: item.Quantity,
+              quantityPerUnit: item.QuantityPerUnit,
+              date: checkProperty("ExpiryDate", item)
+                ? moment(item.ExpiryDate).format("LL hh:mm:ss")
+                : null,
+              weight: item.Weight,
+              description: item.Description,
+              category: item.Category,
+              donationId: item.DonationId,
+              rating: item.Rating,
+              condition: item.Condition,
+              itemImg1: item.Image1,
+              itemImg2: item.Image2,
+              itemImg3: item.Image3,
+              image1Name: item.Image1Name,
+              image2Name: item.Image2Name,
+              image3Name: item.Image3Name,
+              postedDate: checkProperty("PostedDate", item)
+                ? moment(item.PostedDate).format("LL hh:mm:ss")
+                : null,
+              status: item.Status,
+              isActive: JSON.parse(item.IsActive),
+            }))
+            .filter((item) => item.status !== "Deleted"),
         });
       })
       .catch((err) => console.log(err));

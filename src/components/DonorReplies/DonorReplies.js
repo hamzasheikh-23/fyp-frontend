@@ -10,15 +10,16 @@ import axios from "axios";
 import RequestCard from "./RequestCard";
 import { filter } from "lodash";
 import moment from "moment";
+import { baseURL } from "../../baseURL";
 
 class DonorReplies extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       siderDrawerOpen: false,
       selectedCase: "",
       caseTitleList: [],
-      replies:[],
+      replies: [],
       // addModalShow: false,
     };
   }
@@ -26,18 +27,19 @@ class DonorReplies extends React.Component {
     //get requests
     axios
       .get(
-        `https://localhost:44357/reply/get?ngoId=${localStorage.getItem('ngoID')}&status=Pending`
+        `${baseURL}/reply/get?ngoId=${localStorage.getItem(
+          "ngoID"
+        )}&status=Pending`
       )
       .then((res) => {
         // console.log('res', res)
-        if(!res.data.noData){
+        if (!res.data.noData) {
           this.setState({
-            replies: res.data.reply
+            replies: res.data.reply,
           });
-        }
-        else{
+        } else {
           this.setState({
-            replies: []
+            replies: [],
           });
         }
 
@@ -47,9 +49,13 @@ class DonorReplies extends React.Component {
 
     //get cases
     axios
-      .get(`https://localhost:44357/case/get?ngoId=${localStorage.getItem('ngoID')}&status=approved&isActive=true `)
+      .get(
+        `${baseURL}/case/get?ngoId=${localStorage.getItem(
+          "ngoID"
+        )}&status=approved&isActive=true `
+      )
       .then((list) => {
-        console.log('list', list)
+        console.log("list", list);
         this.setState({
           caseTitleList: list.data.cases.map((item) => ({
             id: item.CaseId,
@@ -58,32 +64,30 @@ class DonorReplies extends React.Component {
         });
       })
       .catch((error) => console.log(error));
-
   }
 
-  componentDidUpdate(prevProps, prevState){
-if(prevState.selectedCase !== this.state.selectedCase){
-  this.filteredContent(this.state.selectedCase);
-}
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.selectedCase !== this.state.selectedCase) {
+      this.filteredContent(this.state.selectedCase);
+    }
   }
 
-
-
-  
   filteredContent = (selectedCase) => {
-
     axios
-    .get(`https://localhost:44357/reply/get?ngoId=${localStorage.getItem('ngoID')}${selectedCase ? `&caseId=${selectedCase}`:''}&status=Pending `)
+      .get(
+        `${baseURL}/reply/get?ngoId=${localStorage.getItem(
+          "ngoID"
+        )}${selectedCase ? `&caseId=${selectedCase}` : ""}&status=Pending `
+      )
       .then((res) => {
-         // console.log('res', res)
-         if(!res.data.noData){
+        // console.log('res', res)
+        if (!res.data.noData) {
           this.setState({
-            replies: res.data.reply
+            replies: res.data.reply,
           });
-        }
-        else{
+        } else {
           this.setState({
-            replies: []
+            replies: [],
           });
         }
       })
@@ -98,7 +102,7 @@ if(prevState.selectedCase !== this.state.selectedCase){
   backdropClickHandler = () => {
     this.setState({ siderDrawerOpen: false });
   };
- 
+
   render() {
     console.log("donor reply", this.state);
     let backdrop;
@@ -119,9 +123,7 @@ if(prevState.selectedCase !== this.state.selectedCase){
                 <a
                   style={{
                     backgroundColor:
-                      this.state.selectedCase === ""
-                        ? "#579df8"
-                        : "#4a89dc",
+                      this.state.selectedCase === "" ? "#579df8" : "#4a89dc",
                   }}
                   onClick={() => {
                     this.setState({ selectedCase: "" });
@@ -343,13 +345,12 @@ if(prevState.selectedCase !== this.state.selectedCase){
             {this.state.replies.map((reply) => {
               return (
                 <RequestCard
-                    {...reply}
+                  {...reply}
                   fetchData={this.filteredContent}
                   history={this.props.history}
                 />
               );
             })}
-
           </div>
         </div>
         <Footer />

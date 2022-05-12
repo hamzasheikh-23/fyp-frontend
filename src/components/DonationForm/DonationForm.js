@@ -16,6 +16,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { faExpeditedssl } from "@fortawesome/free-brands-svg-icons";
+import { baseURL } from "../../baseURL";
 
 const initialDonationState = {
   rating: 0,
@@ -75,7 +76,7 @@ class DonationForm extends Component {
     // this.setState({ categoriesArr: temp });
 
     axios
-      .get("https://localhost:44357/donation/category/get")
+      .get(`${baseURL}/donation/category/get`)
       .then((res) => {
         const isEdit = this.props.history.location.state?.data ? true : false;
         if (isEdit) {
@@ -147,14 +148,19 @@ class DonationForm extends Component {
         // console.log(res)
         this.setState({
           category: isEdit
-            ? res.data.find(
-                (item) =>{
-                  console.log('find', item.DonationCategory, this.props.history.location.state?.data?.category, item.DonationCategory ===
-                  this.props.history.location.state?.data?.category)
-                  return (item.DonationCategory ===
-                  this.props.history.location.state?.data?.category)
-                }
-              )?.CategoryId
+            ? res.data.find((item) => {
+                console.log(
+                  "find",
+                  item.DonationCategory,
+                  this.props.history.location.state?.data?.category,
+                  item.DonationCategory ===
+                    this.props.history.location.state?.data?.category
+                );
+                return (
+                  item.DonationCategory ===
+                  this.props.history.location.state?.data?.category
+                );
+              })?.CategoryId
             : res.data.length > 0
             ? res.data[0].CategoryId
             : 0,
@@ -440,7 +446,7 @@ class DonationForm extends Component {
       if (isEdit) {
         axios
           .put(
-            `https://localhost:44357/donation/edit/${this.state.donationId} `,
+            `${baseURL}/donation/edit/${this.state.donationId} `,
             DonationData
           )
           .then((res) => {
@@ -460,7 +466,10 @@ class DonationForm extends Component {
           });
       } else {
         axios
-          .post(`https://localhost:44357/donation/post`, DonationData)
+          .post(
+            `${baseURL}/donation/post`,
+            DonationData
+          )
           .then((res) => {
             this.props.history.push("/profile");
           })

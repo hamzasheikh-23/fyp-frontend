@@ -19,6 +19,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./ManageDonations.css";
 import PreviousCard from "./PreviousCard";
 import { checkProperty } from "../../assets/utils";
+import { baseURL } from "../../baseURL";
 
 class ManageDonations extends Component {
   componentDidMount() {
@@ -26,40 +27,49 @@ class ManageDonations extends Component {
     // console.log('manage donation', this.props.history)
   }
 
-  getData=()=>{
+  getData = () => {
     axios
-    .get(`https://localhost:44357/case/get?ngoId=${localStorage.getItem("ngoID")}`)
-    .then((res) => {
-      if(!res.data.noData){
-        const stories = res.data.cases.map(item=>({
-          caseId: item.CaseId,
-            ngoID: item.NGOId,
-            caseTitle: item.CaseTitle,
-            quantity: item.Quantity,
-            unit: item.Unit,
-            description: item.Description,
-            imageBase64: item.ImageBase64,
-            imageName: item.ImageName ? require(`../../serverImages/cases/${item.ImageName}`) : "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=",
-            category : item.CategoryId,
-            categoryName: item.Category,
-            status: item.Status,
-            isActive: JSON.parse(item.IsActive),
-            postedDate: checkProperty('PostedDate',item) ? moment(item.PostedDate).format('LL hh:mm:ss')  : "",
-        })).filter(item=>{
-          // console.log('filter',item.status!=="Deleted", item.status)
-          return item.status!=="Deleted"
-        });
-  
-        console.log('manage donations', stories)
-  
-        this.setState({ arrayforcards: [...stories] });
-      }else{
-        this.setState({ arrayforcards: [] });
-      }
-     
-    })
-    .catch((err) => console.log("Requested Items", err));
-  }
+      .get(
+        `${baseURL}/case/get?ngoId=${localStorage.getItem(
+          "ngoID"
+        )}`
+      )
+      .then((res) => {
+        if (!res.data.noData) {
+          const stories = res.data.cases
+            .map((item) => ({
+              caseId: item.CaseId,
+              ngoID: item.NGOId,
+              caseTitle: item.CaseTitle,
+              quantity: item.Quantity,
+              unit: item.Unit,
+              description: item.Description,
+              imageBase64: item.ImageBase64,
+              imageName: item.ImageName
+                ? require(`../../serverImages/cases/${item.ImageName}`)
+                : "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc=",
+              category: item.CategoryId,
+              categoryName: item.Category,
+              status: item.Status,
+              isActive: JSON.parse(item.IsActive),
+              postedDate: checkProperty("PostedDate", item)
+                ? moment(item.PostedDate).format("LL hh:mm:ss")
+                : "",
+            }))
+            .filter((item) => {
+              // console.log('filter',item.status!=="Deleted", item.status)
+              return item.status !== "Deleted";
+            });
+
+          console.log("manage donations", stories);
+
+          this.setState({ arrayforcards: [...stories] });
+        } else {
+          this.setState({ arrayforcards: [] });
+        }
+      })
+      .catch((err) => console.log("Requested Items", err));
+  };
 
   constructor() {
     super();
@@ -165,23 +175,23 @@ class ManageDonations extends Component {
           <div className="container">
             <hr></hr>
             <h1 className="blue-heading success-main-heading">
-            Manage Donations
+              Manage Donations
             </h1>
             <br></br>
             <ul className="u-list">
               <div className="divforbuttons">
-                <Link to="/askdonation" >
+                <Link to="/askdonation">
                   <Button variant="outline-info" className="buttonlist">
                     <li>Ask for a new Donation</li>
                   </Button>
                 </Link>
 
-                <Link to="/donor-replies" >
+                <Link to="/donor-replies">
                   <Button variant="outline-info" className="buttonlist">
                     <li>View replies from Donors</li>
                   </Button>
                 </Link>
-                <Link to="/donor-donations" >
+                <Link to="/donor-donations">
                   <Button variant="outline-info" className="buttonlist">
                     <li>View Donor Donations</li>
                   </Button>
@@ -192,7 +202,11 @@ class ManageDonations extends Component {
 
               <div className="cards-container-ngo">
                 {this.state.arrayforcards.map((data) => (
-                  <PreviousCard {...data} getData={this.getData} history={this.props.history} />
+                  <PreviousCard
+                    {...data}
+                    getData={this.getData}
+                    history={this.props.history}
+                  />
                 ))}
               </div>
             </ul>

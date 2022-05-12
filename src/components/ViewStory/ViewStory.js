@@ -1,18 +1,20 @@
-import React from 'react';
-import Footer from '../Footer/Footer';
-import Toolbar from '../Toolbar/Toolbar';
+import React from "react";
+import Footer from "../Footer/Footer";
+import Toolbar from "../Toolbar/Toolbar";
 import SideDrawer from "../SideDrawer/SideDrawer";
 import BackDrop from "../BackDrop/BackDrop";
-import axios from 'axios';
+import axios from "axios";
 // import './NGORequests.css';
 // import ProceedOrderModal from '../Modal/ProceedOrderModal';
-import RequestCard from './RequestCard';
+import RequestCard from "./RequestCard";
+import { baseURL } from "../../baseURL";
 
 class ViewStory extends React.Component {
-    componentDidMount(){
-        console.log('worked')
-        axios.get('https://localhost:44357/story/get')
-        .then(res=>{
+  componentDidMount() {
+    console.log("worked");
+    axios
+      .get(`${baseURL}/story/get`)
+      .then((res) => {
         //     axios.get('/api/getUsers/ngo')
         //     .then(list=>{
         //         // console.log('ngo list',list.data.users)
@@ -20,102 +22,126 @@ class ViewStory extends React.Component {
         //         // console.log(this.state)
         // })
         //     .catch(error=>console.log(error));
-     
-            this.setState({stories: res.data.map(arr => {
-                return {
-                    name:arr.NGOId,
-                    title:arr.StoryTitle,
-                    description:arr.Description,
-                    image: "https://images.unsplash.com/photo-1615789591457-74a63395c990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmVhdXRpZnVsJTIwY2F0fGVufDB8fDB8fA%3D%3D&w=1000&q=80",
-                    date: arr.PostedDate
-                }
-            })})
-            console.log('stories', res)
-            // console.log('stories resconse',this.state)
-    })
-        .catch(err=>console.log(err));
-        this.filteredContent()
-    }
-    state = {
-        siderDrawerOpen: false,
-        donor: true,
-        stories:[],
-        ngoList:[],
-        selectedNgo: '',
-        // addModalShow: false,
-    };
 
-    filteredContent=()=>{
-        if(this.state.selectedNgo!==''){
-            axios.get(`/api/getStoriesOfNgo/${this.state.selectedNgo}`)
-            .then(res=>{
-                // console.log(res.data)
-                const newList= res.data.filter(item=>item.status==='Approved')
-                this.setState({stories:[...newList]})
-            })
-            .catch(err=>console.log(err))
-        }else{
-            axios.get('/api/getApprovedStories')
-            .then(res=>this.setState({stories:[...res.data]}))
-            .catch(err=>console.log(err))
-        }
-    }
-
-    drawerToggleHandler = () => {
-        this.setState(prevState => {
-            return { siderDrawerOpen: !prevState.siderDrawerOpen };
+        this.setState({
+          stories: res.data.map((arr) => {
+            return {
+              name: arr.NGOId,
+              title: arr.StoryTitle,
+              description: arr.Description,
+              image:
+                "https://images.unsplash.com/photo-1615789591457-74a63395c990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmVhdXRpZnVsJTIwY2F0fGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+              date: arr.PostedDate,
+            };
+          }),
         });
-    };
+        console.log("stories", res);
+        // console.log('stories resconse',this.state)
+      })
+      .catch((err) => console.log(err));
+    this.filteredContent();
+  }
+  state = {
+    siderDrawerOpen: false,
+    donor: true,
+    stories: [],
+    ngoList: [],
+    selectedNgo: "",
+    // addModalShow: false,
+  };
 
-    backdropClickHandler = () => {
-        this.setState({ siderDrawerOpen: false });
-    };
-  
-    render() {
-        let backdrop;
-        if (this.state.siderDrawerOpen) {
-            backdrop = <BackDrop click={this.backdropClickHandler} />;
-        }
-        // let addModalClose=()=> this.setState({addModalShow:false});
-        return (
-            <div>
-                <Toolbar drawerClickHandler={this.drawerToggleHandler} about={true} />
-                <SideDrawer about={true} show={this.state.siderDrawerOpen} />
-                {backdrop}
-                <div className="ngo-main-div">
-                    <div className="filter-area">
-                        <h2 className="filter-heading">Filter Stories:</h2>
-                        <ul className="filter-options">
-                            {/* <li><a href="/">All</a></li>
+  filteredContent = () => {
+    if (this.state.selectedNgo !== "") {
+      axios
+        .get(`/api/getStoriesOfNgo/${this.state.selectedNgo}`)
+        .then((res) => {
+          // console.log(res.data)
+          const newList = res.data.filter((item) => item.status === "Approved");
+          this.setState({ stories: [...newList] });
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axios
+        .get("/api/getApprovedStories")
+        .then((res) => this.setState({ stories: [...res.data] }))
+        .catch((err) => console.log(err));
+    }
+  };
+
+  drawerToggleHandler = () => {
+    this.setState((prevState) => {
+      return { siderDrawerOpen: !prevState.siderDrawerOpen };
+    });
+  };
+
+  backdropClickHandler = () => {
+    this.setState({ siderDrawerOpen: false });
+  };
+
+  render() {
+    let backdrop;
+    if (this.state.siderDrawerOpen) {
+      backdrop = <BackDrop click={this.backdropClickHandler} />;
+    }
+    // let addModalClose=()=> this.setState({addModalShow:false});
+    return (
+      <div>
+        <Toolbar drawerClickHandler={this.drawerToggleHandler} about={true} />
+        <SideDrawer about={true} show={this.state.siderDrawerOpen} />
+        {backdrop}
+        <div className="ngo-main-div">
+          <div className="filter-area">
+            <h2 className="filter-heading">Filter Stories:</h2>
+            <ul className="filter-options">
+              {/* <li><a href="/">All</a></li>
                             <li><a href="/">Human Rights Organization </a></li>
                             <li><a href="/">Helping Hands</a></li>
                             <li><a href="/">Justice For You</a></li>
                             <li><a href="/">Little Care</a></li>
                             <li><a href="/">Speak For Change</a></li>
                             <li><a href="/">We Work Together</a></li> */}
-                            <li><a
-                            style={{backgroundColor: this.state.selectedNgo===''?'#579df8':'#4a89dc'}}
-                            onClick={()=>{this.setState({selectedNgo:''},()=>this.filteredContent())}}>All</a></li>
-                            {this.state.ngoList.map((ngo)=>{
-                                return(
-                 
-                                    <li><a
-                                    style={{backgroundColor: this.state.selectedNgo===ngo.id?'#579df8':'#4a89dc'}} onClick={()=>{
-                                        this.setState({selectedNgo: ngo.id},()=>this.filteredContent())
-                                        
-                                
-                                    }
-                                    }>{ngo.name}</a></li>
-                                );
-                            })}
-                            
-                        </ul>
-                    </div>
-                    <div class="request-area">
-                        <h3 className="request-area-heading">SUCCESS STORIES</h3>
-                        
+              <li>
+                <a
+                  style={{
+                    backgroundColor:
+                      this.state.selectedNgo === "" ? "#579df8" : "#4a89dc",
+                  }}
+                  onClick={() => {
+                    this.setState({ selectedNgo: "" }, () =>
+                      this.filteredContent()
+                    );
+                  }}
+                >
+                  All
+                </a>
+              </li>
+              {this.state.ngoList.map((ngo) => {
+                return (
+                  <li>
+                    <a
+                      style={{
+                        backgroundColor:
+                          this.state.selectedNgo === ngo.id
+                            ? "#579df8"
+                            : "#4a89dc",
+                      }}
+                      onClick={() => {
+                        this.setState({ selectedNgo: ngo.id }, () =>
+                          this.filteredContent()
+                        );
+                      }}
+                    >
+                      {ngo.name}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div class="request-area">
+            <h3 className="request-area-heading">SUCCESS STORIES</h3>
 
-                        {/* { <RequestCard org="Helping Hands" title="From Beggary To School" 
+            {/* { <RequestCard org="Helping Hands" title="From Beggary To School" 
                         image='http://localhost:8000/storage/cover_images/story1.jpg'
                         body1="A decade ago, we visited a small home in the village of Salehpat, Sindh. There, on a charpoy (woven bed), sat a shy little girl in her TCF School uniform and her feeble old grandmother. Five-year-old Madiha had just been brought into school by her Principal, Madam Saima Memon, who had seen her begging alongside her grandmother in the busy marketplace."
                         body2="Barefoot under the blazing sun, Madiha was wading through throngs of busy shoppers with a begging bowl in her hand when Ms. Saima saw her for the first time."
@@ -137,45 +163,49 @@ class ViewStory extends React.Component {
                         body8='Amjad believes that better days are ahead. “I’m very proud of my daughters. I see them working so hard every day. I know that education will change their lives in many ways,” he reaffirms.'
                         
                         /> } */}
-                        {this.state.stories.map((story)=>{
-                            // var name;
-                            // axios.get(`/api/getUserDetails/${story.ngo_id}`)
-                            // .then(res=>{
-                            //     console.log('donor data',res.data.name)
-                            //      name=res.data.name
-                            // })
-                            // .catch(err=>console.log(err))
-                            // console.log('donor data',name)
+            {this.state.stories.map((story) => {
+              // var name;
+              // axios.get(`/api/getUserDetails/${story.ngo_id}`)
+              // .then(res=>{
+              //     console.log('donor data',res.data.name)
+              //      name=res.data.name
+              // })
+              // .catch(err=>console.log(err))
+              // console.log('donor data',name)
 
-                            return(
-                                <RequestCard org={story.name} title={story.title} 
-                                image={story.image}
-                                body1={story.description}
-                                />
+              return (
+                <RequestCard
+                  org={story.name}
+                  title={story.title}
+                  image={story.image}
+                  body1={story.description}
+                />
+              );
+            })}
 
-                            );
-                        })}
+            <RequestCard
+              org={"abc organisation"}
+              title={"abc title"}
+              image={`https://images.unsplash.com/photo-1615789591457-74a63395c990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmVhdXRpZnVsJTIwY2F0fGVufDB8fDB8fA%3D%3D&w=1000&q=80`}
+              body1={`Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.`}
+            />
 
-<RequestCard org={'abc organisation'} title={'abc title'} 
-                                image={`https://images.unsplash.com/photo-1615789591457-74a63395c990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmVhdXRpZnVsJTIwY2F0fGVufDB8fDB8fA%3D%3D&w=1000&q=80`}
-                                body1={`Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.`}
-                                />
+            <RequestCard
+              org={"abc organisation"}
+              title={"abc title"}
+              image={`https://images.unsplash.com/photo-1615789591457-74a63395c990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmVhdXRpZnVsJTIwY2F0fGVufDB8fDB8fA%3D%3D&w=1000&q=80`}
+              body1={"dhfsdnjcndvnsdvnsdijceiojdoiajcoasc"}
+            />
 
-<RequestCard org={'abc organisation'} title={'abc title'} 
-                                image={`https://images.unsplash.com/photo-1615789591457-74a63395c990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmVhdXRpZnVsJTIwY2F0fGVufDB8fDB8fA%3D%3D&w=1000&q=80`}
-                                body1={'dhfsdnjcndvnsdvnsdijceiojdoiajcoasc'}
-                                />
-
-                        {/* <RequestCard org="We Work Together" category="Books" 
+            {/* <RequestCard org="We Work Together" category="Books" 
                         body=""
                         />
                         <RequestCard org="Little Care" category="Toys" /> */}
-                       
-                    </div>
-                </div>
-                <Footer/>
-            </div>
-        );
-        }
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 }
 export default ViewStory;

@@ -10,9 +10,10 @@ import axios from "axios";
 import RequestCard from "./RequestCard";
 import { filter } from "lodash";
 import moment from "moment";
+import { baseURL } from "../../baseURL";
 
 class NGORequests extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       siderDrawerOpen: false,
@@ -21,7 +22,7 @@ class NGORequests extends React.Component {
       selectedCategory: "",
       requests: [],
       ngoList: [],
-      categoryList:[]
+      categoryList: [],
       // addModalShow: false,
     };
   }
@@ -29,11 +30,11 @@ class NGORequests extends React.Component {
     //get requests
     axios
       .get(
-        `https://localhost:44357/case/get?status=approved&&isActive=true`
+        `${baseURL}/case/get?status=approved&&isActive=true`
       )
       .then((res) => {
         // console.log('res', res)
-        if(!res.data.noData){
+        if (!res.data.noData) {
           this.setState({
             requests: res.data.cases.map((item) => ({
               caseId: item.CaseId,
@@ -47,10 +48,9 @@ class NGORequests extends React.Component {
               imageName: item.ImageName,
             })),
           });
-        }else{
-          this.setState({requests:[]})
+        } else {
+          this.setState({ requests: [] });
         }
-        
 
         // console.log(this.state)
       })
@@ -58,7 +58,7 @@ class NGORequests extends React.Component {
 
     //get ngos
     axios
-      .get(`https://localhost:44357/user/get/usertype/3 `)
+      .get(`${baseURL}/user/get/usertype/3 `)
       .then((list) => {
         console.log("ngo list", list);
         this.setState({
@@ -70,32 +70,37 @@ class NGORequests extends React.Component {
       })
       .catch((error) => console.log(error));
 
-      //get categories
+    //get categories
     axios
-    .get(`https://localhost:44357/donation/category/get`)
-    .then((list) => {
-      this.setState({
-        categoryList: [...list.data]
-      });
-    })
-    .catch((error) => console.log(error));
+      .get(`${baseURL}/donation/category/get`)
+      .then((list) => {
+        this.setState({
+          categoryList: [...list.data],
+        });
+      })
+      .catch((error) => console.log(error));
   }
 
-  componentDidUpdate(prevProps, prevState){
-if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selectedNgo !== this.state.selectedNgo){
-  this.filteredContent(this.state.selectedCategory, this.state.selectedNgo);
-}
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.selectedCategory !== this.state.selectedCategory ||
+      prevState.selectedNgo !== this.state.selectedNgo
+    ) {
+      this.filteredContent(this.state.selectedCategory, this.state.selectedNgo);
+    }
   }
 
-
-
-  
   filteredContent = (selectedCategory, selectedNgo) => {
-
     axios
-      .get(`https://localhost:44357/case/get?${selectedNgo ? `ngoId=${selectedNgo}`:''}&&status=approved&&isActive=true${selectedCategory? `&&category=${selectedCategory}`: ''}`)
+      .get(
+        `${baseURL}/case/get?${
+          selectedNgo ? `ngoId=${selectedNgo}` : ""
+        }&&status=approved&&isActive=true${
+          selectedCategory ? `&&category=${selectedCategory}` : ""
+        }`
+      )
       .then((res) => {
-        if(!res.data.noData){
+        if (!res.data.noData) {
           this.setState({
             requests: res.data.cases.map((item) => ({
               caseId: item.CaseId,
@@ -109,8 +114,8 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
               imageName: item.ImageName,
             })),
           });
-        }else{
-          this.setState({requests:[]})
+        } else {
+          this.setState({ requests: [] });
         }
       })
       .catch((err) => console.log(err));
@@ -124,7 +129,7 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
   backdropClickHandler = () => {
     this.setState({ siderDrawerOpen: false });
   };
- 
+
   render() {
     console.log("ngo requests", this.state);
     let backdrop;
@@ -165,7 +170,7 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                             : "#4a89dc",
                       }}
                       onClick={() => {
-                        console.log('onClick', ngo.id)
+                        console.log("onClick", ngo.id);
                         this.setState({ selectedNgo: ngo.id });
                       }}
                     >
@@ -233,11 +238,6 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
                 );
               })} 
               </ul>*/}
-
-
-
-             
-            
           </div>
           <div class="request-area">
             <h3 className="request-area-heading">NGO'S REQUESTS</h3>
@@ -245,9 +245,9 @@ if(prevState.selectedCategory !== this.state.selectedCategory || prevState.selec
               return (
                 <RequestCard
                   image={
-                    request.imageName ? 
-                    require(`../../serverImages/cases/${request.imageName}`) :
-                    "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
+                    request.imageName
+                      ? require(`../../serverImages/cases/${request.imageName}`)
+                      : "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
                   }
                   title={request.caseTitle}
                   reqId={request.caseId}

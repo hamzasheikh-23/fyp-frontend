@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getCurrentDate } from "../../utils";
 import { toast } from "react-toastify";
+import { baseURL } from "../../baseURL";
 
 
 // import { FormInput } from "shards-react";
@@ -49,79 +50,77 @@ class AskDonationForm extends Component {
 
   componentDidMount() {
     axios
-      .get("https://localhost:44357/donation/category/get")
+      .get(`${baseURL}/donation/category/get`)
       .then((res) => {
         axios
-        .get("https://localhost:44357/unit/get")
-        .then((resUnit) => {
-        const isEdit = this.props.history?.location?.state?.data ? true : false;
-        
-        if (isEdit) {
-          const {
-            caseId,
-            ngoID,
-            caseTitle,
-            quantity,
-            unit,
-            postedDate,
-            description,
-            imageBase64,
-            imageName,
-            categoryName,
-            status,
-            isActive,
-          } = this.props.history.location.state.data;
-          this.setState(
-            {
-              donationTitle: caseTitle,
-              donationTitleError: "",
-              caseId: caseId,
-              donationDescription: description,
-              donationDescriptionError: "",
-              donationCategoryError: "",
-              donationImageError: "",
-              unit: unit,
-              itemQuantity: quantity,
-              base64Images: [
-                imageName && {
-                    name: imageName,
-                    base64: imageBase64,
-                    edit: true,
-                  },
-              ].filter((item) => item),
-            },
-            () => console.log("check state", this.state)
-          );
-        }
-        // console.log(res);
-        this.setState({
-          categoryType: isEdit
-            ? this.props.history?.location?.state?.data?.categoryName
-            : res.data.length > 0
-            ? res.data[0].DonationCategory
-            : "",
-          categoriesArr: res.data.map((item) => ({
-              id: item.CategoryId,
-              name: item.DonationCategory,
-            })),
-          unit: isEdit
-          ? this.props.history?.location?.state?.data?.unit
-          : resUnit.data.length > 0
-          ? resUnit.data[0].Unit
-          : "",
-          unitsArr: resUnit.data.map((item) => ({
-              id: item.UnitId,
-              name: item.Unit,
-            })),
-        });
-        })
-        .catch((err) => console.log("error in getting units api", err));
+          .get(`${baseURL}/unit/get`)
+          .then((resUnit) => {
+            const isEdit = this.props.history?.location?.state?.data
+              ? true
+              : false;
+
+            if (isEdit) {
+              const {
+                caseId,
+                ngoID,
+                caseTitle,
+                quantity,
+                unit,
+                postedDate,
+                description,
+                imageBase64,
+                imageName,
+                categoryName,
+                status,
+                isActive,
+              } = this.props.history.location.state.data;
+              this.setState(
+                {
+                  donationTitle: caseTitle,
+                  donationTitleError: "",
+                  caseId: caseId,
+                  donationDescription: description,
+                  donationDescriptionError: "",
+                  donationCategoryError: "",
+                  donationImageError: "",
+                  unit: unit,
+                  itemQuantity: quantity,
+                  base64Images: [
+                    imageName && {
+                      name: imageName,
+                      base64: imageBase64,
+                      edit: true,
+                    },
+                  ].filter((item) => item),
+                },
+                () => console.log("check state", this.state)
+              );
+            }
+            // console.log(res);
+            this.setState({
+              categoryType: isEdit
+                ? this.props.history?.location?.state?.data?.categoryName
+                : res.data.length > 0
+                ? res.data[0].DonationCategory
+                : "",
+              categoriesArr: res.data.map((item) => ({
+                id: item.CategoryId,
+                name: item.DonationCategory,
+              })),
+              unit: isEdit
+                ? this.props.history?.location?.state?.data?.unit
+                : resUnit.data.length > 0
+                ? resUnit.data[0].Unit
+                : "",
+              unitsArr: resUnit.data.map((item) => ({
+                id: item.UnitId,
+                name: item.Unit,
+              })),
+            });
+          })
+          .catch((err) => console.log("error in getting units api", err));
       })
       .catch((err) => console.log("error in getting categories api", err));
-
-
-      
-
   }
 
   state = {
@@ -236,14 +235,14 @@ class AskDonationForm extends Component {
         Description: this.state.donationDescription,
         // ImageBase64,
         ImageBase64:
-        this.state.base64Images[0] === undefined
-          ? null
-          : !isEdit
-          ? this.state.base64Images[0].base64
-          : this.state.base64Images[0].base64 ===
-            this.props.history.location.state?.data?.itemImg1
-          ? null
-          : this.state.base64Images[0].base64,
+          this.state.base64Images[0] === undefined
+            ? null
+            : !isEdit
+            ? this.state.base64Images[0].base64
+            : this.state.base64Images[0].base64 ===
+              this.props.history.location.state?.data?.itemImg1
+            ? null
+            : this.state.base64Images[0].base64,
         // ImageName,
         ImageName:
           this.state.base64Images[0] === undefined
@@ -268,14 +267,14 @@ class AskDonationForm extends Component {
       // axios({
       //   method: "post",
       //   data: data,
-      //   url: "https://localhost:44357/case/post ",
+      //   url: "https://charitableapis.azurewebsites.net/case/post ",
       //   // headers: { "Content-Type": "multipart/form-data" }, //to submit documents
       // });
 
       if (isEdit) {
         axios
           .put(
-            `https://localhost:44357/case/edit/${this.state.caseId} `,
+            `${baseURL}/case/edit/${this.state.caseId} `,
             askDonationData
           )
           .then((res) => {
@@ -295,12 +294,15 @@ class AskDonationForm extends Component {
           });
       } else {
         axios
-        .post("https://localhost:44357/case/post ", askDonationData)
-        .then((res) => {
-          console.log(res.data);
-          this.setState(initialDonationFormState);
-          this.props.history.push("/manage-donations");
-        })
+          .post(
+            `${baseURL}/case/post`,
+            askDonationData
+          )
+          .then((res) => {
+            console.log(res.data);
+            this.setState(initialDonationFormState);
+            this.props.history.push("/manage-donations");
+          })
           .catch((err) => {
             console.log("Post Error", err);
             toast.error(`Some error Occured: ${err}`, {
@@ -314,8 +316,6 @@ class AskDonationForm extends Component {
             });
           });
       }
-
-     
     }
   };
 

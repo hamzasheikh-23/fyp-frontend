@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { toast } from 'react-toastify'
 import "./LoginForm.css";
 import FaceImage from "../../images/peo.png";
 import { FaUserTie } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 //import jwt_decode from 'jwt-decode';
 import axios from "axios";
+import { baseURL } from "../../baseURL";
 
 const LoginInitialState = {
   loginUserName: "",
@@ -24,6 +26,7 @@ class LoginForm extends Component {
     this.setState({ [fieldName]: event.target.value });
   };
   loginFormValidate = () => {
+    this.setState({loginErr: false})
     let loginUserNameError = "";
     let loginPasswordError = "";
     // const validName = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
@@ -76,12 +79,18 @@ class LoginForm extends Component {
         password: this.state.loginPassword,
       };
       axios
-        .post("https://charitableapis.azurewebsites.net/user/login", loginData)
+        .post(`${baseURL}/user/login`, loginData)
         .then((res) => {
           console.log("response", res, this.props.history, this.props);
-          // console.log(res);
+          console.log('login',res);
           if (res.data.code !== "0") {
             localStorage.clear();
+            if(!res.data.isActive){
+              toast.error("Your Account is not activated! Please wait for admin's approval",{
+                position: "top-center",
+              })
+              return;
+            }
             localStorage.setItem("isAuthenticated", true);
             localStorage.setItem("userID", res.data.userID);
             localStorage.setItem("userTypeId", res.data.userTypeId);

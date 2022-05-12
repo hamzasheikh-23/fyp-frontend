@@ -3,6 +3,7 @@ import DetailModal from "./DetailModal";
 import { Badge } from "react-bootstrap";
 import axios from "axios";
 import { FaTrash, FaPen } from "react-icons/fa";
+import { baseURL } from "../../baseURL";
 
 class PreviousCard extends React.Component {
   state = {
@@ -10,7 +11,9 @@ class PreviousCard extends React.Component {
   };
   deleteItem = () => {
     axios
-      .put(`https://localhost:44357/case/delete/${this.props.caseId}`)
+      .put(
+        `${baseURL}/case/delete/${this.props.caseId}`
+      )
       .then((res) => {
         if (res.data.isSuccess) {
           this.props.getData();
@@ -25,7 +28,7 @@ class PreviousCard extends React.Component {
       caseTitle,
       quantity,
       unit,
-      category ,
+      category,
       categoryName,
       postedDate,
       description,
@@ -39,7 +42,7 @@ class PreviousCard extends React.Component {
       state: {
         data: {
           caseId,
-          category ,
+          category,
           categoryName,
           ngoID,
           caseTitle,
@@ -52,7 +55,7 @@ class PreviousCard extends React.Component {
           status,
           isActive,
         },
-        isEdit: true
+        isEdit: true,
       },
     });
   };
@@ -87,11 +90,7 @@ class PreviousCard extends React.Component {
             />
           )} */}
 
-            <img
-              src={this.props.imageName}
-              alt=".."
-              className="card-image"
-            />
+          <img src={this.props.imageName} alt=".." className="card-image" />
 
           <div
             style={{ display: "flex", flexDirection: "column" }}

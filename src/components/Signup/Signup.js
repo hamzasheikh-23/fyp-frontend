@@ -20,6 +20,7 @@ import {
   FaCertificate,
   AiOutlineUser,
 } from "react-icons/fa";
+import { baseURL } from "../../baseURL";
 
 class Signup extends Component {
   constructor() {
@@ -49,7 +50,7 @@ class Signup extends Component {
             color: "#DC3545",
             marginLeft: "20px",
             marginTop: "5px",
-            lineHeight: '13px',
+            lineHeight: "13px",
           }}
         >
           {meta.error}
@@ -96,7 +97,7 @@ class Signup extends Component {
           </i>
         ) : null}
 
-{formProps.input.name === "name" ? (
+        {formProps.input.name === "name" ? (
           <i>
             <FaUserTie />
           </i>
@@ -151,7 +152,6 @@ class Signup extends Component {
     const className = `form-group ${
       formProps.meta.error && formProps.meta.touched ? "error" : ""
     } `;
-   
 
     return (
       <div className={className}>
@@ -223,20 +223,19 @@ class Signup extends Component {
     } = formValues;
 
     if (this.props.type === "ngo") {
-    const [first,...last] = name.split(' ');
-    signupData = {
-        FirstName: first, 
-        LastName: last.join(' '),
+      const [first, ...last] = name.split(" ");
+      signupData = {
+        FirstName: first,
+        LastName: last.join(" "),
         Username: username,
         Email: email,
         Password: password,
         Contact: phoneNumber,
         UserTypeId: 3,
         Address: address,
-
       };
-
-    } else { //donor
+    } else {
+      //donor
       signupData = {
         FirstName: fname,
         LastName: lname,
@@ -258,14 +257,17 @@ class Signup extends Component {
       bg: "primary",
     });
     axios
-      .post("https://localhost:44357/user/register", signupData)
+      .post(
+        `${baseURL}/user/register`,
+        signupData
+      )
       .then((res) => {
-        if(res.data.isSuccess){
+        if (res.data.isSuccess) {
           dispatch(reset("signupForm"));
           //this.setState({alertMsg:true, msg:'Form submitted successfully', bg:'success'});
           this.props.history.push("/");
-         // console.log("response: ", res);
-        }else{
+          // console.log("response: ", res);
+        } else {
           this.setState({
             alertMsg: true,
             msg: res.data.errMessage,
@@ -393,35 +395,36 @@ class Signup extends Component {
             onSubmit={this.props.handleSubmit(this.onSubmit)}
             noValidate
           >
-              {this.props.type === "donor" ?
-            <div className="row">
-              <div className="col-lg-6">
-                <Field
-                  type="text"
-                  name="fname"
-                  id="fname"
-                  component={this.renderInput}
-                  placeholder="First Name"
-                />
+            {this.props.type === "donor" ? (
+              <div className="row">
+                <div className="col-lg-6">
+                  <Field
+                    type="text"
+                    name="fname"
+                    id="fname"
+                    component={this.renderInput}
+                    placeholder="First Name"
+                  />
+                </div>
+                <div className="col-lg-6">
+                  <Field
+                    type="text"
+                    name="lname"
+                    id="lname"
+                    component={this.renderInput}
+                    placeholder="Last Name"
+                  />
+                </div>
               </div>
-              <div className="col-lg-6">
-                <Field
-                  type="text"
-                  name="lname"
-                  id="lname"
-                  component={this.renderInput}
-                  placeholder="Last Name"
-                />
-              </div>
-            </div> : 
-            <Field
-            name="name"
-            component={this.renderInput}
-            type="text"
-            id="name"
-            placeholder={"Organization Name"}
-          />
-  }
+            ) : (
+              <Field
+                name="name"
+                component={this.renderInput}
+                type="text"
+                id="name"
+                placeholder={"Organization Name"}
+              />
+            )}
             <Field
               name="username"
               component={this.renderInput}
@@ -526,8 +529,7 @@ const Signupvalidate = (formValues) => {
   const onlyAlphabets = /^[a-zA-Z]*$/;
   const onlyAlphanumeric = /^[a-zA-Z0-9]*$/;
 
-
-  const validUsername=/^[a-zA-Z][a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/;
+  const validUsername = /^[a-zA-Z][a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/;
 
   // const validUsername = /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
   // const validPhoneNum = /^\(?\d{4}\)?[-.]?\d{3}[-.]?\d{4}$/;
@@ -545,15 +547,14 @@ const Signupvalidate = (formValues) => {
 
   if (!formValues.password) {
     errors.password = "you must enter password";
-  }
-  else if (
-   formValues.password.length < 5 ||
-   formValues.password.length > 20
- ) {
-   errors.password = "Password must be between 5 to 20";
- }
-  else if(!onlyAlphanumeric.test(formValues.password)){
-    errors.password='Only alphanumeric characters, No special characters and spaces allowed'
+  } else if (
+    formValues.password.length < 5 ||
+    formValues.password.length > 20
+  ) {
+    errors.password = "Password must be between 5 to 20";
+  } else if (!onlyAlphanumeric.test(formValues.password)) {
+    errors.password =
+      "Only alphanumeric characters, No special characters and spaces allowed";
   }
 
   if (!formValues.password_confirmation) {
@@ -564,53 +565,51 @@ const Signupvalidate = (formValues) => {
 
   if (!formValues.fname) {
     errors.fname = "you must enter first name";
-  } 
-  else if (formValues.fname.length<3 || formValues.fname.length>25) {
+  } else if (formValues.fname.length < 3 || formValues.fname.length > 25) {
     errors.fname = "name must be characters between 3 to 25";
-  }
-  else if (!onlyAlphabets.test(formValues.fname)) {
-    errors.fname = "Only alphabets, No special characters and boundary spaces allowed";
+  } else if (!onlyAlphabets.test(formValues.fname)) {
+    errors.fname =
+      "Only alphabets, No special characters and boundary spaces allowed";
   }
 
   if (!formValues.name) {
     errors.name = "you must enter organization name";
-  } 
-  else if (formValues.name.length<3 || formValues.name.length>30) {
+  } else if (formValues.name.length < 3 || formValues.name.length > 30) {
     errors.name = "name must be characters between 3 to 30";
-  }
-  else if (!validUsername.test(formValues.name)) {
-    errors.name = "First character must be an alphabet and rest alphanumeric, No special characters and boundary spaces allowed";
+  } else if (!validUsername.test(formValues.name)) {
+    errors.name =
+      "First character must be an alphabet and rest alphanumeric, No special characters and boundary spaces allowed";
   }
 
   if (!formValues.lname) {
     errors.lname = "you must enter last name";
   } else if (!onlyAlphabets.test(formValues.lname)) {
-    errors.lname = "Only alphabets, No special characters and boundary spaces allowed";
-  }
-  else if (formValues.lname.length<3 || formValues.lname.length>25) {
+    errors.lname =
+      "Only alphabets, No special characters and boundary spaces allowed";
+  } else if (formValues.lname.length < 3 || formValues.lname.length > 25) {
     errors.lname = "name must be characters between 3 to 25";
   }
 
   if (!formValues.username) {
     errors.username = "you must enter username";
-  } 
-  else if (formValues.username.length<3 || formValues.username.length>30) {
+  } else if (
+    formValues.username.length < 3 ||
+    formValues.username.length > 30
+  ) {
     errors.username = "username must be characters between 3 to 30";
-  }
-  else if (!validUsername.test(formValues.username)) {
-    errors.username = "First character must be an alphabet and rest alphanumeric, No special characters and boundary spaces allowed";
+  } else if (!validUsername.test(formValues.username)) {
+    errors.username =
+      "First character must be an alphabet and rest alphanumeric, No special characters and boundary spaces allowed";
   }
   // console.log('phone check', formValues.phoneNumber)
 
-  if (!formValues.phoneNumber ) {
+  if (!formValues.phoneNumber) {
     errors.phoneNumber = "you must enter a valid number";
   } else if (!validRegNum.test(formValues.phoneNumber)) {
     errors.phoneNumber = "invalid number";
-  }
-  else if (formValues.phoneNumber.length>11) {
+  } else if (formValues.phoneNumber.length > 11) {
     errors.phoneNumber = "phone number must be a 11-digit number";
-  }
-  else if(formValues.phoneNumber.includes('.')){
+  } else if (formValues.phoneNumber.includes(".")) {
     errors.phoneNumber = "you must enter a valid number";
   }
 

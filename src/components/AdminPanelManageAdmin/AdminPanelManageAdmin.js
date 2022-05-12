@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { userType } from "../../actions";
 import { Link } from "react-router-dom";
 import { Field, reduxForm, reset } from "redux-form";
-import Toolbar from '../Toolbar/Toolbar';
-import SideDrawer from '../SideDrawer/SideDrawer';
+import Toolbar from "../Toolbar/Toolbar";
+import SideDrawer from "../SideDrawer/SideDrawer";
 import BackDrop from "../BackDrop/BackDrop";
 import axios from "axios";
 import { Alert, Button } from "react-bootstrap";
@@ -23,6 +23,7 @@ import {
   FaCertificate,
   AiOutlineUser,
 } from "react-icons/fa";
+import { baseURL } from "../../baseURL";
 import AdminRecord from "../AdminRecord/AdminRecord";
 
 class AdminPanelManageAdmin extends Component {
@@ -246,7 +247,10 @@ class AdminPanelManageAdmin extends Component {
       bg: "primary",
     });
     axios
-      .post("https://localhost:44357/user/register", createData)
+      .post(
+        `${baseURL}/user/register`,
+        createData
+      )
       .then((res) => {
         if (res.data.isSuccess) {
           dispatch(reset("signupForm"));
@@ -255,18 +259,17 @@ class AdminPanelManageAdmin extends Component {
           //   msg: "Form submitted successfully",
           //   bg: "success",
           // });
-          this.setState({createPage: false})
+          this.setState({ createPage: false });
           //   this.props.history.push("/");
           // console.log("response: ", res);
         } else {
-          if(res.data.errMessage){
+          if (res.data.errMessage) {
             this.setState({
               alertMsg: true,
               msg: res.data.errMessage,
               bg: "danger",
             });
-
-          }else{
+          } else {
             this.setState({
               alertMsg: true,
               msg: "Form submission failed",
@@ -305,146 +308,139 @@ class AdminPanelManageAdmin extends Component {
       backdrop = <BackDrop click={this.backdropClickHandler} />;
     }
     return (
-        <>
+      <>
         <Toolbar drawerClickHandler={this.drawerToggleHandler} about={true} />
         <SideDrawer about={true} show={this.state.siderDrawerOpen} />
         {backdrop}
-      <div className="my-manage-admin-page">
-        {this.alertHandler()}
-        <div className="container">
-          <h1 className="blue-heading sigup-page-heading">Manage Admins</h1>
-          <div className="account-pic-container">
-            <div className="row">
-              <div className="col-6 main-pic-container ">
-                <button
-                  className="account-button"
-                  onClick={() => this.AccountSelectionHandler()}
-                >
-                  <div className={this.state.createPage && "pic-border"}>
-                    <div className="admin-tag">Create New Admin</div>
-                  </div>
-                </button>
-              </div>
-              <div className="col-6  main-pic-container ">
-                <button
-                  className="account-button"
-                  onClick={() => this.AccountSelectionHandler("ngo")}
-                >
-                  <div className={!this.state.createPage && "pic-border"}>
-                    <div className="admin-tag">Admin Records</div>
-                  </div>
-                </button>
-              </div>
-            </div>
-          </div>
-
-
-          <div style={{display: this.state.createPage ? "block": "none"}}>
-
-          
-
-          <div className="instructions">
-            <p>Hello! Please fill out the form below to create new admin</p>
-          </div>
-
-          <form
-            action=""
-            className="main-donor-signup-form"
-            onSubmit={this.props.handleSubmit(this.onSubmit)}
-            noValidate
-          >
+        <div className="my-manage-admin-page">
+          {this.alertHandler()}
+          <div className="container">
+            <h1 className="blue-heading sigup-page-heading">Manage Admins</h1>
+            <div className="account-pic-container">
               <div className="row">
-                <div className="col-lg-6">
-                  <Field
-                    type="text"
-                    name="fname"
-                    id="fname"
-                    component={this.renderInput}
-                    placeholder="First Name"
-                  />
+                <div className="col-6 main-pic-container ">
+                  <button
+                    className="account-button"
+                    onClick={() => this.AccountSelectionHandler()}
+                  >
+                    <div className={this.state.createPage && "pic-border"}>
+                      <div className="admin-tag">Create New Admin</div>
+                    </div>
+                  </button>
                 </div>
-                <div className="col-lg-6">
-                  <Field
-                    type="text"
-                    name="lname"
-                    id="lname"
-                    component={this.renderInput}
-                    placeholder="Last Name"
-                  />
+                <div className="col-6  main-pic-container ">
+                  <button
+                    className="account-button"
+                    onClick={() => this.AccountSelectionHandler("ngo")}
+                  >
+                    <div className={!this.state.createPage && "pic-border"}>
+                      <div className="admin-tag">Admin Records</div>
+                    </div>
+                  </button>
                 </div>
-              </div>
-            <Field
-              name="username"
-              component={this.renderInput}
-              type="text"
-              id="username"
-              placeholder={"Username"}
-            />
-            <div className="row">
-              <div className="col-lg-6">
-                <Field
-                  type="email"
-                  name="email"
-                  id="email"
-                  component={this.renderInput}
-                  placeholder="Email"
-                />
-              </div>
-              <div className="col-lg-6">
-                <Field
-                  type="number"
-                  name="phoneNumber"
-                  id="phoneNumber"
-                  // onChange={(e)=>{console.log('phone field', e.target.value)}}
-                  component={this.renderInput}
-                  placeholder="Phone Number"
-                />
               </div>
             </div>
 
-            
+            <div style={{ display: this.state.createPage ? "block" : "none" }}>
+              <div className="instructions">
+                <p>Hello! Please fill out the form below to create new admin</p>
+              </div>
 
-            <div className="row field-spacer">
-              <div className="col-lg-6">
+              <form
+                action=""
+                className="main-donor-signup-form"
+                onSubmit={this.props.handleSubmit(this.onSubmit)}
+                noValidate
+              >
+                <div className="row">
+                  <div className="col-lg-6">
+                    <Field
+                      type="text"
+                      name="fname"
+                      id="fname"
+                      component={this.renderInput}
+                      placeholder="First Name"
+                    />
+                  </div>
+                  <div className="col-lg-6">
+                    <Field
+                      type="text"
+                      name="lname"
+                      id="lname"
+                      component={this.renderInput}
+                      placeholder="Last Name"
+                    />
+                  </div>
+                </div>
                 <Field
-                  type="password"
-                  name="password"
-                  id="password"
+                  name="username"
                   component={this.renderInput}
-                  placeholder="Password"
+                  type="text"
+                  id="username"
+                  placeholder={"Username"}
                 />
-              </div>
-              <div className="col-lg-6">
-                <Field
-                  type="password"
-                  name="password_confirmation"
-                  id="password_confirmation"
-                  component={this.renderInput}
-                  placeholder="Confirm Password"
-                />
-              </div>
-            </div>
-            
-            <button
-              type="submit"
-              style={{ outline: "none" }}
-              className=" signup-btn"
-            >
-              Sign Up
-            </button>
-            {/* <p>
+                <div className="row">
+                  <div className="col-lg-6">
+                    <Field
+                      type="email"
+                      name="email"
+                      id="email"
+                      component={this.renderInput}
+                      placeholder="Email"
+                    />
+                  </div>
+                  <div className="col-lg-6">
+                    <Field
+                      type="number"
+                      name="phoneNumber"
+                      id="phoneNumber"
+                      // onChange={(e)=>{console.log('phone field', e.target.value)}}
+                      component={this.renderInput}
+                      placeholder="Phone Number"
+                    />
+                  </div>
+                </div>
+
+                <div className="row field-spacer">
+                  <div className="col-lg-6">
+                    <Field
+                      type="password"
+                      name="password"
+                      id="password"
+                      component={this.renderInput}
+                      placeholder="Password"
+                    />
+                  </div>
+                  <div className="col-lg-6">
+                    <Field
+                      type="password"
+                      name="password_confirmation"
+                      id="password_confirmation"
+                      component={this.renderInput}
+                      placeholder="Confirm Password"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  style={{ outline: "none" }}
+                  className=" signup-btn"
+                >
+                  Sign Up
+                </button>
+                {/* <p>
               <Link to="/" style={{ color: "#6c6c6c", fontSize: "15px" }}>
                 Back to Home Page
               </Link>
             </p> */}
-          </form>
+              </form>
+            </div>
           </div>
-          
+          <div style={{ display: !this.state.createPage ? "block" : "none" }}>
+            <AdminRecord />
+          </div>
         </div>
-        <div style={{display:!this.state.createPage ? "block" : "none"}}>
-              <AdminRecord/>
-          </div>
-      </div>
       </>
     );
   }

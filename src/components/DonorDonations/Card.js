@@ -10,33 +10,30 @@ class Card extends React.Component {
   state = {
     addDetailModalShow: false,
     acceptModal: false,
-    address:"",
-    addressErr:"",
-    msg:""
-
+    address: "",
+    addressErr: "",
+    msg: "",
   };
-  acceptModalClose=()=>{
-    this.setState({acceptModal: false})
-  }
+  acceptModalClose = () => {
+    this.setState({ acceptModal: false });
+  };
   changeHandler = (event, fieldName) => {
     this.setState({ [fieldName]: event.target.value });
     // console.log(event.target.value);
   };
-  validation=()=>{
+  validation = () => {
     let msgErr = "";
     let addressErr = "";
 
-    console.log('validation', this.state)
+    console.log("validation", this.state);
 
     const validText = /^[^\s]+(?: [^\s]+)*$/; //no concurrent spaces and no boundary spaces
-   
-   if (!this.state.address) {
+
+    if (!this.state.address) {
       addressErr = "required";
     } else if (!validText.test(this.state.address)) {
-      addressErr =
-        "remove extra and unnecessary spaces";
+      addressErr = "remove extra and unnecessary spaces";
     }
-
 
     if (
       // msgErr ||
@@ -50,12 +47,12 @@ class Card extends React.Component {
     }
 
     return true;
-  }
+  };
   acceptItem = () => {
-    this.setState({acceptModal:true})
+    this.setState({ acceptModal: true });
     // axios
     //   .put(
-    //     `https://localhost:44357/donation/delete/${this.props.donationId}`
+    //     `https://charitableapis.azurewebsites.net/donation/delete/${this.props.donationId}`
     //   )
     //   .then((res) => {
     //       this.props.getData();
@@ -187,46 +184,44 @@ class Card extends React.Component {
             <Modal.Body>
               <div className="container">
                 <form action="/" noValidate>
-                <div className="form-group">
-                <label htmlFor="address" className="my-donation-label mb-2">
-                  Pickup/Dropoff Address
-                </label>
-                <input
-                  name="address"
-                  value={this.state.address}
-                  onChange={(event) =>
-                    this.changeHandler(event, "address")
-                  }
-                  type="text"
-                  id="address"
-                  placeholder="Address here..."
-                  className="form-control"
-                />
-                <div
-                  style={{
-                    fontSize: "12.8px",
-                    color: "#DC3545",
-                    marginLeft: "10px",
-                  }}
-                >
-                  {this.state.addressErr}
-                </div>
-              </div>
-              <div className="form-group">
-                <label className="mb-2" htmlFor="requestResponse">
-                  Response Message (optional)
-                </label>
-                <textarea
-                  name="requestResponse"
-                  rows="8"
-                  // cols="50"
-                  value={this.state.msg}
-                  onChange={(event) => this.changeHandler(event, "msg")}
-                  id="requestResponse"
-                  placeholder="Send a message to NGO"
-                  className="form-control"
-                ></textarea>
-              </div>
+                  <div className="form-group">
+                    <label htmlFor="address" className="my-donation-label mb-2">
+                      Pickup/Dropoff Address
+                    </label>
+                    <input
+                      name="address"
+                      value={this.state.address}
+                      onChange={(event) => this.changeHandler(event, "address")}
+                      type="text"
+                      id="address"
+                      placeholder="Address here..."
+                      className="form-control"
+                    />
+                    <div
+                      style={{
+                        fontSize: "12.8px",
+                        color: "#DC3545",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      {this.state.addressErr}
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label className="mb-2" htmlFor="requestResponse">
+                      Response Message (optional)
+                    </label>
+                    <textarea
+                      name="requestResponse"
+                      rows="8"
+                      // cols="50"
+                      value={this.state.msg}
+                      onChange={(event) => this.changeHandler(event, "msg")}
+                      id="requestResponse"
+                      placeholder="Send a message to NGO"
+                      className="form-control"
+                    ></textarea>
+                  </div>
                 </form>
               </div>
             </Modal.Body>

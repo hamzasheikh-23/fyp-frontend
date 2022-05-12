@@ -10,19 +10,22 @@ import item2 from "../../images/speak-for-change.jpg";
 import item3 from "../../images/together.png";
 import item5 from "../../images/hope.png";
 import axios from "axios";
+import { baseURL } from "../../baseURL";
 
 class SubscriptionPage extends React.Component {
   componentDidMount() {
     axios
-      .get(`https://localhost:44357/subscription/get`)
+      .get(`${baseURL}/subscription/get`)
       .then((res) => {
-        console.log(res)
-        this.setState({ data: res.data.map(item=>({
-          id: item.PlanID,
-          name: item.PlanName,
-          amountPerMonth: item.Amount,
-          description: item.Description.split('\\n')
-        })) });
+        console.log(res);
+        this.setState({
+          data: res.data.map((item) => ({
+            id: item.PlanID,
+            name: item.PlanName,
+            amountPerMonth: item.Amount,
+            description: item.Description.split("\\n"),
+          })),
+        });
       })
       .catch((err) => console.log(err));
   }
@@ -125,13 +128,12 @@ class SubscriptionPage extends React.Component {
                       GET STARTED
                     </button>
                     <ul>
-                    {
-                        plan.description.map(text=>(
-                          <li><p class="card-text">{text}</p></li>
-                        ))
-                      }
+                      {plan.description.map((text) => (
+                        <li>
+                          <p class="card-text">{text}</p>
+                        </li>
+                      ))}
                     </ul>
-                      
                   </div>
                 </div>
               </div>
