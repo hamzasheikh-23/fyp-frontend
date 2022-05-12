@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { toast } from 'react-toastify'
+import { toast } from "react-toastify";
 import "./LoginForm.css";
 import FaceImage from "../../images/peo.png";
 import { FaUserTie } from "react-icons/fa";
@@ -26,7 +26,7 @@ class LoginForm extends Component {
     this.setState({ [fieldName]: event.target.value });
   };
   loginFormValidate = () => {
-    this.setState({loginErr: false})
+    this.setState({ loginErr: false });
     let loginUserNameError = "";
     let loginPasswordError = "";
     // const validName = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
@@ -48,7 +48,8 @@ class LoginForm extends Component {
     } else if (this.state.loginUserName.length > 50) {
       loginUserNameError = "User name must be less than 50 characters";
     } else if (!validName.test(this.state.loginUserName)) {
-      loginUserNameError = "First character must be an alphabet and rest alphanumeric, No special characters and boundary spaces allowed";
+      loginUserNameError =
+        "First character must be an alphabet and rest alphanumeric, No special characters and boundary spaces allowed";
     }
 
     if (!this.state.loginPassword) {
@@ -81,14 +82,18 @@ class LoginForm extends Component {
       axios
         .post(`${baseURL}/user/login`, loginData)
         .then((res) => {
+          // debugger;
           console.log("response", res, this.props.history, this.props);
-          console.log('login',res);
-          if (res.data.code !== "0") {
+          console.log("login", res);
+          if (res.data.code != "0") {
             localStorage.clear();
-            if(!res.data.isActive){
-              toast.error("Your Account is not activated! Please wait for admin's approval",{
-                position: "top-center",
-              })
+            if (!res.data.isActive) {
+              toast.error(
+                "Your Account is not activated! Please wait for admin's approval",
+                {
+                  position: "top-center",
+                }
+              );
               return;
             }
             localStorage.setItem("isAuthenticated", true);
@@ -109,10 +114,30 @@ class LoginForm extends Component {
                 //ngo
                 localStorage.setItem("loginType", "ngo");
                 localStorage.setItem("ngoID", res.data.ngoID);
+                localStorage.setItem("ngoPlanID", res.data.planID);
+
                 if (!res.data.planID) {
+                  localStorage.setItem("ngoSubscription", false);
                   this.props.history.push("/subscription");
                   return;
                 }
+                axios
+                  .get(
+                    `${baseURL}/subscription/validate?ngoId=${res.data.ngoID}`
+                  )
+                  .then((res) => {
+                    if (!res.data.isSuccess) {
+                      localStorage.setItem("ngoSubscription", false);
+                      toast.error("Your Subscription is expired", {
+                        position: "top-center",
+                      });
+                      this.props.history.push("/subscription");
+                      return;
+                    } else {
+                      localStorage.setItem("ngoSubscription", true);
+                    }
+                  })
+                  .catch(console.log);
               }
               this.props.history.push("/");
             }
@@ -147,7 +172,7 @@ class LoginForm extends Component {
                   >
                     <div className="form-group ">
                       <i>
-                      <FaUserTie />
+                        <FaUserTie />
                       </i>
                       <input
                         type="text"

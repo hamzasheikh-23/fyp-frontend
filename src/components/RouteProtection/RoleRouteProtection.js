@@ -9,11 +9,6 @@ export default function RoleRouteProtection({
 }) {
   const isAuthenticated = JSON.parse(localStorage.getItem("isAuthenticated"));
   const userType = localStorage.getItem("loginType");
-  // localStorage.setItem('isAuthenticated', true);
-  // localStorage.setItem('userType', 'admin');
-  // localStorage.setItem('admin', true);
-  // const isAuthenticated = true; 
-  // const userType = 'admin'; 
 
   return (
     <Route

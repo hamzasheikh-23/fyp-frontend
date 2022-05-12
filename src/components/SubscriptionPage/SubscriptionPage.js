@@ -83,6 +83,14 @@ class SubscriptionPage extends React.Component {
 
   subscribe = (id) => {
     console.log("subscription id =>", id);
+    axios.put(`${baseURL}/susbscription/assign?ngoId=${localStorage.getItem("ngoID")}&planId=${id}`)
+    .then(res=>{
+      localStorage.setItem("ngoPlanID", id);
+      localStorage.setItem("ngoSubscription", true)
+
+      this.props.history.push('/')
+  })
+    .catch(console.log)
   };
 
   render() {

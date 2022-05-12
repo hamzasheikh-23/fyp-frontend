@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import SubscriptionProtection from '../RouteProtection/SubscriptionProtection';
 
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -24,7 +25,7 @@ import { baseURL } from "../../baseURL";
 class ManageDonations extends Component {
   componentDidMount() {
     this.getData();
-    // console.log('manage donation', this.props.history)
+    console.log('manage donation', this.props.history)
   }
 
   getData = () => {
@@ -218,4 +219,5 @@ class ManageDonations extends Component {
   }
 }
 
-export default ManageDonations;
+
+export default (ManageDonations);

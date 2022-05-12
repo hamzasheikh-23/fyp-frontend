@@ -35,24 +35,24 @@ import AdminPanelManageAdmin from "./components/AdminPanelManageAdmin/AdminPanel
 import NGOStatusPending from "./components/NGOStatusPending/NGOStatusPending";
 import NGOStatusRejected from "./components/NGOStatusRejected/NGOStatusRejected";
 import SubscriptionPage from "./components/SubscriptionPage/SubscriptionPage";
+import NotSubscribed from './components/NotSubscribed/NotSubscribed';
 import DoubleLoginProtection from "./components/RouteProtection/DoubleLoginProtection";
 import AlreadyLoggedIn from "./components/AlreadyLoggedIn/AlreadyLoggedIn";
 import RoleRouteProtection from "./components/RouteProtection/RoleRouteProtection";
 import UnauthorizePage from "./components/UnauthorizePage/UnauthorizePage";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import TrackOrder from "./components/TrackOrder/TrackOrder";
 import Invoice from "./components/Invoice/Invoice";
 import AdminPanelManageOrders from "./components/AdminPanelManageOrders/AdminPanelManageOrders";
 import NgoReplies from "./components/NgoReplies/NgoReplies";
 import DonorDonations from "./components/DonorDonations/DonorDonations";
 import ConfirmedDonations from "./components/ConfirmedDonations/ConfirmedDonations";
+import SubscriptionProtection from "./components/RouteProtection/SubscriptionProtection";
 
 const App = () => {
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
-  
   return (
     <Router>
       {/* <img src={require('./images/book.png')} /> */}
@@ -65,7 +65,7 @@ const App = () => {
           validUser="donor"
           // redirectTo="/"
         />
-         <RoleRouteProtection
+        <RoleRouteProtection
           exact
           path="/ngo-replies"
           component={NgoReplies}
@@ -99,21 +99,61 @@ const App = () => {
 
         {/** ADMIN ROUTE STARTS HERE */}
 
-          <RoleRouteProtection
-            exact
-            path="/adminPanelStatistics"
-            component={AdminPanelStatistics}
-            validUser="admin"
-            // redirectTo="/"
-          />
-          <RoleRouteProtection exact path='/manage-order-ngo' component={AdminPanelManageOrders} validUser='admin' />
-          <RoleRouteProtection exact path='/donation-requests' component={AdminPanelDonationRequests} validUser='admin' />
-          <RoleRouteProtection exact path='/manage-ngo-requests' component={AdminPanelManageRequestsFromNGO} validUser='admin' />
-          <RoleRouteProtection exact path='/user-feedback' component={AdminPanelUserFeedback} validUser='admin' />
-          <RoleRouteProtection exact path='/manage-subscriptions' component={AdminPanelManageSubscriptions} validUser='admin' />
-          <RoleRouteProtection exact path='/manage-donors' component={AdminPanelManageDonors} validUser='admin' />
-          <RoleRouteProtection exact path='/manage-partner-ngos' component={AdminPanelManagePartnerNGO} validUser='admin' />
-          <RoleRouteProtection exact path='/manage-admin' component={AdminPanelManageAdmin} validUser='admin' />
+        <RoleRouteProtection
+          exact
+          path="/adminPanelStatistics"
+          component={AdminPanelStatistics}
+          validUser="admin"
+          // redirectTo="/"
+        />
+        <RoleRouteProtection
+          exact
+          path="/manage-order-ngo"
+          component={AdminPanelManageOrders}
+          validUser="admin"
+        />
+        <RoleRouteProtection
+          exact
+          path="/donation-requests"
+          component={AdminPanelDonationRequests}
+          validUser="admin"
+        />
+        <RoleRouteProtection
+          exact
+          path="/manage-ngo-requests"
+          component={AdminPanelManageRequestsFromNGO}
+          validUser="admin"
+        />
+        <RoleRouteProtection
+          exact
+          path="/user-feedback"
+          component={AdminPanelUserFeedback}
+          validUser="admin"
+        />
+        <RoleRouteProtection
+          exact
+          path="/manage-subscriptions"
+          component={AdminPanelManageSubscriptions}
+          validUser="admin"
+        />
+        <RoleRouteProtection
+          exact
+          path="/manage-donors"
+          component={AdminPanelManageDonors}
+          validUser="admin"
+        />
+        <RoleRouteProtection
+          exact
+          path="/manage-partner-ngos"
+          component={AdminPanelManagePartnerNGO}
+          validUser="admin"
+        />
+        <RoleRouteProtection
+          exact
+          path="/manage-admin"
+          component={AdminPanelManageAdmin}
+          validUser="admin"
+        />
 
         {/** ADMIN ROUTE ENDS HERE */}
 
@@ -155,42 +195,70 @@ const App = () => {
           component={SubscriptionPage}
           validUser="ngo"
         />
-         <RoleRouteProtection
+        <RoleRouteProtection
+          exact
+          path="/not-subscribed"
+          component={NotSubscribed}
+          validUser="ngo"
+        />
+        <RoleRouteProtection
           exact
           path="/confirmed-donations"
-          component={ConfirmedDonations}
+          // component={ConfirmedDonations}
+          component={(props) => (
+            <SubscriptionProtection history={props.history}>
+              <ConfirmedDonations history={props.history} />
+            </SubscriptionProtection>
+          )}
           validUser="ngo"
         />
         <RoleRouteProtection
           exact
           path="/donor-donations"
-          component={DonorDonations}
+          // component={DonorDonations}
+          component={(props) => (
+            <SubscriptionProtection history={props.history}>
+              <DonorDonations history={props.history} />
+            </SubscriptionProtection>
+          )}
           validUser="ngo"
         />
         <RoleRouteProtection
           exact
           path="/invoice"
-          component={Invoice}
+          // component={Invoice}
+          component={(props) => (
+            <SubscriptionProtection history={props.history}>
+              <Invoice history={props.history} />
+            </SubscriptionProtection>
+          )}
           validUser="ngo"
         />
         <RoleRouteProtection
           exact
           path="/trackOrder"
-          component={TrackOrder}
+          // component={TrackOrder}
+          component={(props) => (
+            <SubscriptionProtection history={props.history}>
+              <TrackOrder history={props.history} />
+            </SubscriptionProtection>
+          )}
           validUser="ngo"
         />
         <RoleRouteProtection
           exact
           path="/paymentInfo"
-          component={PaymentInfoPage}
+          // component={PaymentInfoPage}
+          component={(props) => (
+            <SubscriptionProtection history={props.history}>
+              <PaymentInfoPage history={props.history} />
+            </SubscriptionProtection>
+          )}
           validUser="ngo"
         />
         <Route path="/alreadyLoggedin" component={AlreadyLoggedIn} />
         <Route path="/unauthorized" component={UnauthorizePage} />
 
-        
-
-       
         {/* <Route
           path="/adminPanelDonorRequests"
           component={AdminPanelDonorRequests}
@@ -206,7 +274,7 @@ const App = () => {
           path="/adminPanelNGORequests"
           component={AdminPanelNGORequests}
         /> */}
-         <RoleRouteProtection
+        <RoleRouteProtection
           exact
           path="/adminPanelNGORequests"
           component={AdminPanelNGORequests}
@@ -233,7 +301,7 @@ const App = () => {
           path="/adminPanelUserFeedback"
           component={AdminPanelUserFeedback}
         /> */}
-         
+
         {/* <Route path="/ngostatuspending" component={NGOStatusPending} /> */}
         <RoleRouteProtection
           exact
@@ -255,10 +323,14 @@ const App = () => {
           path="/manage-donations"
           component={() => <ManageDonations pageheading={"Manage Donations"} />}
         /> */}
-         <RoleRouteProtection
+        <RoleRouteProtection
           exact
           path="/manage-donations"
-          component={ManageDonations}
+          component={(props) => (
+            <SubscriptionProtection history={props.history}>
+              <ManageDonations history={props.history} />
+            </SubscriptionProtection>
+          )}
           validUser="ngo"
           // redirectTo="/"
         />
@@ -275,10 +347,15 @@ const App = () => {
             />
           )}
         /> */}
-         <RoleRouteProtection
+        <RoleRouteProtection
           exact
           path="/askdonation"
-          component={AskDonationForm}
+          // component={AskDonationForm}
+          component={(props) => (
+            <SubscriptionProtection history={props.history}>
+              <AskDonationForm history={props.history} />
+            </SubscriptionProtection>
+          )}
           // component={() => (
           //   <AskDonationForm
           //     history={props.history}
@@ -297,7 +374,12 @@ const App = () => {
         <RoleRouteProtection
           exact
           path="/donor-replies"
-          component={DonorReplies}
+          // component={DonorReplies}
+          component={(props) => (
+            <SubscriptionProtection history={props.history}>
+              <DonorReplies history={props.history} />
+            </SubscriptionProtection>
+          )}
           validUser="ngo"
           // redirectTo="/"
         />
@@ -306,10 +388,18 @@ const App = () => {
           path="/manage-stories"
           component={() => <ManageStories pageheading={"Manage Stories"} />}
         /> */}
-         <RoleRouteProtection
+        <RoleRouteProtection
           exact
           path="/manage-stories"
-          component={() => <ManageStories pageheading={"Manage Stories"} />}
+          component={(props) => (
+            <SubscriptionProtection history={props.history}>
+              <ManageStories
+                history={props.history}
+                pageheading={"Manage Stories"}
+              />
+            </SubscriptionProtection>
+          )}
+          // component={() => <ManageStories pageheading={"Manage Stories"} />}
           validUser="ngo"
           // redirectTo="/"
         />
@@ -326,38 +416,49 @@ const App = () => {
             />
           )}
         /> */}
-         <RoleRouteProtection
+        <RoleRouteProtection
           exact
           path="/addstory"
-          component={() => (
-            <SuccessStoryForm
-              formheading={"Publish a life-changing Story!"}
-              descplaceholder={"Add Story Description"}
-              buttontext={"Upload Story"}
-              iconimageurl={"../../images/icondiam.png"}
-              bgclass={"my-background-3"}
-            />
+          // component={() => (
+          //   <SuccessStoryForm
+          //     formheading={"Publish a life-changing Story!"}
+          //     descplaceholder={"Add Story Description"}
+          //     buttontext={"Upload Story"}
+          //     iconimageurl={"../../images/icondiam.png"}
+          //     bgclass={"my-background-3"}
+          //   />
+          // )}
+          component={(props) => (
+            <SubscriptionProtection history={props.history}>
+              <SuccessStoryForm
+                history={props.history}
+                formheading={"Publish a life-changing Story!"}
+                descplaceholder={"Add Story Description"}
+                buttontext={"Upload Story"}
+                iconimageurl={"../../images/icondiam.png"}
+                bgclass={"my-background-3"}
+              />
+            </SubscriptionProtection>
           )}
           validUser="ngo"
           // redirectTo="/"
         />
       </Switch>
       <ToastContainer
-          // position="top-center"
-          // autoClose={false}
-          // hideProgressBar
-          // newestOnTop={false}
-          // closeOnClick
-          // rtl={false}
-          // pauseOnFocusLoss={false}
-          draggable
-          pauseOnHover
-
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-pauseOnFocusLoss
-        />
+        // position="top-center"
+        // autoClose={false}
+        // hideProgressBar
+        // newestOnTop={false}
+        // closeOnClick
+        // rtl={false}
+        // pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+      />
     </Router>
   );
 };
