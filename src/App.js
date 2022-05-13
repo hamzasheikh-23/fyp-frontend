@@ -250,9 +250,9 @@ const App = () => {
           path="/paymentInfo"
           // component={PaymentInfoPage}
           component={(props) => (
-            <SubscriptionProtection history={props.history}>
+            // <SubscriptionProtection history={props.history}>
               <PaymentInfoPage history={props.history} />
-            </SubscriptionProtection>
+            // </SubscriptionProtection>
           )}
           validUser="ngo"
         />

@@ -81,16 +81,9 @@ class SubscriptionPage extends React.Component {
     this.setState({ siderDrawerOpen: false });
   };
 
-  subscribe = (id) => {
-    console.log("subscription id =>", id);
-    axios.put(`${baseURL}/subscription/assign?ngoId=${localStorage.getItem("ngoID")}&planId=${id}`)
-    .then(res=>{
-      localStorage.setItem("ngoPlanID", id);
-      localStorage.setItem("ngoSubscription", true)
-
-      this.props.history.push('/')
-  })
-    .catch(console.log)
+  subscribe = (id, amount) => {
+    console.log("subscription id =>", id, amount);
+    this.props.history.push('/paymentInfo',{planId: id, amount: amount})
   };
 
   render() {
@@ -130,7 +123,7 @@ class SubscriptionPage extends React.Component {
                       </div> */}
                     </div>
                     <button
-                      onClick={() => this.subscribe(plan.id)}
+                      onClick={() => this.subscribe(plan.id, plan.amountPerMonth)}
                       class="btn btn-primary"
                     >
                       GET STARTED

@@ -51,28 +51,28 @@ class CardsAdminPanel extends Component{
               id:'4',
               path:"/manage-donors",
               title: 'Manage Donors',
-              image: 'https://thumbs.dreamstime.com/b/multiracial-group-black-african-american-caucasian-asian-hands-holding-each-other-wrist-tolerance-unity-love-anti-135505973.jpg',
+              image: 'https://st.depositphotos.com/1194063/3369/i/600/depositphotos_33699059-stock-photo-heart-at-the-human-hands.jpg',
               // description: 'You saved a life. What is Lorem Ipsum it is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
             },
             {
               id:'5',
               path:"/manage-admin",
               title: 'Manage Admins',
-              image: 'https://thumbs.dreamstime.com/b/multiracial-group-black-african-american-caucasian-asian-hands-holding-each-other-wrist-tolerance-unity-love-anti-135505973.jpg',
+              image: 'https://png.pngtree.com/png-clipart/20190520/original/pngtree-user-vector-icon-png-image_3788518.jpg',
               // description: 'You saved a life. What is Lorem Ipsum it is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
             },
             {
               id:'7',
               path:"/manage-subscriptions",
               title: 'Manage Subscriptions',
-              image: 'https://blackpinkupdate.com/wp-content/uploads/2018/07/cover-blackpink-update-youtube-statistic-3.jpg',
+              image: 'https://images.pexels.com/photos/210600/pexels-photo-210600.jpeg?cs=srgb&dl=pexels-pixabay-210600.jpg&fm=jpg',
               // description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
             },
             {
               id:'8',
               path:"/manage-order-ngo",
               title: 'Manage Orders',
-              image: 'https://blackpinkupdate.com/wp-content/uploads/2018/07/cover-blackpink-update-youtube-statistic-3.jpg',
+              image: 'https://duext.com/wp-content/uploads/2018/10/blog-3-option-1.jpg',
               // description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
             },
             {

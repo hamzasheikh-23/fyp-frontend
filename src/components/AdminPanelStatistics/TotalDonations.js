@@ -54,19 +54,19 @@ class TotalDonations extends React.Component {
       .get(`${baseURL}/donation/category/get`)
       .then((res1) => {
         res1.data.forEach((ele) => {
-          console.log("foreach", ele.DonationCategory);
+          // console.log("foreach", ele.DonationCategory);
           temp[ele.DonationCategory] = 0;
         });
         axios
           .get(`${baseURL}/donation/get`)
           .then((res) => {
-            console.log("res", res, res.data);
+            // console.log("res", res, res.data);
             res.data.forEach((item) => {
               if (item.Category) {
                 temp[item.Category] = temp[item.Category] + 1;
               }
             });
-            console.log("end", temp);
+            // console.log("end", temp);
             this.setState({
               series: Object.values(temp),
               options: { ...this.state.options, labels: Object.keys(temp) },

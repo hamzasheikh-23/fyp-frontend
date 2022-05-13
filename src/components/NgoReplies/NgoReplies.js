@@ -67,48 +67,48 @@ class NgoReplies extends React.Component {
     };
   }
   componentDidMount() {
-    this.setState({
-      replies: dummyData,
-    });
-    //get requests
-    // axios
-    //   .get(
-    //     `${baseURL}/reply/get?ngoId=${localStorage.getItem('ngoID')}&status=Pending`
-    //   )
-    //   .then((res) => {
-    //     // console.log('res', res)
-    //     if(!res.data.noData){
-    //       this.setState({
-    //         replies: res.data.reply
-    //       });
-    //     }
-    //     else{
-    //       this.setState({
-    //         replies: []
-    //       });
-    //     }
-
-    //     // console.log(this.state)
-    //   })
-    //   .catch((err) => console.log(err));
-
-    //get cases
+    // this.setState({
+    //   replies: dummyData,
+    // });
+    // get requests
     axios
       .get(
-        `${baseURL}/case/get?ngoId=${localStorage.getItem(
-          "ngoID"
-        )}&status=approved&isActive=true `
+        `${baseURL}/response/get?donorId=${localStorage.getItem('donorID')}&status=Pending`
       )
-      .then((list) => {
-        console.log("list", list);
-        this.setState({
-          caseTitleList: list.data.cases.map((item) => ({
-            id: item.CaseId,
-            name: item.CaseTitle,
-          })),
-        });
+      .then((res) => {
+        // console.log('res', res)
+        if(!res.data.noData){
+          this.setState({
+            replies: res.data.reply
+          });
+        }
+        else{
+          this.setState({
+            replies: []
+          });
+        }
+
+        // console.log(this.state)
       })
-      .catch((error) => console.log(error));
+      .catch((err) => console.log(err));
+
+    //get cases
+    // axios
+    //   .get(
+    //     `${baseURL}/case/get?ngoId=${localStorage.getItem(
+    //       "ngoID"
+    //     )}&status=approved&isActive=true `
+    //   )
+    //   .then((list) => {
+    //     console.log("list", list);
+    //     this.setState({
+    //       caseTitleList: list.data.cases.map((item) => ({
+    //         id: item.CaseId,
+    //         name: item.CaseTitle,
+    //       })),
+    //     });
+    //   })
+    //   .catch((error) => console.log(error));
   }
 
   componentDidUpdate(prevProps, prevState) {

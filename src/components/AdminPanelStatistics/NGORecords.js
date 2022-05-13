@@ -66,21 +66,24 @@ class NGORecords extends React.Component {
     const result = await axios.get(
       `${baseURL}/case/get`
     );
-    console.log("result", result.data.cases);
+    console.log("result ngo record", result.data.cases);
     result.data.cases.forEach((ngo) => {
-      if (!ngos.includes(ngo.NGOName)) {
+      if (ngo.NGOName && !ngos.includes(ngo.NGOName)) {
         ngos.push(ngo.NGOName);
       }
     });
     result.data.cases.forEach((item) => {
-      if (item.Category) {
-        if (!cat[item.Category]) {
-          cat[item.Category] = Array(ngos.length).fill(0);
+      console.log("cases.forEach", item.DonationCategory);
+      if (item.DonationCategory) {
+        if (!cat[item.DonationCategory]) {
+          cat[item.DonationCategory] = Array(ngos.length).fill(0);
         }
         ngos.forEach((ele, i) => {
+          console.log("cases.forEach", item.NGOName, ele, item.NGOName === ele);
           if (item.NGOName === ele) {
-            cat[item.Category][i] = cat[item.Category][i] + 1;
+            cat[item.DonationCategory][i] = cat[item.DonationCategory][i] + 1;
           }
+          console.log("operation===>", cat[item.DonationCategory][i]);
         });
       }
     });
@@ -90,7 +93,7 @@ class NGORecords extends React.Component {
         data: cat[key],
       });
     }
-    console.log("apiiiii", ngos, cat, s);
+    console.log("apiiiii ngo record", ngos, cat, s);
 
     // Array(6).data.map((user)=>{
     //   newCategories.push(['Rija',`id: 1`])

@@ -72,7 +72,7 @@ class DonorRecords extends React.Component {
     const result = await axios.get(
       `${baseURL}/donation/get`
     );
-    console.log("result donor", result.data);
+    // console.log("result donor", result.data);
     result.data.forEach((donor) => {
       if (!donors.includes(donor.DonorName)) {
         donors.push(donor.DonorName);
@@ -96,7 +96,7 @@ class DonorRecords extends React.Component {
         data: cat[key],
       });
     }
-    console.log("apiiiii donor", donors, cat, s);
+    // console.log("apiiiii donor", donors, cat, s);
 
     // result.data.map((user)=>{
     //   newCategories.push([user.name,`id: ${user.user_id}`])

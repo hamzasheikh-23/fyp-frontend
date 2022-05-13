@@ -11,6 +11,7 @@ import moment from "moment";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { baseURL } from "../../baseURL";
+import {checkProperty} from '../../assets/utils';
 
 let expMonthArr = [];
 let expYearArr = [];
@@ -112,6 +113,70 @@ export default class PaymentInfoPage extends React.Component {
     return true;
   };
 
+  subscriptionPayment = (paymentPayload) => {
+    const { planId, amount } = this.props.history?.location?.state?.data;
+    axios
+      .post(`${baseURL}/paymentInfo/post`, paymentPayload)
+      .then((res1) => {
+        axios
+        .put(
+          `${baseURL}/subscription/assign?ngoId=${localStorage.getItem("ngoID")}&planId=${planId}&paymentId=${res1.data.lastId}`,
+          {Amount: amount}
+        )
+        .then((res) => {
+          localStorage.setItem("ngoPlanID", planId);
+          localStorage.setItem("ngoSubscription", true);
+  
+          this.props.history.push("/");
+        })
+        .catch(console.log);
+      })
+      .catch(console.log);
+   
+  };
+
+  replyPayment = (paymentPayload) => {
+    const { caseId, replyId, address, amount } =
+      this.props.history?.location?.state?.data;
+
+    const orderPayload = {
+      NGOId: localStorage.getItem("ngoID"),
+      CaseId: caseId,
+      ReplyId: replyId,
+      DeliveryAddress: address,
+      Amount: amount,
+    };
+
+    console.log("call api replyPayment", paymentPayload, orderPayload);
+
+    axios
+      .post(`${baseURL}/paymentInfo/post`, paymentPayload)
+      .then((res1) => {
+        axios
+          .post(
+            `${baseURL}/order/post`,
+            Object.assign({ PaymentId: res1.data.lastId }, orderPayload)
+          )
+          .then((res2) => {
+            toast.success(
+              "Thank you for your order wait till it gets approve by admin",
+              {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              }
+            );
+            this.props.history.push("/trackOrder");
+          })
+          .catch(console.log);
+      })
+      .catch(console.log);
+  };
+
   proceed = (e) => {
     e.preventDefault();
     const isValid = this.validation();
@@ -125,48 +190,26 @@ export default class PaymentInfoPage extends React.Component {
         ExpiryYear: this.state.expYear,
         CVV: this.state.cvv,
       };
-      const { caseId, replyId, address, amount } =
-        this.props.history?.location?.state?.data;
 
-      const orderPayload = {
-        NGOId: localStorage.getItem("ngoID"),
-        CaseId: caseId,
-        ReplyId: replyId,
-        DeliveryAddress: address,
-        Amount: amount,
-      };
+      console.log('previous data', this.props.history?.location?.state?.data)
 
-      console.log("call api", paymentPayload, orderPayload);
+      const replyId = checkProperty('replyId', this.props.history?.location?.state?.data)
+      const donationId = checkProperty('donationId', this.props.history?.location?.state?.data)
+      const planId = checkProperty('planId', this.props.history?.location?.state?.data)
 
-      axios
-        .post(
-          `${baseURL}/paymentInfo/post`,
-          paymentPayload
-        )
-        .then((res1) => {
-          axios
-            .post(
-              `${baseURL}/order/post`,
-              Object.assign({ PaymentId: res1.data.lastId }, orderPayload)
-            )
-            .then((res2) => {
-              toast.success(
-                "Thank you for your order wait till it gets approve by admin",
-                {
-                  position: "top-center",
-                  autoClose: 5000,
-                  hideProgressBar: true,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                }
-              );
-              this.props.history.push("/trackOrder");
-            })
-            .catch(console.log);
-        })
-        .catch(console.log);
+      // const { replyId } = this.props.history?.location?.state?.data;
+      console.log('replyId',replyId);
+      // const { donationId } = this.props.history?.location?.state?.data;
+      console.log('donationId',donationId);
+      // const { planId } = this.props.history?.location?.state?.data;
+      console.log('planId',planId);
+
+      if (replyId) {
+        this.replyPayment(paymentPayload);
+      } else if (donationId) {
+      } else if (planId) {
+        this.subscriptionPayment(paymentPayload);
+      }
     }
   };
 
