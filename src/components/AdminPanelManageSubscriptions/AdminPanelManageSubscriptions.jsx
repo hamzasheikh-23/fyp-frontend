@@ -12,33 +12,33 @@ const AdminPanelManageSubscriptions = () => {
     const [sideOpen, setSideOpen] = useState(false)
     const [subscriptions, setSubscriptions] = useState([])
 
-    const rows = [
-        {
-            "PlanId": 7,
-            "PlanName": "Warm Gloves",
-            "Amount": 1000,
-            "Description": "Good Gloves",
-            "IsActive": true,
-        },
-        {
-            "PlanId": 7,
-            "PlanName": "Warm Gloves",
-            "Amount": 1000,
-            "Description": "Good Gloves",
-            "IsActive": true,
-        },
-        {
-            "PlanId": 7,
-            "PlanName": "Warm Gloves",
-            "Amount": 1000,
-            "Description": "Good Gloves",
-            "IsActive": false,
-        }
-    ]
+    // const rows = [
+    //     {
+    //         "PlanId": 7,
+    //         "PlanName": "Warm Gloves",
+    //         "Amount": 1000,
+    //         "Description": "Good Gloves",
+    //         "IsActive": true,
+    //     },
+    //     {
+    //         "PlanId": 7,
+    //         "PlanName": "Warm Gloves",
+    //         "Amount": 1000,
+    //         "Description": "Good Gloves",
+    //         "IsActive": true,
+    //     },
+    //     {
+    //         "PlanId": 7,
+    //         "PlanName": "Warm Gloves",
+    //         "Amount": 1000,
+    //         "Description": "Good Gloves",
+    //         "IsActive": false,
+    //     }
+    // ]
 
     const fetchData = async () => {
         await GetDonations('pending').then(res =>  {
-            setSubscriptions(rows)
+            setSubscriptions(res)
         }).catch(err => toast.error(err.response.data.message))
     } 
 
@@ -67,7 +67,7 @@ const AdminPanelManageSubscriptions = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <TableRow rows={subscriptions} />
+                        <TableRow update={fetchData} rows={subscriptions} />
                     </tbody>
                 </Table>
             </div>

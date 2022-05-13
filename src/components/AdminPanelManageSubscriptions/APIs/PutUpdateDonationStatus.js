@@ -1,11 +1,12 @@
-import axios from 'axios'
+import axios from 'axios';
+import {baseURL} from '../../../baseURL';
 
 
-const PutUpdateDonationStatus = async (donationId, status) => {
+const PutUpdateDonationStatus = async (id, status) => {
 
     try {
 
-        const apiUrl = `${process.env.REACT_APP_API_URL}/donation/edit?id=${donationId}&status=${status}`
+        const apiUrl = `${baseURL}/subscription/edit?id=${id}&isActive=${status}`
         const response = await axios.put(apiUrl)
         return response.data
 

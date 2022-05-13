@@ -70,8 +70,8 @@ class RequestCard extends React.Component {
         <ProceedOrderModal
         fetchData={this.props.fetchData}
           show={this.state.addModalShow}
-          reqId={this.props.reqId}
           onHide={addModalClose}
+          reqId={this.props.reqId}
         />}
       </div>
     );

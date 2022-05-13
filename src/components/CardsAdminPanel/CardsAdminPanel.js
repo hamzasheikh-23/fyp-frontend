@@ -82,13 +82,13 @@ class CardsAdminPanel extends Component{
               path: "/adminPanelStatistics"
               // description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
             },
-            {
-              id:'',
-              path:"/user-feedback",
-              title: 'User Feedback',
-              image: 'https://previews.123rf.com/images/makc76/makc761804/makc76180400013/98562149-rating-satisfaction-feedback-in-form-of-emotions-excellent-good-normal-bad-awful-vector-illustration.jpg',
-              // description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
-            },
+            // {
+            //   id:'',
+            //   path:"/user-feedback",
+            //   title: 'User Feedback',
+            //   image: 'https://previews.123rf.com/images/makc76/makc761804/makc76180400013/98562149-rating-satisfaction-feedback-in-form-of-emotions-excellent-good-normal-bad-awful-vector-illustration.jpg',
+            //   // description: 'Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.'
+            // },
           ]
 
 //****THIS arrayforcards is for testing, its contents will be replaced by actual values from DATABASE***

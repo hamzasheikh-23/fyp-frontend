@@ -30,8 +30,8 @@ const TableRow = (props) => {
                         <td>{row.Contact}</td>
                         <td>{row.IsActive && JSON.parse(row.IsActive) ? 'Yes' : 'No'}</td>
                         <td>
-                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleCheck} onClick={() => updateDonationStatus(row.DonorId, 'true')} />
-                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleXmark} onClick={() => updateDonationStatus(row.DonorId, 'false')} />
+                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleCheck} onClick={() => updateDonationStatus(row.AdminId, 'true')} />
+                            <FontAwesomeIcon className='action-icons-donation-requests' icon={faCircleXmark} onClick={() => updateDonationStatus(row.AdminId, 'false')} />
                         </td>
                     </tr>
                 )

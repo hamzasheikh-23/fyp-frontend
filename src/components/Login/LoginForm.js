@@ -87,7 +87,7 @@ class LoginForm extends Component {
           console.log("login", res);
           if (res.data.code != "0") {
             localStorage.clear();
-            if (!res.data.isActive) {
+            if (!JSON.parse(res.data.isActive)) {
               toast.error(
                 "Your Account is not activated! Please wait for admin's approval",
                 {

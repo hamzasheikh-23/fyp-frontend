@@ -20,7 +20,7 @@ class SubscriptionPage extends React.Component {
         console.log(res);
         this.setState({
           data: res.data.map((item) => ({
-            id: item.PlanID,
+            id: item.PlanId,
             name: item.PlanName,
             amountPerMonth: item.Amount,
             description: item.Description.split("\\n"),
@@ -83,7 +83,7 @@ class SubscriptionPage extends React.Component {
 
   subscribe = (id) => {
     console.log("subscription id =>", id);
-    axios.put(`${baseURL}/susbscription/assign?ngoId=${localStorage.getItem("ngoID")}&planId=${id}`)
+    axios.put(`${baseURL}/subscription/assign?ngoId=${localStorage.getItem("ngoID")}&planId=${id}`)
     .then(res=>{
       localStorage.setItem("ngoPlanID", id);
       localStorage.setItem("ngoSubscription", true)
