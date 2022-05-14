@@ -5,6 +5,8 @@ import Toolbar from '../Toolbar/Toolbar'
 import SideDrawer from '../SideDrawer/SideDrawer'
 import TableRow from './TableRow'
 import GetDonations from './APIs/GetDonations'
+import GetDonations2 from './APIs/GetDonations2'
+
 import './AdminPanelManageOrders.css'
 
 const AdminPanelManageOrders = (props) => {
@@ -115,7 +117,7 @@ const AdminPanelManageOrders = (props) => {
                 temp=[];
                 // setNgoRequests([])
             }
-            await GetDonations('').then(res2 =>  {
+            await GetDonations2('').then(res2 =>  {
                 if(!res2.noData){
                     setNgoRequests([...temp, ...res2.order])
                 }
