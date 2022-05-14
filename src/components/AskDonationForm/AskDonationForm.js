@@ -3,7 +3,6 @@ import { getCurrentDate } from "../../utils";
 import { toast } from "react-toastify";
 import { baseURL } from "../../baseURL";
 
-
 // import { FormInput } from "shards-react";
 // import { FormTextarea } from "shards-react";
 import { FaTimesCircle } from "react-icons/fa";
@@ -273,10 +272,7 @@ class AskDonationForm extends Component {
 
       if (isEdit) {
         axios
-          .put(
-            `${baseURL}/case/edit/${this.state.caseId} `,
-            askDonationData
-          )
+          .put(`${baseURL}/case/edit/${this.state.caseId} `, askDonationData)
           .then((res) => {
             this.props.history.push("/manage-donations");
           })
@@ -294,10 +290,7 @@ class AskDonationForm extends Component {
           });
       } else {
         axios
-          .post(
-            `${baseURL}/case/post`,
-            askDonationData
-          )
+          .post(`${baseURL}/case/post`, askDonationData)
           .then((res) => {
             console.log(res.data);
             this.setState(initialDonationFormState);
@@ -332,6 +325,10 @@ class AskDonationForm extends Component {
 
   ImagefileSelectedHandler = (e) => {
     console.log("file", e.target.files);
+    if (e.target.files[0].size > 2000000) {
+      this.setState({ imageErr: "Image size must not be more than 2mb" });
+      return;
+    }
     const isEdit = this.props.history.location.state?.data ? true : false;
     console.log("edit wala", isEdit);
     // let idCardBase64 = "";

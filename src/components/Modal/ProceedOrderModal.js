@@ -27,9 +27,7 @@ class ProceedOrderModal extends Component {
   componentDidMount() {
     // console.log('props', this.props)
     axios
-      .get(
-        `${baseURL}/reply/remainingQuantity/${this.props.reqId}`
-      )
+      .get(`${baseURL}/reply/remainingQuantity/${this.props.reqId}`)
       .then((res) => {
         // console.log('res', res)
         this.setState({
@@ -226,6 +224,10 @@ class ProceedOrderModal extends Component {
   }
 
   ImagefileSelectedHandler = (e) => {
+    if (e.target.files[0].size > 2000000) {
+      this.setState({ imageErr: "Image size must not be more than 2mb" });
+      return;
+    }
     const isEdit = this.props.history?.location?.state?.data ? true : false;
     var pattern = /[\/](jpg|png|jpeg)$/i;
     e.persist();

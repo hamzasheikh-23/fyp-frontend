@@ -195,6 +195,10 @@ class DonationForm extends Component {
 
   ImagefileSelectedHandler = (e) => {
     console.log("file", e.target.files);
+    if (e.target.files[0].size > 2000000) {
+      this.setState({ imageErr: "Image size must not be more than 2mb" });
+      return;
+    }
     const isEdit = this.props.history.location.state?.data ? true : false;
     console.log("edit wala", isEdit);
     // let idCardBase64 = "";
@@ -466,10 +470,7 @@ class DonationForm extends Component {
           });
       } else {
         axios
-          .post(
-            `${baseURL}/donation/post`,
-            DonationData
-          )
+          .post(`${baseURL}/donation/post`, DonationData)
           .then((res) => {
             this.props.history.push("/profile");
           })
