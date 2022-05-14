@@ -104,14 +104,25 @@ const AdminPanelManageOrders = (props) => {
     // ]
 
     const fetchData = async () => {
-        await GetDonations('').then(res =>  {
+        await GetDonations('').then(async res =>  {
             console.log('res',res)
+            let temp;
             if(!res.noData){
-                setNgoRequests(res.order)
+                temp=[...res.order];
+                // setNgoRequests(res.order)
             }
             else{
-                setNgoRequests([])
+                temp=[];
+                // setNgoRequests([])
             }
+            await GetDonations('').then(res2 =>  {
+                if(!res2.noData){
+                    setNgoRequests([...temp, ...res2.order])
+                }
+                else{
+                    setNgoRequests([...temp])
+                }
+            }).catch(err => console.log(err))
         }).catch(err => console.log(err))
     } 
 
