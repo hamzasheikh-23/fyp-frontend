@@ -99,7 +99,7 @@ const InfoModal = (props) => {
                     flexWrap: "wrap",
                   }}
                 >
-                  {props.data.Image1Name && (
+                  {props.data.Image1 && (
                     <div
                       style={{
                         border: "1px solid #4A89DC",
@@ -109,20 +109,15 @@ const InfoModal = (props) => {
                     >
                       <img
                         alt={"..."}
-                        onClick={() =>
-                          window.open(
-                            require(`../../serverImages/${props.data.Image1Name}`),
-                            "_blank"
-                          )
-                        }
-                        src={require(`../../serverImages/${props.data.Image1Name}`)}
+                        
+                        src={`data:image/*;base64,${props.data.Image1}`}
                         height="80px"
                         width="80px"
                         style={{ objectFit: "contain", marginBottom: "5px" }}
                       />
                     </div>
                   )}
-                  {props.data.Image2Name && (
+                  {props.data.Image2 && (
                     <div
                       style={{
                         border: "1px solid #4A89DC",
@@ -132,20 +127,15 @@ const InfoModal = (props) => {
                     >
                       <img
                         alt={"..."}
-                        onClick={() =>
-                          window.open(
-                            require(`../../serverImages/${props.data.Image2Name}`),
-                            "_blank"
-                          )
-                        }
-                        src={require(`../../serverImages/${props.data.Image2Name}`)}
+                       
+                        src={`data:image/*;base64,${props.data.Image2}`}
                         height="80px"
                         width="80px"
                         style={{ objectFit: "contain", marginBottom: "5px" }}
                       />
                     </div>
                   )}
-                  {props.data.Image3Name && (
+                  {props.data.Image3 && (
                     <div
                       style={{
                         border: "1px solid #4A89DC",
@@ -155,13 +145,8 @@ const InfoModal = (props) => {
                     >
                       <img
                         alt={"..."}
-                        onClick={() =>
-                          window.open(
-                            require(`../../serverImages/${props.data.Image3Name}`),
-                            "_blank"
-                          )
-                        }
-                        src={require(`../../serverImages/${props.data.Image3Name}`)}
+                       
+                        src={`data:image/*;base64,${props.data.Image3}`}
                         height="80px"
                         width="80px"
                         style={{ objectFit: "contain", marginBottom: "5px" }}

@@ -127,16 +127,13 @@ class DonationDetailsModal extends Component {
                 <div className="col-lg-4 col-md-6 col-sm-12">
                   {this.props.itemImages[0] === null ? null : (
                     <img
-                      onClick={() =>
-                        window.open(
-                          require(`../../serverImages/${this.props.itemImages[0]}`),
-                          "_blank"
-                        )
-                      }
-                      src={
-                        "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
-                      }
-                      // src={require(`../../serverImages/${this.props.itemImages[0]}`)}
+                      // onClick={() =>
+                      //   window.open(
+                      //     `data:image/*;base64,${this.props.itemImages[0]}`,
+                      //     "_blank"
+                      //   )
+                      // }
+                      src={`data:image/*;base64,${this.props.itemImages[0]}`}
                       height="200px"
                       width="100%"
                       style={{ objectFit: "contain", marginBottom: "5px" }}
@@ -147,16 +144,13 @@ class DonationDetailsModal extends Component {
                 {this.props.itemImages[1] === null ? null : (
                   <div className="col-lg-4 col-md-6 col-sm-12">
                     <img
-                      onClick={() =>
-                        window.open(
-                          require(`../../serverImages/${this.props.itemImages[1]}`),
-                          "_blank"
-                        )
-                      }
-                      src={
-                        "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
-                      }
-                      // src={require(`../../serverImages/${this.props.itemImages[1]}`)}
+                      // onClick={() =>
+                      //   window.open(
+                      //     `data:image/*;base64,${this.props.itemImages[1]}`,
+                      //     "_blank"
+                      //   )
+                      // }
+                      src={`data:image/*;base64,${this.props.itemImages[1]}`}
                       height="200px"
                       width="100%"
                       style={{ objectFit: "contain", marginBottom: "5px" }}
@@ -167,16 +161,13 @@ class DonationDetailsModal extends Component {
                 {this.props.itemImages[2] === null ? null : (
                   <div className="col-lg-4 col-md-6 col-sm-12">
                     <img
-                      onClick={() =>
-                        window.open(
-                          require(`../../serverImages/${this.props.itemImages[2]}`),
-                          "_blank"
-                        )
-                      }
-                      src={
-                        "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
-                      }
-                      // src={require(`../../serverImages/${this.props.itemImages[2]}`)}
+                      // onClick={() =>
+                      //   window.open(
+                      //     `data:image/*;base64,${this.props.itemImages[2]}`,
+                      //     "_blank"
+                      //   )
+                      // }
+                      src={`data:image/*;base64,${this.props.itemImages[2]}`}
                       height="200px"
                       width="100%"
                       style={{ objectFit: "contain", marginBottom: "5px" }}

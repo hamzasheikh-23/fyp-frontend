@@ -78,7 +78,7 @@ const CaseDetailModal = (props) => {
           <div
             style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
           >
-            {props.data.ImageName && (
+            {props.data.CoverImage && (
               <div
                 style={{
                   border: "1px solid #4A89DC",
@@ -88,13 +88,7 @@ const CaseDetailModal = (props) => {
               >
                 <img
                   alt={"..."}
-                  onClick={() =>
-                    window.open(
-                      require(`../../serverImages/cases/${props.data.ImageName}`),
-                      "_blank"
-                    )
-                  }
-                  src={require(`../../serverImages/cases/${props.data.ImageName}`)}
+                  src={`data:image/*;base64,${props.data.CoverImage}`}
                   height="80px"
                   width="80px"
                   style={{ objectFit: "contain", marginBottom: "5px" }}
