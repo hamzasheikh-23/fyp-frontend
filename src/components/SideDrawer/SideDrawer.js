@@ -7,6 +7,7 @@ import {
   FaQuestionCircle,
   FaHandHoldingHeart,
   FaArrowLeft,
+  FaBus,
   FaDotCircle,
   FaGreaterThan,
 } from "react-icons/fa";
@@ -31,7 +32,7 @@ class SideDrawer extends React.Component {
           <li>
             <Link to="/donationForm">
               <i>
-                <FaDotCircle />
+                <FaDotCircle /> 
               </i>
               Donate Random Item
             </Link>
@@ -163,6 +164,14 @@ class SideDrawer extends React.Component {
                       <FaAddressCard />
                     </i>
                     Confirm donations
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/trackOrder">
+                    <i>
+                      <FaBus />
+                    </i>
+                    Track Order
                   </Link>
                 </li>
               </>

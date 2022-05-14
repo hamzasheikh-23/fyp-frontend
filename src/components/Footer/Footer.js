@@ -36,20 +36,20 @@ class Footer extends React.Component {
   };
   submitFeedback = (e) => {
     e.preventDefault();
-    const isValidFeedback = this.feedbackValidation();
-    if (isValidFeedback) {
-      const feedbackData = {
-        user_id: localStorage.getItem("userID"),
-        comment: this.state.feedbackValue,
-      };
-      // console.log(feedbackData)
+    // const isValidFeedback = this.feedbackValidation();
+    // if (isValidFeedback) {
+    //   const feedbackData = {
+    //     user_id: localStorage.getItem("userID"),
+    //     comment: this.state.feedbackValue,
+    //   };
+    //   // console.log(feedbackData)
 
-      axios.post("/api/postFeedback", feedbackData);
-      // .then(res=>{
-      //     console.log(res.data);
-      // }).catch(err=>console.log(err));
-      this.setState({ feedbackValue: "" });
-    }
+    //   axios.post("/api/postFeedback", feedbackData);
+    //   // .then(res=>{
+    //   //     console.log(res.data);
+    //   // }).catch(err=>console.log(err));
+    //   this.setState({ feedbackValue: "" });
+    // }
   };
   render() {
     return (
@@ -58,7 +58,7 @@ class Footer extends React.Component {
           <div className="footer-container">
             <div className="row">
               <div className=" col-lg-3 col-md-6 col-sm-12  segment-one md-mb-30 sm-mb-30">
-                <h3>Little Deeds</h3>
+                <h3>Charitable</h3>
                 <p>
                   Donation is a noble act and is the need for maintaining the
                   social cycle, We caters the donation cycle for in-kind
