@@ -117,7 +117,7 @@ class Card extends React.Component {
                 borderRadius: "65px",
               }}
               href="#"
-              onClick={() => this.props.history.push('/paymentInfo',{data:{donationId: this.props.donationId, address: this.props.dropof, amount: this.props.totalAmount}})}
+              onClick={() => this.props.history.push('/paymentInfo',{data:{donationId: this.props.donationId, address: this.props.dropof, amount: this.props.totalAmount, responseId: this.props.responseId}})}
               class="btn btn-primary view-detail"
             >
               Make Order

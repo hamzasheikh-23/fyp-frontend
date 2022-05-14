@@ -78,6 +78,7 @@ class ConfirmedDonations extends React.Component {
                 weight: item.Weight,
                 message: item.Message,
                 description: item.Description,
+                responseId: item.ResponseId,
                 category: item.DonationCategory,
                 donationId: item.DonationId,
                 rating: item.Rating,

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { getCurrentDate } from "../../utils";
 import { toast } from "react-toastify";
 import { baseURL } from "../../baseURL";
+import { Link } from "react-router-dom";
+
 
 // import { FormInput } from "shards-react";
 // import { FormTextarea } from "shards-react";
@@ -644,6 +646,11 @@ class AskDonationForm extends Component {
               >
                 Submit Request
               </button>
+              <p>
+              <Link to="/" style={{ color: "#6c6c6c" }}>
+                Back to Home Page
+              </Link>
+            </p>
             </form>
 
             <br></br>

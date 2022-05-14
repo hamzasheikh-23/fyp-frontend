@@ -136,12 +136,12 @@ export default class PaymentInfoPage extends React.Component {
   };
 
   donationPayment = (paymentPayload) => {
-    const { donationId, address, amount } = this.props.history?.location?.state?.data;
+    const { donationId, address, amount, responseId } = this.props.history?.location?.state?.data;
     axios
       .post(`${baseURL}/paymentInfo/post`, paymentPayload)
       .then((res1) => {
         //later
-        axios.post(`${baseURL}/order/response/post`,{ PaymentId: res1.data.lastId, DonationId: donationId, Address: address, Amount: amount })
+        axios.post(`${baseURL}/order/response/post`,{ PaymentId: res1.data.lastId, DonationId: donationId, Address: address, Amount: amount, NGOId: localStorage.getItem("ngoID"), ResponseId:  responseId})
         .then((res2) => {
           toast.success(
             "Thank you for your order wait till it gets approve by admin",
