@@ -319,7 +319,7 @@ class AdminPanelManageAdmin extends Component {
             <h1 className="blue-heading sigup-page-heading">Manage Admins</h1>
             <div className="account-pic-container">
               <div style={{display:'flex', justifyContent:'space-evenly', flexWrap:'wrap'}} >
-                <div style={{border:'1px solid red', padding:5, borderRadius:5}}>
+                <div style={{border:`2px solid ${this.state.createPage? 'rgb(162, 201, 243)' : 'white' }`, padding:'5px 3px', borderRadius:5}}>
                   <button
                     className="account-button"
                     onClick={() => this.AccountSelectionHandler()}
@@ -329,7 +329,7 @@ class AdminPanelManageAdmin extends Component {
                     </div>
                   </button>
                 </div>
-                <div className={this.state.createPage && "pic-border"}>
+                <div style={{border:`2px solid ${!this.state.createPage? 'rgb(162, 201, 243)' : 'white' }`, padding:'5px 3px', borderRadius:5}}>
                   <button
                     className="account-button"
                     onClick={() => this.AccountSelectionHandler("ngo")}
