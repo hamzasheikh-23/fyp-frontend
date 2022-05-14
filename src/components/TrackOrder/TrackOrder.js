@@ -62,11 +62,26 @@ export default class TrackOrder extends React.Component {
         )}`
       )
       .then((res) => {
+        let temp;
         if (!res.data.noData) {
-          this.setState({ items: res.data.order });
+          temp=[...res.data.order]
         } else {
-          this.setState({ items: [] });
+          temp=[]
         }
+        axios
+        .get(
+          `${baseURL}/order/response/get?ngoId=${localStorage.getItem(
+            "ngoID"
+          )}`
+        )
+        .then((res2) => {
+          if (!res2.data.noData) {
+            this.setState({ items: [...temp, ...res2.data.order] });
+          } else {
+            this.setState({ items: [...temp] });
+          }
+        })
+        .catch(console.log);
       })
       .catch(console.log);
   }
