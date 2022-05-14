@@ -72,9 +72,9 @@ class Profile extends React.Component {
               itemImg1: item.Image1,
               itemImg2: item.Image2,
               itemImg3: item.Image3,
-              image1Name: item.Image1Name,
-              image2Name: item.Image2Name,
-              image3Name: item.Image3Name,
+              image1Name: 'name1',
+              image2Name: 'name2',
+              image3Name: 'name3',
               postedDate: checkProperty("PostedDate", item)
                 ? moment(item.PostedDate).format("LL hh:mm:ss")
                 : null,
