@@ -58,7 +58,7 @@ class NGORequests extends React.Component {
   getData=()=>{
     axios
     .get(
-      `${baseURL}/case/get?status=approved&&isActive=true`
+      `${baseURL}/case/get?status=approved&isActive=true`
     )
     .then((res) => {
       // console.log('res', res)

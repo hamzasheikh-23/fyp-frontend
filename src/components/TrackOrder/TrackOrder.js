@@ -158,32 +158,49 @@ export default class TrackOrder extends React.Component {
                           &nbsp;
                           {item.CaseId}
                         </p>}
+                        {item.DonationId &&
+                        <p class="card-text" style={{ marginBottom: 0 }}>
+                          <span style={{ fontWeight: "bold" }}>Case Id:</span>{" "}
+                          &nbsp;
+                          {item.DonationId}
+                        </p>}
+                        {item.ReplyId &&
                         <p class="card-text" style={{ marginBottom: 0 }}>
                           <span style={{ fontWeight: "bold" }}>Reply Id:</span>{" "}
                           &nbsp;
                           {item.ReplyId}
-                        </p>
+                        </p>}
+                        {item.ResponseId &&
+                        <p class="card-text" style={{ marginBottom: 0 }}>
+                          <span style={{ fontWeight: "bold" }}>Reply Id:</span>{" "}
+                          &nbsp;
+                          {item.ResponseId}
+                        </p>}
+                        {item.Amount &&
                         <p class="card-text" style={{ marginBottom: 0 }}>
                           <span style={{ fontWeight: "bold" }}>
                             Order Amount:
                           </span>{" "}
                           &nbsp;
                           {item.Amount || 0} PKR
-                        </p>
+                        </p>}
+                        
                         <p class="card-text" style={{ marginBottom: 0 }}>
                           <span style={{ fontWeight: "bold" }}>
-                            Delivery Address:
+                          {item.CaseId ? 'Delivery Address:' : 'Pickup Address:'}
                           </span>{" "}
                           &nbsp;
-                          {item.DeliveryAddress}
+                          {item.CaseId ? item.DeliveryAddress : item.PickupAddress}
                         </p>
+
+                        {item.OrderDateTime &&
                         <p class="card-text">
                           <span style={{ fontWeight: "bold" }}>
                             Posted Date
                           </span>{" "}
                           &nbsp;{" "}
                           {moment(item.OrderDateTime).format("LL hh:mm:ss")}
-                        </p>
+                        </p>}
                       </div>
 
                       {item.Status === "Delivered" && (
