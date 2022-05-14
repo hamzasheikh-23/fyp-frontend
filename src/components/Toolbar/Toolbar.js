@@ -22,21 +22,21 @@ const Toolbar = (props) => {
         <div className="spacer"></div>
         <div className="toolbar-nav-items">
           <ul>
-          {localStorage.getItem("loginType") === "admin" && (
-            <li>
-              <Link to="/adminPanelMain">Options</Link>
-            </li>
-          )}
-          {localStorage.getItem("loginType") !== "admin" && (
-            <>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/aboutUs">About</Link>
-            </li>
-            </>
-          )}
+            {localStorage.getItem("loginType") === "admin" && (
+              <li>
+                <Link to="/adminPanelMain">Options</Link>
+              </li>
+            )}
+            {localStorage.getItem("loginType") !== "admin" && (
+              <>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/aboutUs">About</Link>
+                </li>
+              </>
+            )}
 
             {/* <li><Link to="/adminPanelMain">Admin Panel</Link></li> */}
 
@@ -52,7 +52,7 @@ const Toolbar = (props) => {
                   <Link to="/trackOrder">Track Orders</Link>
                 </li>
                 <li>
-                  <Link to="/confirmed-donations">Donor's donations</Link>
+                  <Link to="/confirmed-donations">Confirm donations</Link>
                 </li>
                 {/* <li>
                     <div className="dropdown">

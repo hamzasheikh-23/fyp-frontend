@@ -49,7 +49,7 @@ class SideDrawer extends React.Component {
   };
 
   Manage = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     this.setState((prevState) => {
       return { manage: !prevState.manage };
     });
@@ -89,9 +89,9 @@ class SideDrawer extends React.Component {
 
     return (
       <nav className={drawerClasses}>
-        <div className="image-card">
+        {/* <div className="image-card">
           <div className="image"></div>
-        </div>
+        </div> */}
 
         <div className="pic-content">
           <h1>Charitable</h1>
@@ -102,13 +102,13 @@ class SideDrawer extends React.Component {
           <ul>
             {localStorage.getItem("loginType") === "admin" && (
               <li>
-              <Link to="/adminPanelMain">
-                <i>
-                  <FaAddressCard />
-                </i>
-                Options
-              </Link>
-            </li>
+                <Link to="/adminPanelMain">
+                  <i>
+                    <FaAddressCard />
+                  </i>
+                  Options
+                </Link>
+              </li>
             )}
             {localStorage.getItem("loginType") !== "admin" && (
               <>
@@ -140,7 +140,7 @@ class SideDrawer extends React.Component {
                     </i>
                     <button>Manage</button>
                   </Link> */}
-                  <Link to="/manage-donations" >
+                  <Link to="/manage-donations">
                     <i>
                       <FaGreaterThan />
                     </i>
@@ -153,7 +153,7 @@ class SideDrawer extends React.Component {
                     <i>
                       <FaAddressCard />
                     </i>
-                    Donor's Donations
+                    Confirm donations
                   </Link>
                 </li>
               </>

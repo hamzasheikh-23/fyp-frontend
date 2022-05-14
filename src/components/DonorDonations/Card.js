@@ -91,9 +91,9 @@ class Card extends React.Component {
       this.setState({ addDetailModalShow: false });
 
     let images = [
-      this.props.image1Name,
-      this.props.image2Name,
-      this.props.image3Name,
+      this.props.itemImg1,
+      this.props.itemImg2,
+      this.props.itemImg3,
     ];
 
     return (
@@ -106,12 +106,9 @@ class Card extends React.Component {
           }}
           class="card"
         >
-          {this.props.image1Name ? (
+          {this.props.itemImg1 ? (
             <img
-              src={
-                "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
-              }
-              //    src={require(`../../serverImages/${this.props.image1Name}`)}
+              src={`data:image/*;base64,${this.props.itemImg1}`}
               alt=".."
               className="card-image"
             />

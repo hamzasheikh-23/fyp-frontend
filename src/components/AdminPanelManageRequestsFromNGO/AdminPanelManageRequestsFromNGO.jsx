@@ -127,7 +127,7 @@ const AdminPanelManageRequestsFromNGO = (props) => {
             <h7 onClick={()=>props.history.goBack()} style={{padding:'16px', display:'inline-block', cursor:'pointer'}}>GO BACK</h7>
             <h1 className="page-heading-donation-requests">Pending Requests From NGOs</h1>
         
-            <div className='table-donation-requests'>
+            <div className='table-donation-requests ngo-request-table-donation-requests'>
                 <Table responsive="md" bordered>
                     <thead>
                         <tr>
