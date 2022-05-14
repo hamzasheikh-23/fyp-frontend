@@ -382,7 +382,7 @@ class DonationForm extends Component {
       const DonationData = {
         Address: this.state.address,
         Rating: this.state.rating,
-        Category: parseFloat(this.state.category),
+        CategoryId: parseFloat(this.state.category),
         Description: this.state.itemDescription,
         Title: this.state.itemTitle,
         Quantity: parseFloat(this.state.itemQuantity),

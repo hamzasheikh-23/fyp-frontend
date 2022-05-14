@@ -318,23 +318,23 @@ class AdminPanelManageAdmin extends Component {
           <div className="container">
             <h1 className="blue-heading sigup-page-heading">Manage Admins</h1>
             <div className="account-pic-container">
-              <div className="row">
-                <div className="col-6 main-pic-container ">
+              <div style={{display:'flex', justifyContent:'space-evenly', flexWrap:'wrap'}} >
+                <div style={{border:'1px solid red', padding:5, borderRadius:5}}>
                   <button
                     className="account-button"
                     onClick={() => this.AccountSelectionHandler()}
                   >
-                    <div className={this.state.createPage && "pic-border"}>
+                    <div >
                       <div className="admin-tag">Create New Admin</div>
                     </div>
                   </button>
                 </div>
-                <div className="col-6  main-pic-container ">
+                <div className={this.state.createPage && "pic-border"}>
                   <button
                     className="account-button"
                     onClick={() => this.AccountSelectionHandler("ngo")}
                   >
-                    <div className={!this.state.createPage && "pic-border"}>
+                    <div >
                       <div className="admin-tag">Admin Records</div>
                     </div>
                   </button>
