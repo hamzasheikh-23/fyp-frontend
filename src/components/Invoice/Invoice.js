@@ -17,7 +17,9 @@ export default class Invoice extends Component {
         `${baseURL}/invoice/get?orderId=${orderId}`
       )
       .then((res) => {
-        this.setState({ data: res.data.invoices });
+        if(!res.data.noData){
+          this.setState({ data: res.data.invoices });
+        }
       })
       .catch(console.log);
   }
@@ -72,24 +74,24 @@ export default class Invoice extends Component {
               <div style={{ flex: 1 }}>
                 <p class="card-text" style={{ marginBottom: 0 }}>
                   <span style={{ fontWeight: "bold" }}>Invoice Id:</span> &nbsp;
-                  {checkProperty("InvoiceId", data)}
+                  {checkProperty("InvoiceId", data, 'N/A')}
                 </p>
 
                 <p class="card-text" style={{ marginBottom: 0 }}>
                   <span style={{ fontWeight: "bold" }}>Order Id:</span> &nbsp;
-                  {checkProperty("OrderId", data)}
+                  {checkProperty("OrderId", data, 'N/A')}
                 </p>
 
                 <p class="card-text" style={{ marginBottom: 0 }}>
                   <span style={{ fontWeight: "bold" }}>Card Number:</span>{" "}
                   &nbsp;
-                  {checkProperty("CardNumber", data)}
+                  {checkProperty("CardNumber", data, 'N/A')}
                 </p>
 
                 <p class="card-text" style={{ marginBottom: 0 }}>
                   <span style={{ fontWeight: "bold" }}>Card Holder Name:</span>{" "}
                   &nbsp;
-                  {checkProperty("CardholderName", data)}
+                  {checkProperty("CardholderName", data, 'N/A')}
                 </p>
 
                 <p class="card-text" style={{ marginBottom: 0 }}>
@@ -99,11 +101,12 @@ export default class Invoice extends Component {
 
                 <p class="card-text" style={{ marginBottom: 0 }}>
                   <span style={{ fontWeight: "bold" }}>Date:</span> &nbsp;
-                  {data.Date ? moment(data.Date).format("LL hh:mm:ss") : ""}
+                  {data.Date ? moment(data.Date).format("LL hh:mm:ss") : 'N/A'}
                 </p>
               </div>
 
               <button
+              disabled={Object.keys(data).length===0}
                 //   style={{
                 //     backgroundColor: "#4A89DC",
                 //     border: "none",

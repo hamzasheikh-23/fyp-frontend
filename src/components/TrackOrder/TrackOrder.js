@@ -146,16 +146,18 @@ export default class TrackOrder extends React.Component {
               </div> */}
                       </div>
                       <div style={{ flex: 1 }}>
+                        {item.Status &&
                         <p class="card-text" style={{ marginBottom: 0 }}>
                           <span style={{ fontWeight: "bold" }}>Status:</span>{" "}
                           &nbsp;
                           {item.Status}
-                        </p>
+                        </p>}
+                        {item.CaseId &&
                         <p class="card-text" style={{ marginBottom: 0 }}>
                           <span style={{ fontWeight: "bold" }}>Case Id:</span>{" "}
                           &nbsp;
                           {item.CaseId}
-                        </p>
+                        </p>}
                         <p class="card-text" style={{ marginBottom: 0 }}>
                           <span style={{ fontWeight: "bold" }}>Reply Id:</span>{" "}
                           &nbsp;

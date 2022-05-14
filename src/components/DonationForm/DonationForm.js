@@ -102,6 +102,7 @@ class DonationForm extends Component {
             status,
             isActive,
           } = this.props.history.location.state.data;
+          console.log('previous data',this.props.history.location.state.data)
           this.setState(
             {
               address,
@@ -119,7 +120,7 @@ class DonationForm extends Component {
               //   (image3Name && itemImg3) && { name: image3Name, base64: itemImg3 },
               // ].filter(item=>item),
               categoriesArr: [],
-              expirationDate: moment(date, "LL hh:mm:ss").utc(true).toDate(),
+              expirationDate: date ?  moment(date, "LL hh:mm:ss").utc(true).toDate() : new Date(),
               expirationDateErr: null,
               base64Images: [
                 image1Name &&
@@ -168,7 +169,7 @@ class DonationForm extends Component {
             id: item.CategoryId,
             name: item.DonationCategory,
           })),
-        });
+        },()=>console.log("category data", this.state.category, this.state.categoriesArr));
       })
       .catch((err) => console.log("error in getting categories api", err));
   }
