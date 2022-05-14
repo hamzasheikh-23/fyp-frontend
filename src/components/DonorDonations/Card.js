@@ -5,6 +5,7 @@ import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 
 import axios from "axios";
 import { FaTrash, FaCheck } from "react-icons/fa";
+import { baseURL } from "../../baseURL";
 
 class Card extends React.Component {
   state = {
@@ -58,8 +59,34 @@ class Card extends React.Component {
     //       this.props.getData();
     //   });
   };
+  submitForm=(e)=>{
+    e.preventDefault();
+    const isValid = this.validation();
+    console.log("isValid: ", isValid, this.state);
+    if (isValid) {
+      const response={
+        NgoId: localStorage.getItem("ngoID"), 
+
+        DonationId:this.props.donationId, 
+
+        Address: this.state.address, 
+
+        Message: this.state.msg, 
+      }
+      console.log("data of response", response);
+      axios
+        .post(`${baseURL}/response/post `, response)
+        .then((res) => {
+          console.log("success", res);
+          this.props.getData();
+          this.acceptModalClose();
+        })
+        .catch((err) => console.log("error", err));
+    }
+    
+  }
   render() {
-    // console.log("card", this.props);
+    console.log("card", this.props);
     let addDetailModalClose = () =>
       this.setState({ addDetailModalShow: false });
 
@@ -186,7 +213,7 @@ class Card extends React.Component {
                 <form action="/" noValidate>
                   <div className="form-group">
                     <label htmlFor="address" className="my-donation-label mb-2">
-                      Pickup/Dropoff Address
+                      Dropoff Address
                     </label>
                     <input
                       name="address"
@@ -231,10 +258,7 @@ class Card extends React.Component {
               </Button>
               <Button
                 variant="success"
-                onClick={() => {
-                  // this.addModalClose(true)
-                  // this.props.history.push('/paymentInfo',{data:{caseId: this.props.CaseId, replyId: this.props.ReplyId, address: this.props.Address, amount: parseFloat(this.state.serviceAmount + this.state.deliveryAmount + this.state.vat)}})
-                }}
+                onClick={this.submitForm}
               >
                 Proceed To Pay
               </Button>

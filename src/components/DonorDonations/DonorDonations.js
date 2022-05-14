@@ -17,43 +17,41 @@ import { baseURL } from "../../baseURL";
 
 class DonorDonations extends React.Component {
   componentDidMount() {
-    this.setState({
-      items: data.map((item) => ({
-        title: item.Title,
-        quantity: item.Quantity,
-        quantityPerUnit: item.QuantityPerUnit,
-        date: item.ExpiryDate
-          ? moment(item.ExpiryDate).format("LL hh:mm:ss")
-          : null,
-        weight: item.Weight,
-        description: item.Description,
-        category: item.Category,
-        donationId: item.DonationId,
-        rating: item.Rating,
-        condition: item.Condition,
-        itemImg1: item.Image1base64,
-        itemImg2: item.Image2base64,
-        itemImg3: item.Image3base64,
-        image1Name: item.Image1Name,
-        image2Name: item.Image2Name,
-        image3Name: item.Image3Name,
-        postedDate: item.PostedDate
-          ? moment(item.PostedDate).format("LL hh:mm:ss")
-          : null,
-        status: item.Status,
-        isActive: item.IsActive,
-      })),
-    });
-    // this.getData()
+    // this.setState({
+    //   items: data.map((item) => ({
+    //     title: item.Title,
+    //     quantity: item.Quantity,
+    //     quantityPerUnit: item.QuantityPerUnit,
+    //     date: item.ExpiryDate
+    //       ? moment(item.ExpiryDate).format("LL hh:mm:ss")
+    //       : null,
+    //     weight: item.Weight,
+    //     description: item.Description,
+    //     category: item.Category,
+    //     donationId: item.DonationId,
+    //     rating: item.Rating,
+    //     condition: item.Condition,
+    //     itemImg1: item.Image1base64,
+    //     itemImg2: item.Image2base64,
+    //     itemImg3: item.Image3base64,
+    //     image1Name: item.Image1Name,
+    //     image2Name: item.Image2Name,
+    //     image3Name: item.Image3Name,
+    //     postedDate: item.PostedDate
+    //       ? moment(item.PostedDate).format("LL hh:mm:ss")
+    //       : null,
+    //     status: item.Status,
+    //     isActive: item.IsActive,
+    //   })),
+    // });
+    this.getData()
   }
 
   getData = () => {
-    console.log("get data called");
+    // alert('start')
     axios
       .get(
-        `${baseURL}/donation/get?donorId=${localStorage.getItem(
-          "donorID"
-        )}`
+        `${baseURL}/donation/get?status=Approved&isActive=true `
       )
       .then((res) => {
         console.log(res);
@@ -63,6 +61,7 @@ class DonorDonations extends React.Component {
               title: item.Title,
               address: item.Address,
               quantity: item.Quantity,
+              donorName: item.DonorName,
               quantityPerUnit: item.QuantityPerUnit,
               date: checkProperty("ExpiryDate", item)
                 ? moment(item.ExpiryDate).format("LL hh:mm:ss")

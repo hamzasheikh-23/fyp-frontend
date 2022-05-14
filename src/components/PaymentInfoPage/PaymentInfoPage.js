@@ -135,6 +135,34 @@ export default class PaymentInfoPage extends React.Component {
    
   };
 
+  donationPayment = (paymentPayload) => {
+    const { donationId, address, amount } = this.props.history?.location?.state?.data;
+    axios
+      .post(`${baseURL}/paymentInfo/post`, paymentPayload)
+      .then((res1) => {
+        //later
+        axios.post(`${baseURL}/order/response/post`,{ PaymentId: res1.data.lastId, DonationId: donationId, Address: address, Amount: amount })
+        .then((res2) => {
+          toast.success(
+            "Thank you for your order wait till it gets approve by admin",
+            {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
+          );
+          this.props.history.push("/trackOrder");
+        })
+        .catch(console.log);
+      })
+      .catch(console.log);
+   
+  };
+
   replyPayment = (paymentPayload) => {
     const { caseId, replyId, address, amount } =
       this.props.history?.location?.state?.data;
@@ -181,6 +209,8 @@ export default class PaymentInfoPage extends React.Component {
     e.preventDefault();
     const isValid = this.validation();
     console.log("isValid: ", isValid, this.state);
+    console.log('previous data', this.props.history?.location?.state?.data)
+
     if (isValid) {
       const paymentPayload = {
         NgoId: localStorage.getItem("ngoID"),
@@ -191,7 +221,6 @@ export default class PaymentInfoPage extends React.Component {
         CVV: this.state.cvv,
       };
 
-      console.log('previous data', this.props.history?.location?.state?.data)
 
       const replyId = checkProperty('replyId', this.props.history?.location?.state?.data)
       const donationId = checkProperty('donationId', this.props.history?.location?.state?.data)
@@ -207,6 +236,7 @@ export default class PaymentInfoPage extends React.Component {
       if (replyId) {
         this.replyPayment(paymentPayload);
       } else if (donationId) {
+        this.donationPayment(paymentPayload)
       } else if (planId) {
         this.subscriptionPayment(paymentPayload);
       }

@@ -16,7 +16,7 @@ class RequestCard extends React.Component {
   rejectReply = () => {
     axios
       .put(
-        `${baseURL}/reply/edit?id=${this.props.ReplyId}&status=Rejected`
+        `${baseURL}/response/edit?id=${this.props.ResponseId}&status=Rejected`
       )
       .then((res) => {
         this.props.fetchData();
@@ -26,7 +26,7 @@ class RequestCard extends React.Component {
   acceptReply = () => {
     axios
       .put(
-        `${baseURL}/reply/edit?id=${this.props.ReplyId}&status=Approved`
+        `${baseURL}/response/edit?id=${this.props.ResponseId}&status=Approved`
       )
       .then((res) => {
         this.props.fetchData();
@@ -44,7 +44,7 @@ class RequestCard extends React.Component {
             {this.props.DonationTitle}
           </h5>
           <h6 class="card-subtitle mb-4 text-muted ngo-request-card-subtitle">
-            Responder's Name: {this.props.NGOName}
+            Responder's Name: {this.props.NgoName}
           </h6>
           <p class="card-text ngo-request-card-text ">{this.props.Message}</p>
           {/* <p class="card-text ngo-request-card-text mb-5"><span style={{fontWeight:'bold'}}>Donation Quantity:</span> &nbsp; {`${checkProperty('Quantity',this.props, 1)} ${checkProperty('Unit',this.props,'unit')}`}</p> */}

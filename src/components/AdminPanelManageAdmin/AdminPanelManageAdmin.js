@@ -313,6 +313,7 @@ class AdminPanelManageAdmin extends Component {
         <SideDrawer about={true} show={this.state.siderDrawerOpen} />
         {backdrop}
         <div className="my-manage-admin-page">
+          <h7 onClick={()=>this.props.history.goBack()} style={{padding:'16px', display:'inline-block', cursor:'pointer'}}>GO BACK</h7>
           {this.alertHandler()}
           <div className="container">
             <h1 className="blue-heading sigup-page-heading">Manage Admins</h1>

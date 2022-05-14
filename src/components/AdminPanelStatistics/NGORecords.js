@@ -20,7 +20,7 @@ class NGORecords extends React.Component {
         },
         chart: {
           type: "bar",
-          height: 350,
+          // height: 350,
         },
         plotOptions: {
           bar: {
@@ -153,7 +153,7 @@ class NGORecords extends React.Component {
           options={this.state.options}
           series={this.state.series}
           type="bar"
-          height={550}
+          height={500}
         />
       </>
     );

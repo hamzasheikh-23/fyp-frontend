@@ -7,7 +7,7 @@ import TableRow from './TableRow'
 import GetDonations from './APIs/GetDonations'
 import './AdminPanelManageDonors.css'
 
-const AdminPanelManageDonors = () => {
+const AdminPanelManageDonors = (props) => {
 
     const [sideOpen, setSideOpen] = useState(false)
     const [donors, setDonors] = useState([])
@@ -68,6 +68,7 @@ const AdminPanelManageDonors = () => {
         <>
             <Toolbar drawerClickHandler={() => setSideOpen(!sideOpen)} about={true}/>
             <SideDrawer about={true} show={sideOpen} />
+            <h7 onClick={()=>props.history.goBack()} style={{padding:'16px', display:'inline-block', cursor:'pointer'}}>GO BACK</h7>
             <h1 className="page-heading-donation-requests">Donor Records</h1>
         
             <div className='table-donation-requests'>

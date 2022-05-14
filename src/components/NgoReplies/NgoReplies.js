@@ -12,48 +12,48 @@ import RequestCard from "./RequestCard";
 import { filter } from "lodash";
 import moment from "moment";
 
-const dummyData = [
-  {
-    DonationTitle: "three set of gloves",
-    ReplyId: 1,
-    NGOName: "Saylani Welfare",
-    Message: "this is the dummy msg",
-    PostedDate: "March 33, 2022",
-    Status: "Pending",
-  },
-  {
-    DonationTitle: "three set of gloves",
-    ReplyId: 1,
-    NGOName: "Saylani Welfare",
-    Message: "this is the dummy msg",
-    PostedDate: "March 33, 2022",
-    Status: "Pending",
-  },
-  {
-    DonationTitle: "three set of gloves",
-    ReplyId: 1,
-    NGOName: "Saylani Welfare",
-    Message: "this is the dummy msg",
-    PostedDate: "March 33, 2022",
-    Status: "Pending",
-  },
-  {
-    DonationTitle: "three set of gloves",
-    ReplyId: 1,
-    NGOName: "Saylani Welfare",
-    Message: "this is the dummy msg",
-    PostedDate: "March 33, 2022",
-    Status: "Pending",
-  },
-  {
-    DonationTitle: "three set of gloves",
-    ReplyId: 1,
-    NGOName: "Saylani Welfare",
-    Message: "this is the dummy msg",
-    PostedDate: "March 33, 2022",
-    Status: "Pending",
-  },
-];
+// const dummyData = [
+//   {
+//     DonationTitle: "three set of gloves",
+//     ReplyId: 1,
+//     NGOName: "Saylani Welfare",
+//     Message: "this is the dummy msg",
+//     PostedDate: "March 33, 2022",
+//     Status: "Pending",
+//   },
+//   {
+//     DonationTitle: "three set of gloves",
+//     ReplyId: 1,
+//     NGOName: "Saylani Welfare",
+//     Message: "this is the dummy msg",
+//     PostedDate: "March 33, 2022",
+//     Status: "Pending",
+//   },
+//   {
+//     DonationTitle: "three set of gloves",
+//     ReplyId: 1,
+//     NGOName: "Saylani Welfare",
+//     Message: "this is the dummy msg",
+//     PostedDate: "March 33, 2022",
+//     Status: "Pending",
+//   },
+//   {
+//     DonationTitle: "three set of gloves",
+//     ReplyId: 1,
+//     NGOName: "Saylani Welfare",
+//     Message: "this is the dummy msg",
+//     PostedDate: "March 33, 2022",
+//     Status: "Pending",
+//   },
+//   {
+//     DonationTitle: "three set of gloves",
+//     ReplyId: 1,
+//     NGOName: "Saylani Welfare",
+//     Message: "this is the dummy msg",
+//     PostedDate: "March 33, 2022",
+//     Status: "Pending",
+//   },
+// ];
 
 class NgoReplies extends React.Component {
   constructor(props) {
@@ -71,26 +71,7 @@ class NgoReplies extends React.Component {
     //   replies: dummyData,
     // });
     // get requests
-    axios
-      .get(
-        `${baseURL}/response/get?donorId=${localStorage.getItem('donorID')}&status=Pending`
-      )
-      .then((res) => {
-        // console.log('res', res)
-        if(!res.data.noData){
-          this.setState({
-            replies: res.data.reply
-          });
-        }
-        else{
-          this.setState({
-            replies: []
-          });
-        }
-
-        // console.log(this.state)
-      })
-      .catch((err) => console.log(err));
+    this.getData();
 
     //get cases
     // axios
@@ -111,6 +92,29 @@ class NgoReplies extends React.Component {
     //   .catch((error) => console.log(error));
   }
 
+  getData=()=>{
+    axios
+    .get(
+      `${baseURL}/response/get?donorId=${localStorage.getItem('donorID')}&status=Pending`
+    )
+    .then((res) => {
+      // console.log('res', res)
+      if(!res.data.noData){
+        this.setState({
+          replies: res.data.reply
+        });
+      }
+      else{
+        this.setState({
+          replies: []
+        });
+      }
+
+      // console.log(this.state)
+    })
+    .catch((err) => console.log(err));
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.selectedCase !== this.state.selectedCase) {
       this.filteredContent(this.state.selectedCase);
@@ -127,7 +131,7 @@ class NgoReplies extends React.Component {
       .then((res) => {
         if (!res.data.noData) {
           this.setState({
-            replies: dummyData,
+            replies: res.data.reply,
           });
         } else {
           this.setState({
@@ -160,7 +164,7 @@ class NgoReplies extends React.Component {
         <SideDrawer about={true} show={this.state.siderDrawerOpen} />
         {backdrop}
         <div className="replies-main-div">
-          <div className="filter-area">
+          {/* <div className="filter-area">
             <h2 className="filter-heading">Filter By Titles:</h2>
             <ul className="filter-options">
               <li>
@@ -195,202 +199,15 @@ class NgoReplies extends React.Component {
                   </li>
                 );
               })}
-              {/* <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCase === "Clothes"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCase: "Clothes" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Clothes
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCase === "Medicines"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCase: "Medicines" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Medicines
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCase === "Toys"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCase: "Toys" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Toys
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCase === "Books"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCase: "Books" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Books
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCase === "Food"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCase: "Food" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Food
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCase === "School Fees"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCase: "School Fees" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  School Fees
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCase === "Medicines"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCase: "Medicines" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Medicines
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCase === "Toys"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCase: "Toys" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Toys
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCase === "Books"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCase: "Books" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Books
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCase === "Food"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCase: "Food" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  Food
-                </a>
-              </li>
-              <li>
-                <a
-                  style={{
-                    backgroundColor:
-                      this.state.selectedCase === "School Fees"
-                        ? "#579df8"
-                        : "#4a89dc",
-                  }}
-                  onClick={() => {
-                    this.setState({ selectedCase: "School Fees" }, () =>
-                      this.filteredContent()
-                    );
-                  }}
-                >
-                  last
-                </a>
-              </li> */}
             </ul>
-          </div>
-          <div class="request-area">
+          </div> */}
+          <div class="request-area" style={{margin:'0 auto'}}>
             <h3 className="request-area-heading">NGO'S RESPONSE</h3>
             {this.state.replies.map((reply) => {
               return (
                 <RequestCard
                   {...reply}
-                  fetchData={this.filteredContent}
+                  fetchData={this.getData}
                   history={this.props.history}
                 />
               );

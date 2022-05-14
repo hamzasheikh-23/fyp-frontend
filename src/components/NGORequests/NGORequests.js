@@ -28,33 +28,7 @@ class NGORequests extends React.Component {
   }
   componentDidMount() {
     //get requests
-    axios
-      .get(
-        `${baseURL}/case/get?status=approved&&isActive=true`
-      )
-      .then((res) => {
-        // console.log('res', res)
-        if (!res.data.noData) {
-          this.setState({
-            requests: res.data.cases.map((item) => ({
-              caseId: item.CaseId,
-              ngoID: item.NGOId,
-              caseTitle: item.CaseTitle,
-              quantity: item.Quantity,
-              unit: item.Unit,
-              postedDate: item.PostedDate,
-              description: item.Description,
-              imageBase64: item.ImageBase64,
-              imageName: item.ImageName,
-            })),
-          });
-        } else {
-          this.setState({ requests: [] });
-        }
-
-        // console.log(this.state)
-      })
-      .catch((err) => console.log(err));
+  this.getData();
 
     //get ngos
     axios
@@ -79,6 +53,36 @@ class NGORequests extends React.Component {
         });
       })
       .catch((error) => console.log(error));
+  }
+
+  getData=()=>{
+    axios
+    .get(
+      `${baseURL}/case/get?status=approved&&isActive=true`
+    )
+    .then((res) => {
+      // console.log('res', res)
+      if (!res.data.noData) {
+        this.setState({
+          requests: res.data.cases.map((item) => ({
+            caseId: item.CaseId,
+            ngoID: item.NGOId,
+            caseTitle: item.CaseTitle,
+            quantity: item.Quantity,
+            unit: item.Unit,
+            postedDate: item.PostedDate,
+            description: item.Description,
+            imageBase64: item.ImageBase64,
+            imageName: item.ImageName,
+          })),
+        });
+      } else {
+        this.setState({ requests: [] });
+      }
+
+      // console.log(this.state)
+    })
+    .catch((err) => console.log(err));
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -143,7 +147,7 @@ class NGORequests extends React.Component {
         <SideDrawer about={true} show={this.state.siderDrawerOpen} />
         {backdrop}
         <div className="ngo-main-div">
-          <div className="filter-area">
+          {/* <div className="filter-area">
             <h2 className="filter-heading">Filter By NGO:</h2>
             <ul className="filter-options">
               <li>
@@ -179,29 +183,9 @@ class NGORequests extends React.Component {
                   </li>
                 );
               })}
-
-              {/* <li>
-                <a>Human Rights Organization </a>
-              </li>
-              <li>
-                <a>Helping Hands</a>
-              </li>
-              <li>
-                <a>Justice For You</a>
-              </li>
-              <li>
-                <a>Little Care</a>
-              </li>
-              <li>
-                <a>Speak For Change</a>
-              </li>
-              <li>
-                <a>We Work Together</a>
-              </li> */}
             </ul>
 
-            {/* category filters */}
-            {/* <h2 className="filter-heading">Filter By Category:</h2>
+            <h2 className="filter-heading">Filter By Category:</h2>
             <ul className="filter-options">
               <li>
                 <a
@@ -237,9 +221,9 @@ class NGORequests extends React.Component {
                   </li>
                 );
               })} 
-              </ul>*/}
-          </div>
-          <div class="request-area">
+              </ul>
+          </div> */}
+          <div class="request-area" style={{margin:'0 auto'}}>
             <h3 className="request-area-heading">NGO'S REQUESTS</h3>
             {this.state.requests.map((request) => {
               return (
@@ -256,7 +240,7 @@ class NGORequests extends React.Component {
                   ngoname={request.ngoName || ""}
                   des={request.description}
                   date={moment(request.postedDate).format("LL hh:mm:ss")}
-                  fetchData={this.filteredContent}
+                  fetchData={this.getData}
                 />
               );
             })}

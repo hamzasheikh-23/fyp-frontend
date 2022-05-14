@@ -83,7 +83,7 @@ class SubscriptionPage extends React.Component {
 
   subscribe = (id, amount) => {
     console.log("subscription id =>", id, amount);
-    this.props.history.push('/paymentInfo',{planId: id, amount: amount})
+    this.props.history.push('/paymentInfo',{data:{planId: id, amount: amount}})
   };
 
   render() {

@@ -94,7 +94,7 @@ class SideDrawer extends React.Component {
         </div>
 
         <div className="pic-content">
-          <h1>Little Deeds</h1>
+          <h1>Charitable</h1>
           <p className="color-highlight">-that make big difference!</p>
         </div>
 
@@ -161,7 +161,7 @@ class SideDrawer extends React.Component {
             {localStorage.getItem("loginType") === "donor" ? (
               <>
                 <li>
-                  <Link to="/#" onClick={this.MakingDonation}>
+                  <Link onClick={this.MakingDonation}>
                     <i>
                       <FaHandHoldingHeart />
                     </i>

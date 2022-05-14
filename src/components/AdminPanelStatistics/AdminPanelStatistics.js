@@ -11,6 +11,7 @@ class AdminPanelStatistics extends React.Component{
     render(){
         return (
         <div >
+            <h7 onClick={()=>this.props.history.goBack()} style={{padding:'16px', display:'inline-block', cursor:'pointer'}}>GO BACK</h7>
             <h1 style={{marginTop:'20px', marginBottom:"40px"}} className="blue-heading donation-heading">Application Statistics</h1>
             <Container>
             <Row>

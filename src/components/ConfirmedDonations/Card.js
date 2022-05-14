@@ -84,7 +84,7 @@ class Card extends React.Component {
                 {this.props.postedDate}
               </p>
             </div>
-
+<div style={{display:'flex', flexWrap:'wrap'}}>
             <button
               style={{
                 backgroundColor: "#4A89DC",
@@ -105,6 +105,27 @@ class Card extends React.Component {
             >
               View Details
             </button>
+            <button
+              style={{
+                backgroundColor: "#4A89DC",
+                border: "none",
+                // width: 170px,
+                color: "white",
+                padding: "7px 20px",
+                textAlign: "center",
+                textDecoration: "none",
+                display: "block",
+                fontSize: "12px",
+                margin: "10px auto",
+                borderRadius: "65px",
+              }}
+              href="#"
+              onClick={() => this.props.history.push('/paymentInfo',{data:{donationId: this.props.donationId, address: this.props.dropof, amount: this.props.totalAmount}})}
+              class="btn btn-primary view-detail"
+            >
+              Make Order
+            </button>
+            </div>
           </div>
         </div>
         <DonationDetailsModal

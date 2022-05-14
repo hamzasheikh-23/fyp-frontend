@@ -31,13 +31,24 @@ class TotalUsers extends React.Component {
         },
         title: {
           text: "Total Users",
-          align: "center",
+          align: "left",
           margin: 20,
           offsetY: 20,
           style: {
             fontSize: "20px",
           },
         },
+        legend: {
+          show: false,
+        },
+        responsive: [{
+          breakpoint: 400,
+          options: {
+            legend: {
+              show: false,
+            },
+          },
+      }]
       },
       series: [],
     };
@@ -65,18 +76,18 @@ class TotalUsers extends React.Component {
   }
   render() {
     return (
-      <div>
-        <div style={{ margin: "0 auto", width: "80%" }}>
+      // <div>
+        <div style={{ margin: "0 auto",  }}>
           <Chart
-            style={{ margin: "0 auto" }}
+            style={{ margin: "0 auto",  }}
             options={this.state.options}
             series={this.state.series.length ? this.state.series : [1, 1]}
             type="pie"
-            height="350"
-            width="100%"
+            // height="260"
+            // width="100%"
           />
         </div>
-      </div>
+      // </div>
     );
   }
 }

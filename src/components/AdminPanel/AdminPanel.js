@@ -100,7 +100,7 @@ class AdminPanel extends React.Component {
                     <FaSlackHash />
                   </i>
                   <span class="count-numbers">{this.state.admins}</span>
-                  <span class="count-name">Successful Donations</span>
+                  <span class="count-name">Our Admins</span>
                 </div>
               </div>
             </div>

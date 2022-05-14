@@ -83,7 +83,7 @@ class AdminPanelDonorRequests extends React.Component {
         {backdrop}
 
         <div className="main-admin-container">
-
+        <h7 onClick={()=>this.props.history.goBack()} style={{padding:'16px', display:'inline-block', cursor:'pointer'}}>GO BACK</h7>
           <h1 className="text-in-admin1" >Pending Donation Requests from Users</h1>
           <hr></hr>
 

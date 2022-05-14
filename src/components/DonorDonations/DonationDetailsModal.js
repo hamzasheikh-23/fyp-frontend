@@ -46,6 +46,10 @@ class DonationDetailsModal extends Component {
                   <td>{moment(data.posted).format("LL hh:mm:ss")}</td>
                 </tr>
                 <tr>
+                  <td>Donor Name:</td>
+                  <td>{data.donorName}</td>
+                </tr>
+                <tr>
                   <td>Condition:</td>
                   <td>{data.condition}</td>
                 </tr>

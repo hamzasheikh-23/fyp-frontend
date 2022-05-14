@@ -20,6 +20,8 @@ class DonationDetailsModal extends Component {
   //     }
   // }
 
+ 
+
   render() {
     console.log("detail", this.props);
     const { data } = this.props;
@@ -45,14 +47,14 @@ class DonationDetailsModal extends Component {
                   <td>Date & Time of Donation:</td>
                   <td>{moment(data.posted).format("LL hh:mm:ss")}</td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>Condition:</td>
                   <td>{data.condition}</td>
-                </tr>
-                <tr>
+                </tr> */}
+                {/* <tr>
                   <td>Category:</td>
                   <td>{data.category}</td>
-                </tr>
+                </tr> */}
                 {/* <tr>
                 <td>Address:</td>
                 <td>{this.state.selectedItem.donationAddress}</td>
@@ -61,21 +63,21 @@ class DonationDetailsModal extends Component {
                   <td>Quantity:</td>
                   <td>{data.quantity}</td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>Quantity Per Unit:</td>
                   <td>{data.quantityPerUnit}</td>
-                </tr>
-                <tr>
+                </tr> */}
+                {/* <tr>
                   <td>Weight:</td>
                   <td>{data.weight}</td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td>Description:</td>
                   <td>{data.description}</td>
                 </tr>
                 <tr>
-                  <td>Rating:</td>
-                  <td>{data.rating}</td>
+                  <td>Message:</td>
+                  <td>{data.message}</td>
                 </tr>
                 {data.date && (
                   <tr>
@@ -91,6 +93,33 @@ class DonationDetailsModal extends Component {
                   <td>Pickup Address:</td>
                   <td>{checkProperty("address", data)}</td>
                 </tr>
+                <tr>
+                  <td>Drop off Address:</td>
+                  <td>{checkProperty("dropof", data)}</td>
+                </tr>
+                <tr>
+                      <td>Service Charges:</td>
+                      <td>{data.serviceAmount} PKR</td>
+                    </tr>
+                    <tr>
+                      <td>Delivery Charges:</td>
+                      <td>{data.deliveryAmount} PKR</td>
+                    </tr>
+                    <tr>
+                      <td>VAT:</td>
+                      <td>{data.vat} PKR</td>
+                    </tr>
+                    <tr>
+                      <td>Total:</td>
+                      <td>
+                        {parseFloat(
+                          data.serviceAmount +
+                            data.deliveryAmount +
+                            data.vat
+                        )}{" "}
+                        PKR
+                      </td>
+                    </tr>
               </tbody>
             </table>
             <div className="container">
