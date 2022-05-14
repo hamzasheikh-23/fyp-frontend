@@ -11,7 +11,9 @@ export default class Invoice extends Component {
     data: {},
   };
   componentDidMount() {
-    const { orderId } = this.props.history?.location?.state;
+     // const { orderId } = this.props.history?.location?.state;
+    const orderId = checkProperty('orderId', checkProperty('state', this.props.history?.location, {}), {});
+    console.log('order id check', orderId);
     axios
       .get(
         `${baseURL}/invoice/get?orderId=${orderId}`
@@ -24,7 +26,9 @@ export default class Invoice extends Component {
       .catch(console.log);
   }
   payNow = () => {
-    const { orderId } = this.props.history?.location?.state;
+    // const { orderId } = this.props.history?.location?.state;
+    const orderId = checkProperty('orderId', checkProperty('state', this.props.history?.location, {}), {})
+
     axios
       .put(
         `${baseURL}/order/edit?id=${orderId}&status=Completed`
