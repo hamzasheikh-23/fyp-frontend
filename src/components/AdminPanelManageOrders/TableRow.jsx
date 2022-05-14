@@ -69,8 +69,8 @@ const TableRow = (props) => {
               <td>{checkProperty('NGOId',row,'-')}</td>
               <td>{checkProperty('NGOName',row,'-')}</td>
               <td>{checkProperty('DonationId',row,'-')}</td>
-              <td>{checkProperty('DonorId',row,'-')}</td>
-              <td>{checkProperty('DonorName',row,'-')}</td>
+              {/* <td>{checkProperty('DonorId',row,'-')}</td>
+              <td>{checkProperty('DonorName',row,'-')}</td> */}
               <td>{checkProperty('PickupAddress',row,'-')}</td>
               <td>{checkProperty('DeliveryAddress',row,'-')}</td>
               <td>{checkProperty('Status',row,'-')}</td>
