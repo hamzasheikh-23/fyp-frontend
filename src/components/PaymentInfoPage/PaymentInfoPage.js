@@ -74,6 +74,8 @@ export default class PaymentInfoPage extends React.Component {
       cvvErr = "required";
     } else if (!validNumber.test(this.state.cvv)) {
       cvvErr = "Only numbers allowed";
+    }else if (this.state.cvv.length !== 3) {
+      cvvErr = "CVV must be a 3-digit number";
     } else {
       cvvErr = "";
     }

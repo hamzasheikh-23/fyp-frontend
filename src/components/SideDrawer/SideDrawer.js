@@ -6,6 +6,7 @@ import {
   FaSignInAlt,
   FaQuestionCircle,
   FaHandHoldingHeart,
+  FaArrowLeft,
   FaDotCircle,
   FaGreaterThan,
 } from "react-icons/fa";
@@ -99,6 +100,14 @@ class SideDrawer extends React.Component {
         </div>
 
         <div>
+          {/* <FaArrowLeft
+            style={{
+              margin: "15px",
+              marginTop: "20px",
+              cursor: "pointer",
+            }}
+            onClick={()=>this.props.history.goBack()}
+          /> */}
           <ul>
             {localStorage.getItem("loginType") === "admin" && (
               <li>

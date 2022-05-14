@@ -158,6 +158,7 @@ class DonorReplies extends React.Component {
             </ul>
           </div> */}
            <div class="request-area" style={{margin:'0 auto'}}>
+             
             <h3 className="request-area-heading">DONOR'S RESPONSE</h3>
             {this.state.replies.map((reply) => {
               return (
