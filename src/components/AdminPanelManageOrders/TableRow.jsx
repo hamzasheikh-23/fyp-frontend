@@ -12,6 +12,7 @@ import PutUpdateDonationStatus from "./APIs/PutUpdateDonationStatus";
 import "./AdminPanelManageOrders.css";
 import moment from "moment";
 import axios from "axios";
+import { checkProperty } from "../../assets/utils";
 
 const TableRow = (props) => {
   const [infoModal, setInfoModal] = useState(false);
@@ -63,13 +64,16 @@ const TableRow = (props) => {
           return (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{row.OrderId}</td>
-              <td>{row.CaseId}</td>
-              <td>{row.NGOId}</td>
-              <td>{row.NGOName}</td>
-              <td>{row.PickupAddress}</td>
-              <td>{row.DeliveryAddress}</td>
-              <td>{row.Status}</td>
+              <td>{checkProperty('OrderId',row,'-')}</td>
+              <td>{checkProperty('CaseId',row,'-')}</td>
+              <td>{checkProperty('NGOId',row,'-')}</td>
+              <td>{checkProperty('NGOName',row,'-')}</td>
+              <td>{checkProperty('DonationId',row,'-')}</td>
+              <td>{checkProperty('DonorId',row,'-')}</td>
+              <td>{checkProperty('DonorName',row,'-')}</td>
+              <td>{checkProperty('PickupAddress',row,'-')}</td>
+              <td>{checkProperty('DeliveryAddress',row,'-')}</td>
+              <td>{checkProperty('Status',row,'-')}</td>
               <td>{moment(row.OrderDateTime).format("DD-MM-YYYY")}</td>
               <td>
                 {row.Status === "Approved" && (

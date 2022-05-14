@@ -252,23 +252,11 @@ class AskDonationForm extends Component {
               this.props.history.location.state?.data?.image1Name
             ? null
             : this.state.base64Images[0].name,
-        Category: this.state.categoryType,
+        DonationCategory: this.state.categoryType,
       };
 
-      console.log(askDonationData);
-
-      // let data = new FormData();
-      // for (var key in askDonationData) {
-      //   data.set(key, askDonationData[key]);
-      // }
 
       console.log("submittedData", askDonationData);
-      // axios({
-      //   method: "post",
-      //   data: data,
-      //   url: "https://charitableapis.azurewebsites.net/case/post ",
-      //   // headers: { "Content-Type": "multipart/form-data" }, //to submit documents
-      // });
 
       if (isEdit) {
         axios

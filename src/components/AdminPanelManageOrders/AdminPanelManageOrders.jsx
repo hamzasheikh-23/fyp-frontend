@@ -136,6 +136,9 @@ const AdminPanelManageOrders = (props) => {
                             <th>Case ID</th>
                             <th>NGO ID</th>
                             <th>NGO Name</th>
+                            <th>Donation ID</th>
+                            <th>Donor ID</th>
+                            <th>Donor Name</th>
                             <th>Pickup Address</th>
                             <th>Delivery Address</th>
                             <th>Status</th>
