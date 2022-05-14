@@ -215,15 +215,15 @@ class RequestCard extends React.Component {
                 <div className="container">
                   <div className="row">
                     <div className="col-lg-4 col-md-6 col-sm-12">
-                      {!this.props.Image1Name ? null : (
+                      {!this.props.Image1 ? null : (
                         <img
-                          onClick={() =>
-                            window.open(
-                              require(`../../serverImages/donorReplies/${this.props.Image1Name}`),
-                              "_blank"
-                            )
-                          }
-                          src={require(`../../serverImages/donorReplies/${this.props.Image1Name}`)}
+                          // onClick={() =>
+                          //   window.open(
+                          //     require(`../../serverImages/donorReplies/${this.props.Image1}`),
+                          //     "_blank"
+                          //   )
+                          // }
+                          src={`data:image/*;base64,${this.props.Image1}`}
                           height="200px"
                           width="100%"
                           style={{ objectFit: "contain", marginBottom: "5px" }}
@@ -232,15 +232,15 @@ class RequestCard extends React.Component {
                     </div>
 
                     <div className="col-lg-4 col-md-6 col-sm-12">
-                      {!this.props.Image2Name ? null : (
+                      {!this.props.Image2 ? null : (
                         <img
-                          onClick={() =>
-                            window.open(
-                              require(`../../serverImages/donorReplies/${this.props.Image2Name}`),
-                              "_blank"
-                            )
-                          }
-                          src={require(`../../serverImages/donorReplies/${this.props.Image2Name}`)}
+                          // onClick={() =>
+                          //   window.open(
+                          //     require(`../../serverImages/donorReplies/${this.props.Image2}`),
+                          //     "_blank"
+                          //   )
+                          // }
+                          src={`data:image/*;base64,${this.props.Image2}`}
                           height="200px"
                           width="100%"
                           style={{ objectFit: "contain", marginBottom: "5px" }}
@@ -249,15 +249,15 @@ class RequestCard extends React.Component {
                     </div>
 
                     <div className="col-lg-4 col-md-6 col-sm-12">
-                      {!this.props.Image3Name ? null : (
+                      {!this.props.Image3 ? null : (
                         <img
-                          onClick={() =>
-                            window.open(
-                              require(`../../serverImages/donorReplies/${this.props.Image3Name}`),
-                              "_blank"
-                            )
-                          }
-                          src={require(`../../serverImages/donorReplies/${this.props.Image3Name}`)}
+                          // onClick={() =>
+                          //   window.open(
+                          //     require(`../../serverImages/donorReplies/${this.props.Image3}`),
+                          //     "_blank"
+                          //   )
+                          // }
+                          src={`data:image/*;base64,${this.props.Image3}`}
                           height="200px"
                           width="100%"
                           style={{ objectFit: "contain", marginBottom: "5px" }}

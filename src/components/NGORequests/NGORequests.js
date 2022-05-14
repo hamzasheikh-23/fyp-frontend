@@ -74,6 +74,7 @@ class NGORequests extends React.Component {
             description: item.Description,
             imageBase64: item.ImageBase64,
             imageName: item.ImageName,
+            coverImage: item.CoverImage,
           })),
         });
       } else {
@@ -116,6 +117,7 @@ class NGORequests extends React.Component {
               description: item.Description,
               imageBase64: item.ImageBase64,
               imageName: item.ImageName,
+              coverImage: item.CoverImage,
             })),
           });
         } else {
@@ -229,8 +231,8 @@ class NGORequests extends React.Component {
               return (
                 <RequestCard
                   image={
-                    request.imageName
-                      ? require(`../../serverImages/cases/${request.imageName}`)
+                    request.coverImage
+                      ? `data:image/*;base64,${request.coverImage}`
                       : "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
                   }
                   title={request.caseTitle}
