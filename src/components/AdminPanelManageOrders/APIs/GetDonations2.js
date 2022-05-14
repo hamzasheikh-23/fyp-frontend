@@ -3,7 +3,7 @@ import { baseURL } from "../../../baseURL";
 
 const GetDonations2 = async (status) => {
   try {
-    const apiUrl = `${baseURL}/order/response/get`;
+    const apiUrl = `${baseURL}/order/getallresponse`;
     const response = await axios.get(apiUrl);
     return response.data;
   } catch (e) {
