@@ -5,12 +5,15 @@ import Toolbar from '../Toolbar/Toolbar'
 import SideDrawer from '../SideDrawer/SideDrawer'
 import TableRow from './TableRow'
 import GetDonations from './APIs/GetDonations'
-import './AdminRecord.css'
+import './AdminRecord.css';
+import TablePagination from "../TablePagination/TablePagination";
 
 const AdminRecord = () => {
 
     const [sideOpen, setSideOpen] = useState(false)
     const [admins, setAdmins] = useState([])
+    const [adminsDisplay, setAdminsDisplay] = useState([])
+
 
     // const rows = [
     //     {
@@ -71,6 +74,15 @@ const AdminRecord = () => {
             {/* <h1 className="page-heading-donation-requests">Admin Records</h1> */}
         
             <div className='table-donation-requests admin-manage'>
+            <TablePagination
+          list={admins}
+          getData={(data) => setAdminsDisplay(data)}
+          searchParam="Username"
+          searchText="User Name"
+          filterParam="IsActive"
+          filterText="Active Status"
+          filterList={[{name:"", value:""},{name:"Yes", value:"true"},{name:"No", value:"false"}]}
+        >
                 <Table responsive="md" bordered>
                     <thead>
                         <tr>
@@ -86,9 +98,10 @@ const AdminRecord = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <TableRow update={fetchData} rows={admins} />
+                        <TableRow update={fetchData} rows={adminsDisplay} />
                     </tbody>
                 </Table>
+                </TablePagination>
             </div>
         </>
     )

@@ -6,13 +6,15 @@ import SideDrawer from '../SideDrawer/SideDrawer'
 import TableRow from './TableRow'
 import GetDonations from './APIs/GetDonations'
 import GetDonations2 from './APIs/GetDonations2'
-
+import TablePagination from "../TablePagination/TablePagination";
 import './AdminPanelManageOrders.css'
 
 const AdminPanelManageOrders = (props) => {
 
     const [sideOpen, setSideOpen] = useState(false)
     const [ngoRequests, setNgoRequests] = useState([])
+    const [ngoRequestsDisplay, setNgoRequestsDisplay] = useState([])
+
     // const [statusFilter, setStatusFilter] = useState('pending')
 
     // const rows = [
@@ -141,6 +143,15 @@ const AdminPanelManageOrders = (props) => {
             <h1 className="page-heading-donation-requests">Manage NGO Orders</h1>
         
             <div className='table-donation-requests manage-order'>
+            <TablePagination
+          list={ngoRequests}
+          getData={(data) => setNgoRequestsDisplay(data)}
+          searchParam="OrderId"
+          searchText="Order ID"
+          filterParam="Status"
+          filterText="Status"
+          filterList={["", "Approved", "Rejected", "Completed","Pending"]}
+        >
                 <Table responsive="md" bordered>
                     <thead>
                         <tr>
@@ -160,9 +171,10 @@ const AdminPanelManageOrders = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <TableRow update={fetchData} rows={ngoRequests} />
+                        <TableRow update={fetchData} rows={ngoRequestsDisplay} />
                     </tbody>
                 </Table>
+                </TablePagination>
             </div>
         </>
     )

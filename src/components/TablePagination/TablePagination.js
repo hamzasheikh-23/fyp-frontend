@@ -20,6 +20,7 @@ export default class TablePagination extends React.Component {
   };
   componentDidMount() {
     this.reorganiseLibrary();
+    console.log('props',this.props)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -33,26 +34,38 @@ export default class TablePagination extends React.Component {
 
   // Calculates the library
   reorganiseLibrary = () => {
-    // console.log("reorganiseLibrary props", this.props.list);
+    console.log("reorganiseLibrary", this.state.filter, typeof this.state.filter);
     // debugger;
     const { search, perPage, currentPage, filter } = this.state;
-    let library = this.props.list;
+    let library = this.props.list.map(item=>({...item, [this.props.searchParam]: item[this.props.searchParam]?.toString()}));
 
     if (search !== "") {
       library = library.filter((book) =>
-        book[this.props.searchParam].toLowerCase().includes(search)
+        book[this.props.searchParam]?.toLowerCase().includes(search)
       );
     }
-    if (filter !== "") {
+    if((typeof filter === 'object' && filter.value !=="")){
+        library = library.filter(
+            (book) => {
+                    console.log('filterlist','obj',book[this.props.filterParam]?.toLowerCase(), filter.value)
+                    return book[this.props.filterParam]?.toLowerCase() === filter.value
+            }
+          );
+    }
+    if (filter !== "" && typeof filter === 'string' ) {
       library = library.filter(
-        (book) => book[this.props.filterParam].toLowerCase() === filter
+        (book) => {
+                console.log('filterlist','string')
+                return book[this.props.filterParam]?.toLowerCase() === filter
+            
+        }
       );
     }
     // console.log('chunk',_.chunk(library, perPage))
 
     library = _.chunk(library, perPage);
     // console.log('libarary',library)
-    // console.log("reorganiseLibrary library", library);
+    console.log("reorganiseLibrary library", library);
 
     this.setState(
       {
@@ -89,14 +102,22 @@ export default class TablePagination extends React.Component {
 
   // handle filter
   handleFilter = (value) =>
-    this.setState(
-      {
-        filter: value.toLowerCase(),
-      },
-      () => {
-        this.reorganiseLibrary();
-      }
-    );
+  typeof value === 'string' ?
+      this.setState(
+        {
+          filter: value.toLowerCase(),
+        },
+        () => {
+          this.reorganiseLibrary();
+        }
+      ) : this.setState(
+        {
+          filter: { name: value.name,value: value.value.toLowerCase()},
+        },
+        () => {
+          this.reorganiseLibrary();
+        }
+      );
 
   // handle per page
   handlePerPage = (evt) =>
@@ -127,7 +148,7 @@ export default class TablePagination extends React.Component {
         <div className="page-header">
           <div className="form-group mb-2">
             <label htmlFor="status" className="my-donation-label">
-              Search By Title:
+              Search By {this.props.searchText}:
             </label>
             <input
               name="item-quantity"
@@ -140,12 +161,25 @@ export default class TablePagination extends React.Component {
             />
           </div>
           <div className="form-group mb-2">
-            <DropdownButton className="dd" title={(filter.charAt(0).toUpperCase() + filter.slice(1)) || 'All'}>
-              {this.props.filterList.map((item) => (
-                <Dropdown.Item onClick={() => this.handleFilter(item)}>
-                  {item || 'All'}
-                </Dropdown.Item>
-              ))}
+            <DropdownButton className="dd" title={
+                typeof book === 'string'?
+                ((filter.charAt(0).toUpperCase() + filter.slice(1)) || this.props.filterText):
+                (filter.name || this.props.filterText)}>
+              {this.props.filterList.map((item) => {
+                  if(typeof item === "string"){
+                    return(
+                        <Dropdown.Item onClick={() => this.handleFilter(item)}>
+                          {item || "All"}
+                        </Dropdown.Item>
+                      )
+                  }else{
+                    return(
+                        <Dropdown.Item onClick={() => this.handleFilter(item)}>
+                          {item.name || "All"}
+                        </Dropdown.Item>
+                      )
+                  }
+                  })}
             </DropdownButton>
           </div>
         </div>

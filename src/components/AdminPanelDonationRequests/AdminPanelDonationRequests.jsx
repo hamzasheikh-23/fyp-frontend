@@ -30,7 +30,7 @@ const AdminPanelDonationRequests = (props) => {
     fetchData();
   }, []);
 
-  console.log('outer', donationRequests)
+  console.log("outer", donationRequests);
 
   return (
     <>
@@ -44,9 +44,16 @@ const AdminPanelDonationRequests = (props) => {
       </h7>
       <h1 className="page-heading-donation-requests">Donation Requests</h1>
 
-        <div className="table-donation-requests outer manage-donation-request-donor">
-      <TablePagination list={donationRequests} getData={data=>setDonationRequestsDisplay(data)}
-      searchParam='Title' filterParam='Status' filterList={['','Deleted','Approved','Rejected']}>
+      <div className="table-donation-requests outer manage-donation-request-donor">
+        <TablePagination
+          list={donationRequests}
+          getData={(data) => setDonationRequestsDisplay(data)}
+          searchParam="Title"
+          searchText="Title"
+          filterParam="Status"
+          filterText="Status"
+          filterList={["", "Deleted", "Approved", "Rejected"]}
+        >
           <Table responsive="md" bordered>
             <thead>
               <tr>
@@ -81,9 +88,8 @@ const AdminPanelDonationRequests = (props) => {
               <TableRow update={fetchData} rows={donationRequestsDisplay} />
             </tbody>
           </Table>
-          {/* <Pagination /> */}
-      </TablePagination>
-        </div>
+        </TablePagination>
+      </div>
     </>
   );
 };

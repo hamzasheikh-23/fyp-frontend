@@ -5,12 +5,15 @@ import Toolbar from '../Toolbar/Toolbar'
 import SideDrawer from '../SideDrawer/SideDrawer'
 import TableRow from './TableRow'
 import GetDonations from './APIs/GetDonations'
-import './AdminPanelManageDonors.css'
+import './AdminPanelManageDonors.css';
+import TablePagination from "../TablePagination/TablePagination";
 
 const AdminPanelManageDonors = (props) => {
 
     const [sideOpen, setSideOpen] = useState(false)
     const [donors, setDonors] = useState([])
+    const [donorsDisplay, setDonorsDisplay] = useState([])
+
 
     // const rows = [
     //     {
@@ -72,6 +75,15 @@ const AdminPanelManageDonors = (props) => {
             <h1 className="page-heading-donation-requests">Donor Records</h1>
         
             <div className='table-donation-requests'>
+            <TablePagination
+          list={donors}
+          getData={(data) => setDonorsDisplay(data)}
+          searchParam="Username"
+          searchText="User Name"
+          filterParam="IsActive"
+          filterText="Active Status"
+          filterList={[{name:"", value:""},{name:"Yes", value:"true"},{name:"No", value:"false"}]}
+        >
                 <Table responsive="md" bordered>
                     <thead>
                         <tr>
@@ -79,6 +91,7 @@ const AdminPanelManageDonors = (props) => {
                             <th>Donor ID</th>
                             <th>User ID</th>
                             <th>Donor Name</th>
+                            <th>User Name</th>
                             <th>Contact</th>
                             <th>Address</th>
                             {/* <th>City</th>
@@ -89,9 +102,10 @@ const AdminPanelManageDonors = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <TableRow update={fetchData} rows={donors} />
+                        <TableRow update={fetchData} rows={donorsDisplay} />
                     </tbody>
                 </Table>
+                </TablePagination>
             </div>
         </>
     )

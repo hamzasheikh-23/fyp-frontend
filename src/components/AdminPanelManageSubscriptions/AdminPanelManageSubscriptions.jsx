@@ -5,12 +5,15 @@ import Toolbar from '../Toolbar/Toolbar'
 import SideDrawer from '../SideDrawer/SideDrawer'
 import TableRow from './TableRow'
 import GetDonations from './APIs/GetDonations'
-import './AdminPanelManageSubscriptions.css'
+import './AdminPanelManageSubscriptions.css';
+import TablePagination from "../TablePagination/TablePagination";
 
 const AdminPanelManageSubscriptions = (props) => {
 
     const [sideOpen, setSideOpen] = useState(false)
     const [subscriptions, setSubscriptions] = useState([])
+    const [subscriptionsDisplay, setSubscriptionsDisplay] = useState([])
+
 
     // const rows = [
     //     {
@@ -55,6 +58,15 @@ const AdminPanelManageSubscriptions = (props) => {
             <h1 className="page-heading-donation-requests">Manage Subscriptions</h1>
         
             <div className='table-donation-requests'>
+            <TablePagination
+          list={subscriptions}
+          getData={(data) => setSubscriptionsDisplay(data)}
+          searchParam="PlanName"
+          searchText="Plan Name"
+          filterParam="IsActive"
+          filterText="Active Status"
+          filterList={[{name:"", value:""},{name:"Yes", value:"true"},{name:"No", value:"false"}]}
+        >
                 <Table responsive="md" bordered>
                     <thead>
                         <tr>
@@ -68,9 +80,10 @@ const AdminPanelManageSubscriptions = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <TableRow update={fetchData} rows={subscriptions} />
+                        <TableRow update={fetchData} rows={subscriptionsDisplay} />
                     </tbody>
                 </Table>
+                </TablePagination>
             </div>
         </>
     )

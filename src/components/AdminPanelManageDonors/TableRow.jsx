@@ -25,6 +25,7 @@ const TableRow = (props) => {
                         <td>{row.DonorId}</td>
                         <td>{row.UserId}</td>
                         <td>{`${row.FirstName} ${row.LastName}`}</td>
+                        <td>{row.Username}</td>
                         <td>{row.Contact}</td>
                         <td>{row.Address}</td>
                         {/* <td>{row.City}</td>

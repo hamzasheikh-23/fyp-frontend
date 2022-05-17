@@ -5,12 +5,15 @@ import Toolbar from '../Toolbar/Toolbar'
 import SideDrawer from '../SideDrawer/SideDrawer'
 import TableRow from './TableRow'
 import GetDonations from './APIs/GetDonations'
-import './AdminPanelManagePartnerNGO.css'
+import './AdminPanelManagePartnerNGO.css';
+import TablePagination from "../TablePagination/TablePagination";
+
 
 const AdminPanelManagePartnerNGO = (props) => {
 
     const [sideOpen, setSideOpen] = useState(false)
     const [partnerNgos, setPartnerNgos] = useState([])
+    const [partnerNgosDisplay, setPartnerNgosDisplay] = useState([])
 
     // const rows = [
     //     {
@@ -82,6 +85,15 @@ const AdminPanelManagePartnerNGO = (props) => {
             <h1 className="page-heading-donation-requests">Partner NGO Records</h1>
         
             <div className='table-donation-requests manage-partner-ngo'>
+            <TablePagination
+          list={partnerNgos}
+          getData={(data) => setPartnerNgosDisplay(data)}
+          searchParam="Username"
+          searchText="User Name"
+          filterParam="IsActive"
+          filterText="Active Status"
+          filterList={[{name:"", value:""},{name:"Yes", value:"true"},{name:"No", value:"false"}]}
+        >
                 <Table style={{overflowX: "auto !important"}} responsive bordered>
                     <thead>
                         <tr>
@@ -102,9 +114,10 @@ const AdminPanelManagePartnerNGO = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <TableRow update={fetchData} rows={partnerNgos} />
+                        <TableRow update={fetchData} rows={partnerNgosDisplay} />
                     </tbody>
                 </Table>
+                </TablePagination>
             </div>
         </>
     )
