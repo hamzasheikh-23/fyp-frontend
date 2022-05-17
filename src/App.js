@@ -21,7 +21,6 @@ import PaymentInfoPage from "./components/PaymentInfoPage/PaymentInfoPage";
 import AdminPanel from "./components/AdminPanel/AdminPanel";
 import AdminPanelNGORecords from "./components/AdminPanelNGORecords/AdminPanelNGORecords";
 import AdminPanelNGOJoin from "./components/AdminPanelNGOJoin/AdminPanelNGOJoin";
-import AdminPanelDonorRequests from "./components/AdminPanelDonorRequests/AdminPanelDonorRequests";
 import AdminPanelNGORequests from "./components/AdminPanelNGORequests/AdminPanelNGORequests";
 import AdminPanelUserFeedback from "./components/AdminPanelUserFeedback/AdminPanelUserFeedback";
 import AdminPanelStatistics from "./components/AdminPanelStatistics/AdminPanelStatistics";
@@ -259,17 +258,8 @@ const App = () => {
         <Route path="/alreadyLoggedin" component={AlreadyLoggedIn} />
         <Route path="/unauthorized" component={UnauthorizePage} />
 
-        {/* <Route
-          path="/adminPanelDonorRequests"
-          component={AdminPanelDonorRequests}
-        /> */}
-        <RoleRouteProtection
-          exact
-          path="/adminPanelDonorRequests"
-          component={AdminPanelDonorRequests}
-          validUser="admin"
-          // redirectTo="/"
-        />
+       
+        
         {/* <Route
           path="/adminPanelNGORequests"
           component={AdminPanelNGORequests}

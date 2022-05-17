@@ -1,0 +1,33 @@
+.table-pagination{
+    .page-header{
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        .dd button{
+            background-color: #4A89DC;
+            border: none;
+            outline: none;
+        }
+    }
+    .table-pagination{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 40px;
+        margin-top: 20px;
+
+        .pagination-btn{
+            margin: 0px 4px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+        }
+        .pages-detail{
+            margin-right: 20px;
+        }
+    }
+}
